@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Tiles filters</title>
+
+	<style>
+		
+		body {
+			width: 800px;
+			margin: 0 auto;
+			text-align: center;
+			padding: 1em;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			display: inline-block;
+		}
+
+		.categories {
+			margin-bottom: 1em;
+		}
+
+		.categories a {
+			display: inline-block;
+			text-decoration: none;
+			text-transform: uppercase;
+			font-weight: bold;
+			color: #333333;
+			margin: 0 1em;
+			padding: .5em;
+		}
+
+		.tiles li {
+			padding: 1em;
+			width: 25%;
+			float: left;
+			box-sizing: border-box;
+			color: #ffffff;
+		}
+
+		.cat-red { background: #e74c3c; }
+		.cat-blue { background: #3498db; }
+		.cat-green { background: #2ecc71; }
+		.cat-yellow { background: #f1c40f; }
+		
+		.categories_hover {
+			background-color: #4d7ac1;
+		}
+		.categories_active {
+			background-color: #3c69b0;
+		}
+	</style>
+</head>
+<body>
+
+	<ul class="categories">
+					<li><a href="javascript:void(0)" data-vivaldi-spatnav-clickable="1" class="categories_active">all</a></li>
+					<li><a href="javascript:void(0)" data-vivaldi-spatnav-clickable="1" class="">red</a></li>
+					<li><a href="javascript:void(0)" data-vivaldi-spatnav-clickable="1" class="">blue</a></li>
+					<li><a href="javascript:void(0)" data-vivaldi-spatnav-clickable="1" class="">green</a></li>
+					<li><a href="javascript:void(0)" data-vivaldi-spatnav-clickable="1">yellow</a></li>
+			</ul>
+
+	<ul class="tiles">
+					<li class="cat cat-green">Tile - 0</li>
+					<li class="cat cat-red">Tile - 1</li>
+					<li class="cat cat-red">Tile - 2</li>
+					<li class="cat cat-yellow">Tile - 3</li>
+					<li class="cat cat-blue">Tile - 4</li>
+					<li class="cat cat-red">Tile - 5</li>
+					<li class="cat cat-yellow">Tile - 6</li>
+					<li class="cat cat-red">Tile - 7</li>
+					<li class="cat cat-green">Tile - 8</li>
+					<li class="cat cat-yellow">Tile - 9</li>
+					<li class="cat cat-yellow">Tile - 10</li>
+					<li class="cat cat-yellow">Tile - 11</li>
+					<li class="cat cat-yellow">Tile - 12</li>
+					<li class="cat cat-green">Tile - 13</li>
+					<li class="cat cat-yellow">Tile - 14</li>
+					<li class="cat cat-red">Tile - 15</li>
+					<li class="cat cat-green">Tile - 16</li>
+					<li class="cat cat-red">Tile - 17</li>
+					<li class="cat cat-green">Tile - 18</li>
+					<li class="cat cat-blue">Tile - 19</li>
+			</ul>
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.categories a').on('mouseover', function(){
+			$(this).addClass('categories_hover');
+		});
+		$('.categories a').on('mouseout', function(){
+			$(this).removeClass('categories_hover');
+		});
+		$('.categories a').on('click', function(){
+      			$('.categories a').removeClass('categories_active');
+			$(this).addClass('categories_active');
+          		var color = $(this).text();
+          		choose(color);
+		});
+	});
+
+function choose(color){
+	$('.cat').hide();
+	$('.cat-'+color).show();
+	console.log(color);
+	if(color == 'all'){
+		$('.cat').show();
+	}
+};
+</script>
+
+
+</body></html>
