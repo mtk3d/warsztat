@@ -5,12 +5,12 @@ namespace ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ServiceOrderPosition
+ * Service
  *
- * @ORM\Table(name="service_order_position")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\ServiceOrderPositionRepository")
+ * @ORM\Table(name="service")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\ServiceRepository")
  */
-class ServiceOrderPosition
+class Service
 {
     /**
      * @var int
@@ -27,20 +27,6 @@ class ServiceOrderPosition
      * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="order_id", type="integer")
-     */
-    private $orderId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="service_id", type="integer")
-     */
-    private $serviceId;
 
     /**
      * @var string
@@ -77,27 +63,6 @@ class ServiceOrderPosition
      */
     private $vatSum;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="employee_id", type="integer")
-     */
-    private $employeeId;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="quantity", type="float")
-     */
-    private $quantity;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="completed", type="boolean")
-     */
-    private $completed;
-
 
     /**
      * Get id
@@ -114,7 +79,7 @@ class ServiceOrderPosition
      *
      * @param integer $userId
      *
-     * @return ServiceOrderPosition
+     * @return Service
      */
     public function setUserId($userId)
     {
@@ -134,83 +99,11 @@ class ServiceOrderPosition
     }
 
     /**
-     * Set orderId
-     *
-     * @param integer $orderId
-     *
-     * @return ServiceOrderPosition
-     */
-    public function setOrderId($orderId)
-    {
-        $this->orderId = $orderId;
-
-        return $this;
-    }
-
-    /**
-     * Get orderId
-     *
-     * @return int
-     */
-    public function getOrderId()
-    {
-        return $this->orderId;
-    }
-
-    /**
-     * Set serviceId
-     *
-     * @param integer $serviceId
-     *
-     * @return ServiceOrderPosition
-     */
-    public function setServiceId($serviceId)
-    {
-        $this->serviceId = $serviceId;
-
-        return $this;
-    }
-
-    /**
-     * Get serviceId
-     *
-     * @return int
-     */
-    public function getServiceId()
-    {
-        return $this->serviceId;
-    }
-
-    /**
-     * Set employeeId
-     *
-     * @param integer $employeeId
-     *
-     * @return ServiceOrderPosition
-     */
-    public function setEmployeeId($employeeId)
-    {
-        $this->employeeId = $employeeId;
-
-        return $this;
-    }
-
-    /**
-     * Get employeeId
-     *
-     * @return int
-     */
-    public function getEmployeeId()
-    {
-        return $this->employeeId;
-    }
-
-    /**
      * Set name
      *
      * @param string $name
      *
-     * @return DocumentPosition
+     * @return Service
      */
     public function setName($name)
     {
@@ -234,7 +127,7 @@ class ServiceOrderPosition
      *
      * @param float $netto
      *
-     * @return DocumentPosition
+     * @return Service
      */
     public function setNetto($netto)
     {
@@ -258,7 +151,7 @@ class ServiceOrderPosition
      *
      * @param float $brutto
      *
-     * @return DocumentPosition
+     * @return Service
      */
     public function setBrutto($brutto)
     {
@@ -282,7 +175,7 @@ class ServiceOrderPosition
      *
      * @param float $vat
      *
-     * @return DocumentPosition
+     * @return Service
      */
     public function setVat($vat)
     {
@@ -306,7 +199,7 @@ class ServiceOrderPosition
      *
      * @param float $vatSum
      *
-     * @return DocumentPosition
+     * @return Service
      */
     public function setVatSum($vatSum)
     {
@@ -324,52 +217,5 @@ class ServiceOrderPosition
     {
         return $this->vatSum;
     }
-
-    /**
-     * Set quantity
-     *
-     * @param float $quantity
-     *
-     * @return ServiceOrderPosition
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    /**
-     * Get quantity
-     *
-     * @return float
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * Set completed
-     *
-     * @param boolean $completed
-     *
-     * @return ServiceOrderPosition
-     */
-    public function setCompleted($completed)
-    {
-        $this->completed = $completed;
-
-        return $this;
-    }
-
-    /**
-     * Get completed
-     *
-     * @return bool
-     */
-    public function getCompleted()
-    {
-        return $this->completed;
-    }
 }
+

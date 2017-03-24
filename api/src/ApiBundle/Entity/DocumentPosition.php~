@@ -404,3 +404,4 @@ class DocumentPosition
         return $this->updatedAt;
     }
 }
+

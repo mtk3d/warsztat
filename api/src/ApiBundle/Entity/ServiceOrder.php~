@@ -5,12 +5,12 @@ namespace ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tire
+ * ServiceOrder
  *
- * @ORM\Table(name="tire")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\TireRepository")
+ * @ORM\Table(name="service_order")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\ServiceOrderRepository")
  */
-class Tire
+class ServiceOrder
 {
     /**
      * @var int
@@ -38,44 +38,30 @@ class Tire
     /**
      * @var int
      *
-     * @ORM\Column(name="vehicle_id", type="integer", nullable=true)
+     * @ORM\Column(name="vehicle_id", type="integer")
      */
     private $vehicleId;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="number", type="string", length=255)
+     * @ORM\Column(name="date", type="datetime")
      */
-    private $number;
+    private $date;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="size", type="string", length=255, nullable=true)
+     * @ORM\Column(name="term", type="datetime")
      */
-    private $size;
+    private $term;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="producer", type="string", length=255, nullable=true)
+     * @ORM\Column(name="completed", type="boolean")
      */
-    private $producer;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255, nullable=true)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="rim", type="string", length=255, nullable=true)
-     */
-    private $rim;
+    private $completed;
 
     /**
      * @var string
@@ -114,7 +100,7 @@ class Tire
      *
      * @param integer $userId
      *
-     * @return Tire
+     * @return ServiceOrder
      */
     public function setUserId($userId)
     {
@@ -138,7 +124,7 @@ class Tire
      *
      * @param integer $consumerId
      *
-     * @return Tire
+     * @return ServiceOrder
      */
     public function setConsumerId($consumerId)
     {
@@ -162,7 +148,7 @@ class Tire
      *
      * @param integer $vehicleId
      *
-     * @return Tire
+     * @return ServiceOrder
      */
     public function setVehicleId($vehicleId)
     {
@@ -182,123 +168,75 @@ class Tire
     }
 
     /**
-     * Set number
+     * Set date
      *
-     * @param string $number
+     * @param \DateTime $date
      *
-     * @return Tire
+     * @return ServiceOrder
      */
-    public function setNumber($number)
+    public function setDate($date)
     {
-        $this->number = $number;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get number
+     * Get date
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getNumber()
+    public function getDate()
     {
-        return $this->number;
+        return $this->date;
     }
 
     /**
-     * Set size
+     * Set term
      *
-     * @param string $size
+     * @param \DateTime $term
      *
-     * @return Tire
+     * @return ServiceOrder
      */
-    public function setSize($size)
+    public function setTerm($term)
     {
-        $this->size = $size;
+        $this->term = $term;
 
         return $this;
     }
 
     /**
-     * Get size
+     * Get term
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getSize()
+    public function getTerm()
     {
-        return $this->size;
+        return $this->term;
     }
 
     /**
-     * Set producer
+     * Set completed
      *
-     * @param string $producer
+     * @param boolean $completed
      *
-     * @return Tire
+     * @return ServiceOrder
      */
-    public function setProducer($producer)
+    public function setCompleted($completed)
     {
-        $this->producer = $producer;
+        $this->completed = $completed;
 
         return $this;
     }
 
     /**
-     * Get producer
+     * Get completed
      *
-     * @return string
+     * @return bool
      */
-    public function getProducer()
+    public function getCompleted()
     {
-        return $this->producer;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Tire
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set rim
-     *
-     * @param string $rim
-     *
-     * @return Tire
-     */
-    public function setRim($rim)
-    {
-        $this->rim = $rim;
-
-        return $this;
-    }
-
-    /**
-     * Get rim
-     *
-     * @return string
-     */
-    public function getRim()
-    {
-        return $this->rim;
+        return $this->completed;
     }
 
     /**
@@ -306,7 +244,7 @@ class Tire
      *
      * @param string $notes
      *
-     * @return Tire
+     * @return ServiceOrder
      */
     public function setNotes($notes)
     {
@@ -330,7 +268,7 @@ class Tire
      *
      * @param \DateTime $createdAt
      *
-     * @return Tire
+     * @return ServiceOrder
      */
     public function setCreatedAt($createdAt)
     {
@@ -354,7 +292,7 @@ class Tire
      *
      * @param \DateTime $updatedAt
      *
-     * @return Tire
+     * @return ServiceOrder
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -373,3 +311,4 @@ class Tire
         return $this->updatedAt;
     }
 }
+

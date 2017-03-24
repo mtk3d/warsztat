@@ -218,4 +218,3 @@ class Service
         return $this->vatSum;
     }
 }
-

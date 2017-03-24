@@ -3,7 +3,6 @@
 namespace ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Document
@@ -13,6 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Document
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="documents")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * @var int
@@ -27,9 +31,6 @@ class Document
      * @var int
      *
      * @ORM\Column(name="user_id", type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Type("integer")
      */
     private $userId;
 
@@ -37,9 +38,6 @@ class Document
      * @var int
      *
      * @ORM\Column(name="consumer_id", type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Type("integer")
      */
     private $consumerId;
 
@@ -47,9 +45,6 @@ class Document
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Choice({"FV", "Rachunek"})
      */
     private $type;
 
@@ -57,13 +52,6 @@ class Document
      * @var string
      *
      * @ORM\Column(name="number", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Regex(
-     *     pattern="/^.{1,2}[[:space:]][0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]$/",
-     *     match=true,
-     *     message="Wrong number format"
-     * )
      */
     private $number;
 
@@ -71,9 +59,6 @@ class Document
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\DateTime()
      */
     private $date;
 
@@ -81,9 +66,6 @@ class Document
      * @var \DateTime
      *
      * @ORM\Column(name="date_of_payment", type="datetime")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\DateTime()
      */
     private $dateOfPayment;
 
@@ -91,9 +73,6 @@ class Document
      * @var string
      *
      * @ORM\Column(name="payment_method", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Choice({"Gotówka", "Karta", "Przelew"})
      */
     private $paymentMethod;
 
@@ -101,8 +80,6 @@ class Document
      * @var bool
      *
      * @ORM\Column(name="paid", type="boolean")
-     * @Assert\NotBlank()
-     * @Assert\Type("bool")
      */
     private $paid;
 
@@ -131,8 +108,6 @@ class Document
      * @var float
      *
      * @ORM\Column(name="vat", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("float")
      */
     private $vat;
 
@@ -140,8 +115,6 @@ class Document
      * @var float
      *
      * @ORM\Column(name="netto", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("float")
      */
     private $netto;
 
@@ -149,8 +122,6 @@ class Document
      * @var float
      *
      * @ORM\Column(name="brutto", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("float")
      */
     private $brutto;
 
@@ -158,8 +129,6 @@ class Document
      * @var string
      *
      * @ORM\Column(name="vat_sum", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("float")
      */
     private $vatSum;
 
@@ -174,9 +143,6 @@ class Document
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\DateTime()
      */
     private $createdAt;
 
@@ -184,9 +150,6 @@ class Document
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\DateTime()
      */
     private $updatedAt;
 
@@ -632,28 +595,5 @@ class Document
     {
         return $this->updatedAt;
     }
-
-    /**
-     * Set user
-     *
-     * @param \ApiBundle\Entity\User $user
-     *
-     * @return Document
-     */
-    public function setUser(\ApiBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \ApiBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }
+

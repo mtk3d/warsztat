@@ -1,319 +1,430 @@
 <!DOCTYPE html>
 <html>
 <head>
+      <meta charset="utf-8">
 	<title>Warsztat</title>
-	<!-- <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
-	<!-- <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap-theme.min.css"> -->
-	<link rel="stylesheet" type="text/css" href="./node_modules/semantic-ui/dist/semantic.min.css">
+  <link rel="shortcut icon" href="img/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="./node_modules/semantic-ui/dist/semantic.min.css">
+    <style>
+        body {
+          background-image: url(img/bg.png);
+          background-size: cover;
+          color: #fff!important;
+        }
+        .first-letter-circle{
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            font-size: 60px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 100px;
+            margin: 20px;
+            background-color: #31578c;
+            color: #fff;
+            margin: 0 auto;
+            font-weight: bold;
+            cursor: default;
+        }
+        .avatar-container{
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            padding-top: 20px!important;
+            padding-bottom: 20px!important;
+        }
+        .item-bottom{
+            position: absolute!important;
+            bottom: 0!important;
+            width: 100%;
+            text-align: center;
+        }
+        .item-bottom a:hover{
+          text-decoration: underline;
+        }
+        .divider, label {
+          color: #fff!important;
+        }
+       /* .position-check-box{
+          width: 25px;
+        }*/
+    </style>
 </head>
 <body>
 
-
-<div class="ui stackable menu inverted" style="border-radius: 0">
-  <div class="item">
-    <strong>Warsztat</strong>
+<body>
+  <div class="ui attached pushable">
+  <div class="ui visible inverted left vertical sidebar menu">
+  <div class="avatar-container item">
+        <div class="first-letter-circle">W</div>
+        <h2>Warsztat</h2>
+        <a class="ui secondary button" href="#">
+          Ustawienia
+        </a>
+        <a class="ui secondary button" href="#">
+          Wyloguj
+        </a>
   </div>
-  <a class="item">Features</a>
-  <a class="item">Testimonials</a>
-  <a class="item">Sign-in</a>
-  <div class="right menu">
-    <div class="item">
-      <div class="ui icon input">
-        <input type="text" placeholder="Search...">
-        <i class="search link icon"></i>
+    <a class="item active">
+      <i class="file text outline icon"></i>
+      Dokumenty
+    </a>
+    <a class="item">
+      <i class="tasks icon"></i>
+      Zlecenia
+    </a>
+    <a class="item">
+      <i class="users icon"></i>
+      Klienci
+    </a>
+    <a class="item">
+      <i class="car icon"></i>
+      Pojzady
+    </a>
+    <a class="item">
+      <i class="user icon"></i>
+      Pracownicy
+    </a>
+    <a class="item">
+      <i class="configure icon"></i>
+      Usługi
+    </a>
+    <a class="item">
+      <i class="grid layout icon"></i>
+      Magazyn
+    </a>
+    <a class="item">
+      <i class="selected radio icon"></i>
+      Opony
+    </a>
+    <a class="item">
+      <i class="calendar icon"></i>
+      Terminarz
+    </a>
+    <a class="item">
+      <i class="pie chart icon"></i>
+      Raporty
+    </a>
+    <div class="item item-bottom">
+      <a href="https://github.com/mtk3d/warsztat" target="_blank">GitHub <i class="github icon"></i></a>| 
+      <a href="https://webmtkblog.wordpress.com/" target="_blank">MTK <i class="code icon"></i></a>| 
+      <a href="http://uczestnicy.dajsiepoznac.pl/profil/mateusz-cholewka" target="_blank">DSP2017 <img src="img/dsp2017.png" style="height: 11px"></a>
+    </div>
+  </div>
+  <div class="pusher" style="padding-right:260px;">
+    <div class="ui basic segment">
+
+
+
+<div class="fluid container" style="margin-bottom: 20px">
+  <div class="ui large breadcrumb">
+    <a class="section">Warsztat</a>
+    <i class="right chevron icon divider"></i>
+    <div class="active section">Dokumenty</div>
+  </div>
+</div>
+
+      <div style="overflow: hidden">
+
+<div class="ui buttons" style="float: left; margin-right: 30px">
+  <button class="ui button">Wszystkie</button>
+  <button class="ui button active">Faktury</button>
+  <button class="ui button">Rachunki</button>
+</div>
+
+<div class="ui form" style="float: left; margin-right: 10px">
+  <div class="inline field">
+    <label>Od</label>
+    <input type="date">
+  </div>
+</div>
+
+<div class="ui form" style="float: left;">
+  <div class="inline field">
+    <label>do</label>
+    <input type="date">
+  </div>
+</div>
+
+<div class="ui search" style="float: right">
+  <div class="ui icon input">
+    <input class="prompt" type="text" placeholder="Szukaj...">
+    <i class="search icon"></i>
+  </div>
+  <div class="results"></div>
+</div>
+
+</div>
+        <table class="ui celled table selectable">
+  <thead>
+    <tr>
+    <th>
+      <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+    </th>
+    <th>Numer</th>
+    <th>Typ</th>
+    <th>Data wystawienia</th>
+    <th>Data płatności</th>
+    <th>Metoda płatności</th>
+    <th>Zapłacono</th>
+    <th>Klient</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td><a href="#">FV 03/01/2017</a></td>
+      <td>Faktura VAT</td>
+      <td>20.01.2017</td>
+      <td>29.01.2017</td>
+      <td>Gotówka</td>
+      <td>Tak</td>
+      <td>Jan Kowalski</td>
+    </tr>
+    
+  </tbody>
+  <tfoot>
+    <tr><th colspan="8">
+    <!-- <div class="ui  blue labeled icon button">
+          <i class="pencil icon"></i> Edytuj
+        </div>
+        <div class="ui  yellow labeled icon button">
+          <i class="search icon"></i> Podgląd
+        </div> -->
+        <div class="ui  red labeled icon button disabled">
+          <i class="trash icon"></i> Usuń
+        </div>
+      <div class="ui right floated pagination menu small">
+        <a class="icon item">
+          <i class="left chevron icon"></i>
+        </a>
+        <a class="item">1</a>
+        <a class="item">2</a>
+        <a class="item">3</a>
+        <a class="item">4</a>
+        <a class="icon item">
+          <i class="right chevron icon"></i>
+        </a>
+      </div>
+    </th>
+  </tr></tfoot>
+</table>
+<div class="ui green labeled icon button">
+          <i class="file outline icon"></i> Nowy dokument
+        </div>
       </div>
     </div>
-    <a class="ui item">Logout </a>
   </div>
 </div>
+</body>
 
-
-
-<div class="ui grid">
-  <div class="three wide column" style="padding-top: 0; padding-bottom: 0">
-    <div class="ui vertical fluid tabular menu" style="margin: 0;height: calc(100vh - 49px); padding-left: 8px; padding-top: 10px">
-      <a class="item active" data-tab="documents">Documents </a>
-      <a class="item" data-tab="store">Store </a>
-      <a class="item" data-tab="magazine">Magazine </a>
-    </div>
-  </div>
-  <div class="thirteen wide stretched column" style="padding-right: 27px">
-    <div class="ui tab active" data-tab="documents">
-
-
-    	<table class="ui compact celled definition table">
-  <thead class="full-width">
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Registration Date</th>
-      <th>E-mail address</th>
-      <th>Premium Plan</th>
-    </tr>
-  </thead>
-  <tbody>
-  <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-
-  <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td class="collapsing">
-        <div class="ui fitted slider checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-  </tbody>
-  <tfoot class="full-width">
-    <tr>
-      <th></th>
-      <th colspan="4">
-        <div class="ui right floated small primary labeled icon button"><i class="file icon"></i> New Document </div>
-
-        <div class="ui small  button">Approve </div>
-        <div class="ui small  disabled button">Approve All </div>
-      </th>
-    </tr>
-  </tfoot>
-</table>
-
-<div class="ui centered grid">
-<div class="center aligned column">
-<div class="ui pagination menu" style="margin: 0 auto;">
-  <a class="item">
-    Previous
-  </a>
-  <div class="active item">
-    1
-  </div>
-  <a class="disabled item">
-    ...
-  </a>
-  <a class="item">
-    11
-  </a>
-  <a class="item">
-    12
-  </a>
-  <a class="item">
-    Next
-  </a>
-</div>
-</div>
-</div>
-
-    	</div>
-    <div class="ui tab" data-tab="store">
-    	<div class="ui segment">
-    	This is an stretched grid column. This segment will always match the tab height 
-    	</div>
-    	</div>
-    <div class="ui tab" data-tab="magazine">
-    	<div class="ui segment">
-    	This is an stretched grid column. This segment will always match the tab height This is an stretched grid column. This segment will always match the tab height 
-    	</div>
-    </div>
-  </div>
-</div>
 
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>
 <!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
 <script src="./node_modules/semantic-ui/dist/semantic.min.js"></script>
 <script>
-$('.tabular.menu .item').tab();
-$('.ui.button')
-  .on('click', function() {
-    // programmatically activating tab
-    $.tab('change tab', 'tab-name');
-  });
+
 </script>
 </body>
 </html>

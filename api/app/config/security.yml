@@ -2,18 +2,26 @@
 # http://symfony.com/doc/current/security.html
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        #Symfony\Component\Security\Core\User\User: plaintext
+        ApiBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:
-                        password: password
-                        roles: 'ROLE_USER'
-                    admin:
-                        password: password2
-                        roles: 'ROLE_ADMIN'
+        our_db_provider:
+            entity:
+                class: ApiBundle:User
+                property: username
+
+        # in_memory:
+        #     memory:
+        #         users:
+        #             user:
+        #                 password: password
+        #                 roles: 'ROLE_USER'
+        #             admin:
+        #                 password: password2
+        #                 roles: 'ROLE_ADMIN'
 
     firewalls:
 
@@ -36,4 +44,4 @@ security:
 
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

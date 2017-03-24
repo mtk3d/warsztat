@@ -10,4 +10,49 @@ namespace ApiBundle\Repository;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
+    private $_defaultQuery = "SELECT
+                    d.id,
+                    d.number,
+                    d.type,
+                    d.date,
+                    d.dateOfPayment,
+                    d.paymentMethod,
+                    d.paid
+                FROM
+                    ApiBundle:Document d
+                WHERE
+                    d.userId = ";
+
+    public function getList($type, $userId)
+    {
+        $where = "";
+        
+        switch($type)
+        {
+            case 'invoices':
+                $where = "AND d.type = 'FV'";
+                break;
+            case 'bills':
+                $where = "AND d.type = 'Rachunek'";
+                break;
+        }
+        return $this->getEntityManager()
+        ->createQuery($this->_defaultQuery.$userId.$where)
+        ->getArrayResult();
+    }
+
+    public function findById($id, $userId)
+    {
+        return $this->getEntityManager()
+        ->createQuery("SELECT
+                    d
+                FROM
+                    ApiBundle:Document d
+                WHERE
+                    d.userId = $userId
+                AND
+                    d.id = $id"
+        )
+        ->getArrayResult();
+    }
 }

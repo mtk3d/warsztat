@@ -10,4 +10,17 @@ namespace ApiBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getId($username)
+    {
+        $user = $this->getEntityManager()
+            ->createQuery("SELECT
+                    u.id
+                FROM
+                    ApiBundle:User u
+                WHERE
+                    u.username = '$username'"
+            )
+            ->getArrayResult();
+        return $user['0']['id'];
+    }
 }

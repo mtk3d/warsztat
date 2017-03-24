@@ -10,4 +10,27 @@ namespace ApiBundle\Repository;
  */
 class EmployeeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getList()
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT
+                    e
+                FROM
+                    ApiBundle:Employee e
+            ")
+            ->getArrayResult();
+    }
+
+    public function getById($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT
+                    e
+                FROM
+                    ApiBundle:Employee e
+            ")
+            ->getArrayResult();
+    }
 }

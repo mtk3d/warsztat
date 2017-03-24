@@ -3,15 +3,29 @@
 namespace ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Consumer
+ * User
  *
- * @ORM\Table(name="consumer")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\ConsumerRepository")
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\UserRepository")
  */
-class Consumer
+class User implements UserInterface
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="user")
+     */
+    private $documents;
+
+    public function __construct()
+    {
+        $this->documents = new ArrayCollection();
+    }
+
+
     /**
      * @var int
      *
@@ -22,11 +36,18 @@ class Consumer
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
-    private $userId;
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
 
     /**
      * @var string
@@ -38,7 +59,7 @@ class Consumer
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
@@ -59,51 +80,9 @@ class Consumer
     /**
      * @var string
      *
-     * @ORM\Column(name="nip", type="string", length=255, nullable=true)
-     */
-    private $nip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="pesel", type="string", length=255, nullable=true)
-     */
-    private $pesel;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true, unique=true)
      */
     private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="www", type="string", length=255, nullable=true)
-     */
-    private $www;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="bank", type="string", length=255, nullable=true)
-     */
-    private $bank;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="bank_account", type="string", length=255, nullable=true)
-     */
-    private $bankAccount;
 
     /**
      * @var string
@@ -150,9 +129,16 @@ class Consumer
     /**
      * @var string
      *
-     * @ORM\Column(name="notes", type="text", nullable=true)
+     * @ORM\Column(name="nip", type="string", length=255, nullable=true, unique=true)
      */
-    private $notes;
+    private $nip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="regon", type="string", length=255, nullable=true, unique=true)
+     */
+    private $regon;
 
     /**
      * @var \DateTime
@@ -180,27 +166,51 @@ class Consumer
     }
 
     /**
-     * Set userId
+     * Set username
      *
-     * @param integer $userId
+     * @param string $username
      *
-     * @return Consumer
+     * @return User
      */
-    public function setUserId($userId)
+    public function setUsername($username)
     {
-        $this->userId = $userId;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get username
      *
-     * @return int
+     * @return string
      */
-    public function getUserId()
+    public function getUsername()
     {
-        return $this->userId;
+        return $this->username;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
@@ -208,7 +218,7 @@ class Consumer
      *
      * @param string $company
      *
-     * @return Consumer
+     * @return User
      */
     public function setCompany($company)
     {
@@ -232,7 +242,7 @@ class Consumer
      *
      * @param string $name
      *
-     * @return Consumer
+     * @return User
      */
     public function setName($name)
     {
@@ -256,7 +266,7 @@ class Consumer
      *
      * @param string $firstName
      *
-     * @return Consumer
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -280,7 +290,7 @@ class Consumer
      *
      * @param string $lastName
      *
-     * @return Consumer
+     * @return User
      */
     public function setLastName($lastName)
     {
@@ -300,83 +310,11 @@ class Consumer
     }
 
     /**
-     * Set nip
-     *
-     * @param string $nip
-     *
-     * @return Consumer
-     */
-    public function setNip($nip)
-    {
-        $this->nip = $nip;
-
-        return $this;
-    }
-
-    /**
-     * Get nip
-     *
-     * @return string
-     */
-    public function getNip()
-    {
-        return $this->nip;
-    }
-
-    /**
-     * Set pesel
-     *
-     * @param string $pesel
-     *
-     * @return Consumer
-     */
-    public function setPesel($pesel)
-    {
-        $this->pesel = $pesel;
-
-        return $this;
-    }
-
-    /**
-     * Get pesel
-     *
-     * @return string
-     */
-    public function getPesel()
-    {
-        return $this->pesel;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     *
-     * @return Consumer
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
      * Set email
      *
      * @param string $email
      *
-     * @return Consumer
+     * @return User
      */
     public function setEmail($email)
     {
@@ -396,83 +334,11 @@ class Consumer
     }
 
     /**
-     * Set www
-     *
-     * @param string $www
-     *
-     * @return Consumer
-     */
-    public function setWww($www)
-    {
-        $this->www = $www;
-
-        return $this;
-    }
-
-    /**
-     * Get www
-     *
-     * @return string
-     */
-    public function getWww()
-    {
-        return $this->www;
-    }
-
-    /**
-     * Set bank
-     *
-     * @param string $bank
-     *
-     * @return Consumer
-     */
-    public function setBank($bank)
-    {
-        $this->bank = $bank;
-
-        return $this;
-    }
-
-    /**
-     * Get bank
-     *
-     * @return string
-     */
-    public function getBank()
-    {
-        return $this->bank;
-    }
-
-    /**
-     * Set bankAccount
-     *
-     * @param string $bankAccount
-     *
-     * @return Consumer
-     */
-    public function setBankAccount($bankAccount)
-    {
-        $this->bankAccount = $bankAccount;
-
-        return $this;
-    }
-
-    /**
-     * Get bankAccount
-     *
-     * @return string
-     */
-    public function getBankAccount()
-    {
-        return $this->bankAccount;
-    }
-
-    /**
      * Set street
      *
      * @param string $street
      *
-     * @return Consumer
+     * @return User
      */
     public function setStreet($street)
     {
@@ -496,7 +362,7 @@ class Consumer
      *
      * @param string $buildNumber
      *
-     * @return Consumer
+     * @return User
      */
     public function setBuildNumber($buildNumber)
     {
@@ -520,7 +386,7 @@ class Consumer
      *
      * @param string $apartmentNumber
      *
-     * @return Consumer
+     * @return User
      */
     public function setApartmentNumber($apartmentNumber)
     {
@@ -544,7 +410,7 @@ class Consumer
      *
      * @param string $place
      *
-     * @return Consumer
+     * @return User
      */
     public function setPlace($place)
     {
@@ -568,7 +434,7 @@ class Consumer
      *
      * @param string $postalCode
      *
-     * @return Consumer
+     * @return User
      */
     public function setPostalCode($postalCode)
     {
@@ -592,7 +458,7 @@ class Consumer
      *
      * @param string $post
      *
-     * @return Consumer
+     * @return User
      */
     public function setPost($post)
     {
@@ -612,27 +478,51 @@ class Consumer
     }
 
     /**
-     * Set notes
+     * Set nip
      *
-     * @param string $notes
+     * @param string $nip
      *
-     * @return Consumer
+     * @return User
      */
-    public function setNotes($notes)
+    public function setNip($nip)
     {
-        $this->notes = $notes;
+        $this->nip = $nip;
 
         return $this;
     }
 
     /**
-     * Get notes
+     * Get nip
      *
      * @return string
      */
-    public function getNotes()
+    public function getNip()
     {
-        return $this->notes;
+        return $this->nip;
+    }
+
+    /**
+     * Set regon
+     *
+     * @param string $regon
+     *
+     * @return User
+     */
+    public function setRegon($regon)
+    {
+        $this->regon = $regon;
+
+        return $this;
+    }
+
+    /**
+     * Get regon
+     *
+     * @return string
+     */
+    public function getRegon()
+    {
+        return $this->regon;
     }
 
     /**
@@ -640,7 +530,7 @@ class Consumer
      *
      * @param \DateTime $createdAt
      *
-     * @return Consumer
+     * @return User
      */
     public function setCreatedAt($createdAt)
     {
@@ -664,7 +554,7 @@ class Consumer
      *
      * @param \DateTime $updatedAt
      *
-     * @return Consumer
+     * @return User
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -682,4 +572,22 @@ class Consumer
     {
         return $this->updatedAt;
     }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
 }
+

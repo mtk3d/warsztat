@@ -373,3 +373,4 @@ class Tire
         return $this->updatedAt;
     }
 }
+

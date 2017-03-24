@@ -311,4 +311,3 @@ class Store
         return $this->notes;
     }
 }
-

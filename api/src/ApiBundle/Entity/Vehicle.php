@@ -311,4 +311,3 @@ class Vehicle
         return $this->updatedAt;
     }
 }
-

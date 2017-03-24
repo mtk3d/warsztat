@@ -5,12 +5,12 @@ namespace ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CarRent
+ * CarRentHistory
  *
- * @ORM\Table(name="car_rent")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\CarRentRepository")
+ * @ORM\Table(name="car_rent_history")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\CarRentHistoryRepository")
  */
-class CarRent
+class CarRentHistory
 {
     /**
      * @var int
@@ -31,16 +31,16 @@ class CarRent
     /**
      * @var int
      *
-     * @ORM\Column(name="consumer_id", type="integer", nullable=true)
+     * @ORM\Column(name="car_id", type="integer")
      */
-    private $consumerId;
+    private $carId;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="registration_number", type="string", length=255)
+     * @ORM\Column(name="consumer_id", type="integer")
      */
-    private $registrationNumber;
+    private $consumerId;
 
     /**
      * @var string
@@ -57,18 +57,18 @@ class CarRent
     private $gas;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
-     * @ORM\Column(name="loan", type="boolean")
+     * @ORM\Column(name="created_at", type="datetime")
      */
-    private $loan;
+    private $createdAt;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="notes", type="text")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
-    private $notes;
+    private $updatedAt;
 
 
     /**
@@ -86,7 +86,7 @@ class CarRent
      *
      * @param integer $userId
      *
-     * @return CarRent
+     * @return CarRentHistory
      */
     public function setUserId($userId)
     {
@@ -106,11 +106,35 @@ class CarRent
     }
 
     /**
+     * Set carId
+     *
+     * @param integer $carId
+     *
+     * @return CarRentHistory
+     */
+    public function setCarId($carId)
+    {
+        $this->carId = $carId;
+
+        return $this;
+    }
+
+    /**
+     * Get carId
+     *
+     * @return int
+     */
+    public function getCarId()
+    {
+        return $this->carId;
+    }
+
+    /**
      * Set consumerId
      *
      * @param integer $consumerId
      *
-     * @return CarRent
+     * @return CarRentHistory
      */
     public function setConsumerId($consumerId)
     {
@@ -130,35 +154,11 @@ class CarRent
     }
 
     /**
-     * Set registrationNumber
-     *
-     * @param string $registrationNumber
-     *
-     * @return CarRent
-     */
-    public function setRegistrationNumber($registrationNumber)
-    {
-        $this->registrationNumber = $registrationNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get registrationNumber
-     *
-     * @return string
-     */
-    public function getRegistrationNumber()
-    {
-        return $this->registrationNumber;
-    }
-
-    /**
      * Set course
      *
      * @param string $course
      *
-     * @return CarRent
+     * @return CarRentHistory
      */
     public function setCourse($course)
     {
@@ -182,7 +182,7 @@ class CarRent
      *
      * @param string $gas
      *
-     * @return CarRent
+     * @return CarRentHistory
      */
     public function setGas($gas)
     {
@@ -202,50 +202,51 @@ class CarRent
     }
 
     /**
-     * Set loan
+     * Set createdAt
      *
-     * @param boolean $loan
+     * @param \DateTime $createdAt
      *
-     * @return CarRent
+     * @return CarRentHistory
      */
-    public function setLoan($loan)
+    public function setCreatedAt($createdAt)
     {
-        $this->loan = $loan;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get loan
+     * Get createdAt
      *
-     * @return bool
+     * @return \DateTime
      */
-    public function getLoan()
+    public function getCreatedAt()
     {
-        return $this->loan;
+        return $this->createdAt;
     }
 
     /**
-     * Set notes
+     * Set updatedAt
      *
-     * @param string $notes
+     * @param \DateTime $updatedAt
      *
-     * @return CarRent
+     * @return CarRentHistory
      */
-    public function setNotes($notes)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->notes = $notes;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get notes
+     * Get updatedAt
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getNotes()
+    public function getUpdatedAt()
     {
-        return $this->notes;
+        return $this->updatedAt;
     }
 }
+

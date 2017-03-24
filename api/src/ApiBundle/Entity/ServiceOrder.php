@@ -311,4 +311,3 @@ class ServiceOrder
         return $this->updatedAt;
     }
 }
-

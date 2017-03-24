@@ -5,12 +5,12 @@ namespace ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DocumentPosition
+ * Store
  *
- * @ORM\Table(name="document_position")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\DocumentPositionRepository")
+ * @ORM\Table(name="store")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\StoreRepository")
  */
-class DocumentPosition
+class Store
 {
     /**
      * @var int
@@ -27,27 +27,6 @@ class DocumentPosition
      * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="document_id", type="integer")
-     */
-    private $documentId;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="service", type="boolean")
-     */
-    private $service;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="item_id", type="integer", nullable=true)
-     */
-    private $itemId;
 
     /**
      * @var string
@@ -85,6 +64,13 @@ class DocumentPosition
     private $vatSum;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="unit", type="string", length=255)
+     */
+    private $unit;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="quantity", type="float")
@@ -92,18 +78,11 @@ class DocumentPosition
     private $quantity;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private $updatedAt;
+    private $notes;
 
 
     /**
@@ -121,7 +100,7 @@ class DocumentPosition
      *
      * @param integer $userId
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setUserId($userId)
     {
@@ -141,83 +120,11 @@ class DocumentPosition
     }
 
     /**
-     * Set documentId
-     *
-     * @param integer $documentId
-     *
-     * @return DocumentPosition
-     */
-    public function setDocumentId($documentId)
-    {
-        $this->documentId = $documentId;
-
-        return $this;
-    }
-
-    /**
-     * Get documentId
-     *
-     * @return int
-     */
-    public function getDocumentId()
-    {
-        return $this->documentId;
-    }
-
-     /**
-     * Set service
-     *
-     * @param boolean $service
-     *
-     * @return DocumentPosition
-     */
-    public function setService($service)
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
-    /**
-     * Get service
-     *
-     * @return bool
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * Set itemId
-     *
-     * @param integer $itemId
-     *
-     * @return DocumentPosition
-     */
-    public function setItemId($itemId)
-    {
-        $this->itemId = $itemId;
-
-        return $this;
-    }
-
-    /**
-     * Get itemId
-     *
-     * @return int
-     */
-    public function getItemId()
-    {
-        return $this->itemId;
-    }
-
-    /**
      * Set name
      *
      * @param string $name
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setName($name)
     {
@@ -241,7 +148,7 @@ class DocumentPosition
      *
      * @param float $netto
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setNetto($netto)
     {
@@ -265,7 +172,7 @@ class DocumentPosition
      *
      * @param float $brutto
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setBrutto($brutto)
     {
@@ -289,7 +196,7 @@ class DocumentPosition
      *
      * @param float $vat
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setVat($vat)
     {
@@ -313,7 +220,7 @@ class DocumentPosition
      *
      * @param float $vatSum
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setVatSum($vatSum)
     {
@@ -333,11 +240,35 @@ class DocumentPosition
     }
 
     /**
+     * Set unit
+     *
+     * @param string $unit
+     *
+     * @return Store
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
      * Set quantity
      *
      * @param float $quantity
      *
-     * @return DocumentPosition
+     * @return Store
      */
     public function setQuantity($quantity)
     {
@@ -357,50 +288,27 @@ class DocumentPosition
     }
 
     /**
-     * Set createdAt
+     * Set notes
      *
-     * @param \DateTime $createdAt
+     * @param string $notes
      *
-     * @return DocumentPosition
+     * @return Store
      */
-    public function setCreatedAt($createdAt)
+    public function setNotes($notes)
     {
-        $this->createdAt = $createdAt;
+        $this->notes = $notes;
 
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get notes
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getCreatedAt()
+    public function getNotes()
     {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return DocumentPosition
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
+        return $this->notes;
     }
 }
+

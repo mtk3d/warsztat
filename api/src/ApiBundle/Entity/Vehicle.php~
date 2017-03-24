@@ -5,12 +5,12 @@ namespace ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CarRent
+ * Vehicle
  *
- * @ORM\Table(name="car_rent")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\CarRentRepository")
+ * @ORM\Table(name="vehicle")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\VehicleRepository")
  */
-class CarRent
+class Vehicle
 {
     /**
      * @var int
@@ -31,7 +31,7 @@ class CarRent
     /**
      * @var int
      *
-     * @ORM\Column(name="consumer_id", type="integer", nullable=true)
+     * @ORM\Column(name="consumer_id", type="integer")
      */
     private $consumerId;
 
@@ -45,30 +45,44 @@ class CarRent
     /**
      * @var string
      *
-     * @ORM\Column(name="course", type="string", length=255, nullable=true)
+     * @ORM\Column(name="model", type="string", length=255, nullable=true)
      */
-    private $course;
+    private $model;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="gas", type="string", length=255, nullable=true)
+     * @ORM\Column(name="mark", type="string", length=255, nullable=true)
      */
-    private $gas;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="loan", type="boolean")
-     */
-    private $loan;
+    private $mark;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="notes", type="text")
+     * @ORM\Column(name="engine", type="string", length=255, nullable=true)
+     */
+    private $engine;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
 
 
     /**
@@ -86,7 +100,7 @@ class CarRent
      *
      * @param integer $userId
      *
-     * @return CarRent
+     * @return Vehicle
      */
     public function setUserId($userId)
     {
@@ -110,7 +124,7 @@ class CarRent
      *
      * @param integer $consumerId
      *
-     * @return CarRent
+     * @return Vehicle
      */
     public function setConsumerId($consumerId)
     {
@@ -134,7 +148,7 @@ class CarRent
      *
      * @param string $registrationNumber
      *
-     * @return CarRent
+     * @return Vehicle
      */
     public function setRegistrationNumber($registrationNumber)
     {
@@ -154,75 +168,75 @@ class CarRent
     }
 
     /**
-     * Set course
+     * Set model
      *
-     * @param string $course
+     * @param string $model
      *
-     * @return CarRent
+     * @return Vehicle
      */
-    public function setCourse($course)
+    public function setModel($model)
     {
-        $this->course = $course;
+        $this->model = $model;
 
         return $this;
     }
 
     /**
-     * Get course
+     * Get model
      *
      * @return string
      */
-    public function getCourse()
+    public function getModel()
     {
-        return $this->course;
+        return $this->model;
     }
 
     /**
-     * Set gas
+     * Set mark
      *
-     * @param string $gas
+     * @param string $mark
      *
-     * @return CarRent
+     * @return Vehicle
      */
-    public function setGas($gas)
+    public function setMark($mark)
     {
-        $this->gas = $gas;
+        $this->mark = $mark;
 
         return $this;
     }
 
     /**
-     * Get gas
+     * Get mark
      *
      * @return string
      */
-    public function getGas()
+    public function getMark()
     {
-        return $this->gas;
+        return $this->mark;
     }
 
     /**
-     * Set loan
+     * Set engine
      *
-     * @param boolean $loan
+     * @param string $engine
      *
-     * @return CarRent
+     * @return Vehicle
      */
-    public function setLoan($loan)
+    public function setEngine($engine)
     {
-        $this->loan = $loan;
+        $this->engine = $engine;
 
         return $this;
     }
 
     /**
-     * Get loan
+     * Get engine
      *
-     * @return bool
+     * @return string
      */
-    public function getLoan()
+    public function getEngine()
     {
-        return $this->loan;
+        return $this->engine;
     }
 
     /**
@@ -230,7 +244,7 @@ class CarRent
      *
      * @param string $notes
      *
-     * @return CarRent
+     * @return Vehicle
      */
     public function setNotes($notes)
     {
@@ -248,4 +262,53 @@ class CarRent
     {
         return $this->notes;
     }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Vehicle
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Vehicle
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 }
+

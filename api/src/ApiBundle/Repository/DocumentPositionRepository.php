@@ -10,4 +10,23 @@ namespace ApiBundle\Repository;
  */
 class DocumentPositionRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findByDocumentId($id)
+	{
+		return $this->getEntityManager()
+		->createQuery(
+		      "SELECT
+		      		d.id,
+		      		d.name,
+		      		d.netto,
+		      		d.brutto,
+		      		d.vat,
+		      		d.vatSum,
+		      		d.quantity
+		      	FROM
+		      		ApiBundle:DocumentPosition d
+		      	WHERE
+		      		d.documentId = ".$id
+		)
+		->getResult();
+	}
 }

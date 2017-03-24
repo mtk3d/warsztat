@@ -5,12 +5,12 @@ namespace ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DocumentPosition
+ * ServiceOrderPosition
  *
- * @ORM\Table(name="document_position")
- * @ORM\Entity(repositoryClass="ApiBundle\Repository\DocumentPositionRepository")
+ * @ORM\Table(name="service_order_position")
+ * @ORM\Entity(repositoryClass="ApiBundle\Repository\ServiceOrderPositionRepository")
  */
-class DocumentPosition
+class ServiceOrderPosition
 {
     /**
      * @var int
@@ -31,23 +31,16 @@ class DocumentPosition
     /**
      * @var int
      *
-     * @ORM\Column(name="document_id", type="integer")
+     * @ORM\Column(name="order_id", type="integer")
      */
-    private $documentId;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="service", type="boolean")
-     */
-    private $service;
+    private $orderId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="item_id", type="integer", nullable=true)
+     * @ORM\Column(name="service_id", type="integer")
      */
-    private $itemId;
+    private $serviceId;
 
     /**
      * @var string
@@ -85,6 +78,13 @@ class DocumentPosition
     private $vatSum;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="employee_id", type="integer")
+     */
+    private $employeeId;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="quantity", type="float")
@@ -92,18 +92,11 @@ class DocumentPosition
     private $quantity;
 
     /**
-     * @var \DateTime
+     * @var bool
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="completed", type="boolean")
      */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private $updatedAt;
+    private $completed;
 
 
     /**
@@ -121,7 +114,7 @@ class DocumentPosition
      *
      * @param integer $userId
      *
-     * @return DocumentPosition
+     * @return ServiceOrderPosition
      */
     public function setUserId($userId)
     {
@@ -141,75 +134,75 @@ class DocumentPosition
     }
 
     /**
-     * Set documentId
+     * Set orderId
      *
-     * @param integer $documentId
+     * @param integer $orderId
      *
-     * @return DocumentPosition
+     * @return ServiceOrderPosition
      */
-    public function setDocumentId($documentId)
+    public function setOrderId($orderId)
     {
-        $this->documentId = $documentId;
+        $this->orderId = $orderId;
 
         return $this;
     }
 
     /**
-     * Get documentId
+     * Get orderId
      *
      * @return int
      */
-    public function getDocumentId()
+    public function getOrderId()
     {
-        return $this->documentId;
+        return $this->orderId;
     }
 
-     /**
-     * Set service
+    /**
+     * Set serviceId
      *
-     * @param boolean $service
+     * @param integer $serviceId
      *
-     * @return DocumentPosition
+     * @return ServiceOrderPosition
      */
-    public function setService($service)
+    public function setServiceId($serviceId)
     {
-        $this->service = $service;
+        $this->serviceId = $serviceId;
 
         return $this;
     }
 
     /**
-     * Get service
-     *
-     * @return bool
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * Set itemId
-     *
-     * @param integer $itemId
-     *
-     * @return DocumentPosition
-     */
-    public function setItemId($itemId)
-    {
-        $this->itemId = $itemId;
-
-        return $this;
-    }
-
-    /**
-     * Get itemId
+     * Get serviceId
      *
      * @return int
      */
-    public function getItemId()
+    public function getServiceId()
     {
-        return $this->itemId;
+        return $this->serviceId;
+    }
+
+    /**
+     * Set employeeId
+     *
+     * @param integer $employeeId
+     *
+     * @return ServiceOrderPosition
+     */
+    public function setEmployeeId($employeeId)
+    {
+        $this->employeeId = $employeeId;
+
+        return $this;
+    }
+
+    /**
+     * Get employeeId
+     *
+     * @return int
+     */
+    public function getEmployeeId()
+    {
+        return $this->employeeId;
     }
 
     /**
@@ -337,7 +330,7 @@ class DocumentPosition
      *
      * @param float $quantity
      *
-     * @return DocumentPosition
+     * @return ServiceOrderPosition
      */
     public function setQuantity($quantity)
     {
@@ -357,50 +350,27 @@ class DocumentPosition
     }
 
     /**
-     * Set createdAt
+     * Set completed
      *
-     * @param \DateTime $createdAt
+     * @param boolean $completed
      *
-     * @return DocumentPosition
+     * @return ServiceOrderPosition
      */
-    public function setCreatedAt($createdAt)
+    public function setCompleted($completed)
     {
-        $this->createdAt = $createdAt;
+        $this->completed = $completed;
 
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get completed
      *
-     * @return \DateTime
+     * @return bool
      */
-    public function getCreatedAt()
+    public function getCompleted()
     {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return DocumentPosition
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
+        return $this->completed;
     }
 }
+
