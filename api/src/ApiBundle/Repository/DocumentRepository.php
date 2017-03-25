@@ -10,49 +10,76 @@ namespace ApiBundle\Repository;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
-    private $_defaultQuery = "SELECT
-                    d.id,
-                    d.number,
-                    d.type,
-                    d.date,
-                    d.dateOfPayment,
-                    d.paymentMethod,
-                    d.paid
-                FROM
-                    ApiBundle:Document d
-                WHERE
-                    d.userId = ";
 
-    public function getList($type, $userId)
+    public function createFindOneByIdQuery(int $id, int $userId)
     {
-        $where = "";
-        
-        switch($type)
-        {
-            case 'invoices':
-                $where = "AND d.type = 'FV'";
-                break;
-            case 'bills':
-                $where = "AND d.type = 'Rachunek'";
-                break;
-        }
-        return $this->getEntityManager()
-        ->createQuery($this->_defaultQuery.$userId.$where)
-        ->getArrayResult();
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Document d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
     }
 
-    public function findById($id, $userId)
+    public function createFindByConsumerIdQuery(int $id, int $userId)
     {
-        return $this->getEntityManager()
-        ->createQuery("SELECT
-                    d
-                FROM
-                    ApiBundle:Document d
-                WHERE
-                    d.userId = $userId
-                AND
-                    d.id = $id"
-        )
-        ->getArrayResult();
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Document d
+            WHERE d.consumerId = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindByTypeQuery($type, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Document d
+            WHERE d.type = :type
+            AND d.userId = :userId
+            "
+        );
+        if($type=='bills')
+            $type="Rachunek";
+        else if($type=='invoices')
+            $type="FV";
+        else
+            $type="";
+
+        $query->setParameter('type', $type);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindAllQuery(int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Document d
+            WHERE d.userId = :userId
+            "
+        );
+
+        $query->setParameter('userId', $userId);
+
+        return $query;
     }
 }

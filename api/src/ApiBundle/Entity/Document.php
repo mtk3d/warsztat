@@ -27,8 +27,6 @@ class Document
      * @var int
      *
      * @ORM\Column(name="user_id", type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
      * @Assert\Type("integer")
      */
     private $userId;
@@ -39,7 +37,7 @@ class Document
      * @ORM\Column(name="consumer_id", type="integer")
      * @Assert\NotBlank()
      * @Assert\NotNull()
-     * @Assert\Type("integer")
+     * @Assert\Type("digit")
      */
     private $consumerId;
 
@@ -101,8 +99,7 @@ class Document
      * @var bool
      *
      * @ORM\Column(name="paid", type="boolean")
-     * @Assert\NotBlank()
-     * @Assert\Type("bool")
+     * @Assert\Type("boolean")
      */
     private $paid;
 
@@ -117,6 +114,7 @@ class Document
      * @var string
      *
      * @ORM\Column(name="bank_account", type="string", length=255, nullable=true, unique=true)
+     * @Assert\Type("digit")
      */
     private $bankAccount;
 
@@ -132,7 +130,7 @@ class Document
      *
      * @ORM\Column(name="vat", type="float")
      * @Assert\NotBlank()
-     * @Assert\Type("float")
+     * @Assert\Type("digit")
      */
     private $vat;
 
@@ -141,7 +139,7 @@ class Document
      *
      * @ORM\Column(name="netto", type="float")
      * @Assert\NotBlank()
-     * @Assert\Type("float")
+     * @Assert\Type("digit")
      */
     private $netto;
 
@@ -150,7 +148,7 @@ class Document
      *
      * @ORM\Column(name="brutto", type="float")
      * @Assert\NotBlank()
-     * @Assert\Type("float")
+     * @Assert\Type("digit")
      */
     private $brutto;
 
@@ -159,7 +157,7 @@ class Document
      *
      * @ORM\Column(name="vat_sum", type="float")
      * @Assert\NotBlank()
-     * @Assert\Type("float")
+     * @Assert\Type("digit")
      */
     private $vatSum;
 
@@ -174,8 +172,6 @@ class Document
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
      * @Assert\DateTime()
      */
     private $createdAt;
@@ -184,8 +180,6 @@ class Document
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
      * @Assert\DateTime()
      */
     private $updatedAt;

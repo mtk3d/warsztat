@@ -6,6 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class DocumentType extends AbstractType
 {
@@ -19,10 +22,10 @@ class DocumentType extends AbstractType
             ->add('consumerId', TextType::class)
             ->add('type', TextType::class)
             ->add('number', TextType::class)
-            ->add('date', TextType::class)
-            ->add('dateOfPayment', TextType::class)
+            ->add('date', DateTimeType::class, ['widget' => 'single_text'])
+            ->add('dateOfPayment', DateTimeType::class, ['widget' => 'single_text'])
             ->add('paymentMethod', TextType::class)
-            ->add('paid', TextType::class)
+            ->add('paid', CheckboxType::class)
             ->add('bank', TextType::class)
             ->add('bankAccount', TextType::class)
             ->add('place', TextType::class)
@@ -30,7 +33,7 @@ class DocumentType extends AbstractType
             ->add('netto', TextType::class)
             ->add('brutto', TextType::class)
             ->add('vatSum', TextType::class)
-            ->add('notes', TextType::class)
+            ->add('notes', TextareaType::class)
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
@@ -41,6 +44,6 @@ class DocumentType extends AbstractType
     }
     public function getName()
     {
-        return 'blog_post';
+        return 'document';
     }
 }
