@@ -2,125 +2,30 @@
 
 namespace ApiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use ApiBundle\Entity\Document;
-use ApiBundle\Form\Type\DocumentType;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\View\RouteRedirectView;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Routing\ClassResourceInterface;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
-* @Route("/api/document")
-*/
-class DocumentController extends Controller
+ * Class BlogPostsController
+ * @package AppBundle\Controller
+ *
+ * @RouteResource("Document")
+ */
+class DocumentController extends FOSRestController implements ClassResourceInterface
 {
-    /**
-     * @Route("/list/{type}")
-     * @Route("/")
-     * @Method({"GET"})
-     */
-    public function documentListAction($type = 'all')
+    public function getAction(int $id)
     {
-        $username = $this->get('security.token_storage')->getToken()->getUsername();
-        $userId = $this->getDoctrine()->getRepository('ApiBundle:User')->getId($username);
-
-        $documents = $this->getDoctrine()
-            ->getRepository('ApiBundle:Document')
-            ->getList($type, $userId);
-
-        if(empty($documents))
-        {
-            $documents = ["message" => "Not found $type documents"];
-        }
-
-        $response = new JsonResponse();
-        return $response->setData($documents);
+        return $this->getDoctrine()->getRepository('ApiBundle:Document')->find($id);
     }
-
-    /**
-     * @Route("/{id}")
-     * @Method({"GET"})
-     */
-    public function documentAction($id)
-    {
-        $username = $this->get('security.token_storage')->getToken()->getUsername();
-        $userId = $this->getDoctrine()->getRepository('ApiBundle:User')->getId($username);
-
-        $document = $this->getDoctrine()
-            ->getRepository('ApiBundle:Document')
-            ->findById($id, $userId);
-
-        $documentPositions = $this->getDoctrine()
-            ->getRepository('ApiBundle:DocumentPosition')
-            ->findByDocumentId($id);
-        if(empty($document))
-        {
-            $data = ["message" => "Document not found"];
-        }else{
-            $data = [
-                "document" => $document,
-                "positions" => $documentPositions
-            ];
-        }
-        $response = new JsonResponse();
-        return $response->setData($data);
-    }
-
-    /**
-     * @Route("")
-     * @Method({"POST"})
-     */
-    public function documentStoreAction(Request $request)
-    {
-        $form = $this->createForm(DocumentType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
-        $form->submit($request->request->all());
-
-        $content = $request->getContent();
-
-        if (!$form->isValid()) {
-            return $form;
-        }
-
-        $document = $form->getData();
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($document);
-        $em->flush();
-
-        $routeOptions = [
-            'id' => $document->getId(),
-        ];
-
-        return $this->routeRedirectView('document', $routeOptions, Response::HTTP_CREATED);
-    }
-
-    /**
-     * @Route("/{id}")
-     * @Method({"PUT", "PATCH"})
-     */
-    public function documentUpdateAction($id)
-    {
-        $data = ["message" => "documentUpdate"];
-        
-        $response = new JsonResponse();
-        return $response->setData($data);
-    }
-
-    /**
-     * @Route("/{id}")
-     * @Method({"DELETE"})
-     */
-    public function documentDeleteAction($id)
-    {
-        $data = ["message" => "documentDelete"];
-        
-        $response = new JsonResponse();
-        return $response->setData($data);
-    }
-
 }

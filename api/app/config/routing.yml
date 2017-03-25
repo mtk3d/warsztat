@@ -1,11 +1,15 @@
-api:
-    resource: "@ApiBundle/Controller/"
-    type:     annotation
-    prefix:   /
+api_login_check:
+   path: /api/login_check
 
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-    
-api_login_check:
-    path: /api/login_check
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix: "/doc"
+
+api:
+    type: rest
+    prefix: /api
+    resource: "routing_api.yml"
