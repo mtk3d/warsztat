@@ -136,8 +136,6 @@ class Document
      * @var float
      *
      * @ORM\Column(name="netto", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("digit")
      */
     private $netto;
 
@@ -145,8 +143,6 @@ class Document
      * @var float
      *
      * @ORM\Column(name="brutto", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("digit")
      */
     private $brutto;
 
@@ -154,8 +150,6 @@ class Document
      * @var string
      *
      * @ORM\Column(name="vat_sum", type="float")
-     * @Assert\NotBlank()
-     * @Assert\Type("digit")
      */
     private $vatSum;
 

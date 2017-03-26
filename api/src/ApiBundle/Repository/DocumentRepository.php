@@ -38,7 +38,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             "
         );
 
-        $query->setParameter('id', $consumerId);
+        $query->setParameter('consumerId', $consumerId);
         $query->setParameter('userId', $userId);
 
         return $query;
@@ -96,7 +96,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
 
         $query->setParameter('userId', $userId);
         $query->setParameter('type', $type);
-        $query->setMaxResults(1);
+                                           $query->setMaxResults(1);
 
         return $query;
     }

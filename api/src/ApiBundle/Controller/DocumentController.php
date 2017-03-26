@@ -41,8 +41,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
     public function cgetAction()
     {
-        $documents = $this->getDocumentRepository()->createFindAllQuery($this->getUserId())->getResult();
-        if ($documents === null) {
+        $documents = $this->getDocumentRepository()
+            ->createFindAllQuery($this->getUserId())
+            ->getResult();
+
+        if($documents == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $documents;
@@ -50,8 +53,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
     public function getListAction($type)
     {
-        $document = $this->getDocumentRepository()->createFindByTypeQuery($type, $this->getUserId())->getResult();
-        if ($document === null) {
+        $document = $this->getDocumentRepository()
+            ->createFindByTypeQuery($type, $this->getUserId())
+            ->getResult();
+
+        if($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $document;
@@ -59,8 +65,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
     public function getConsumerAction(int $consumerId)
     {
-        $document = $this->getDocumentRepository()->createFindByConsumerIdQuery($consumerId, $this->getUserId())->getResult();
-        if ($document === null) {
+        $document = $this->getDocumentRepository()
+            ->createFindByConsumerIdQuery($consumerId, $this->getUserId())
+            ->getResult();
+
+        if ($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $document;
@@ -68,8 +77,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
     public function getAction(int $id)
     {
-        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
-        if ($document === null) {
+        $document = $this->getDocumentRepository()
+            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->getOneOrNullResult();
+
+        if($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $document;
@@ -113,12 +125,15 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     public function putAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
-        $document->setUpdatedAt($dateTime);
+        $document = $this->getDocumentRepository()
+            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->getOneOrNullResult();
 
-        if ($document === null) {
+        if ($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
+
+        $document->setUpdatedAt($dateTime);
 
         $form = $this->createForm(DocumentType::class, $document, [
             'csrf_protection' => false,
@@ -144,12 +159,15 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     public function patchAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
-        $document->setUpdatedAt($dateTime);
+        $document = $this->getDocumentRepository()
+            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->getOneOrNullResult();
 
-        if ($document === null) {
+        if ($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
+
+        $document->setUpdatedAt($dateTime);
 
         $form = $this->createForm(DocumentType::class, $document, [
             'csrf_protection' => false,
@@ -174,9 +192,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
     public function deleteAction(int $id)
     {
-        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
+        $document = $this->getDocumentRepository()
+            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->getOneOrNullResult();
 
-        if ($document === null) {
+        if ($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
