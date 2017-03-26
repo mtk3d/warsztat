@@ -32,7 +32,11 @@ class DocumentNumberGenerator
         }else{
             $number = explode(" ", $document[0]['number']);
             $number = explode("/", $number[1]);
-            $number = intval($number[0])+1;
+            
+            if($number[2]==$month)
+                $number = intval($number[0])+1;
+            else
+                $number = '001';
 
             if($number<10)
                 $number = '00'.$number;
