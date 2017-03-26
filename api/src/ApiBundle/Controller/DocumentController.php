@@ -10,15 +10,13 @@ use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
- * Class BlogPostsController
+ * Class DocumentController
  * @package AppBundle\Controller
  *
  * @RouteResource("Document")
@@ -31,23 +29,23 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         return $this->get('crv.doctrine_entity_repository.document');
     }
 
-    private function getDocumentPositionRepository()
-    {
-        return $this->get('crv.doctrine_entity_repository.document_position');
-    }
-
     private function getUserId()
     {
         return $this->getUser()->getId();
     }
 
+    private function generateDocumentNumber($type)
+    {
+        return $this->get('utils.document_number.generate')->getNextNumber($this->getUserId(), $type);
+    }
+
     public function cgetAction()
     {
-        $document = $this->getDocumentRepository()->createFindAllQuery($this->getUserId())->getResult();
-        if ($document === null) {
+        $documents = $this->getDocumentRepository()->createFindAllQuery($this->getUserId())->getResult();
+        if ($documents === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $document;
+        return $documents;
     }
 
     public function getListAction($type)
@@ -59,9 +57,9 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         return $document;
     }
 
-    public function getConsumerAction(int $id)
+    public function getConsumerAction(int $consumerId)
     {
-        $document = $this->getDocumentRepository()->createFindByConsumerIdQuery($id, $this->getUserId())->getResult();
+        $document = $this->getDocumentRepository()->createFindByConsumerIdQuery($consumerId, $this->getUserId())->getResult();
         if ($document === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
@@ -81,9 +79,6 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     {
         $dateTime = new \DateTime('now');
         $document = new Document();
-        $document->setUserId($this->getUserId());
-        $document->setCreatedAt($dateTime);
-        $document->setUpdatedAt($dateTime);
 
         $form = $this->createForm(DocumentType::class, $document, [
             'csrf_protection' => false,
@@ -95,6 +90,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         if (!$form->isValid()) {
             return $form;
         }
+
+        $document->setUserId($this->getUserId());
+        $document->setNumber($this->generateDocumentNumber($document->getType()));
+        $document->setCreatedAt($dateTime);
+        $document->setUpdatedAt($dateTime);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($document);
@@ -110,7 +110,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     public function putAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $document = $this->getDocumentRepository()->find($id);
+        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
         $document->setUpdatedAt($dateTime);
 
         if ($document === null) {
@@ -141,7 +141,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     public function patchAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $document = $this->getDocumentRepository()->find($id);
+        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
         $document->setUpdatedAt($dateTime);
 
         if ($document === null) {
@@ -171,7 +171,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
     public function deleteAction(int $id)
     {
-        $document = $this->getDocumentRepository()->find($id);
+        $document = $this->getDocumentRepository()->createFindOneByIdQuery($id, $this->getUserId())->getSingleResult();
 
         if ($document === null) {
             return new View(null, Response::HTTP_NOT_FOUND);

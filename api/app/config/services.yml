@@ -18,3 +18,7 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - ApiBundle\Entity\DocumentPosition
+
+    utils.document_number.generate:
+        class: ApiBundle\Utils\DocumentNumberGenerator
+        arguments: ['@service_container']

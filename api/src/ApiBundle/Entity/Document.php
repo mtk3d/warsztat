@@ -55,10 +55,8 @@ class Document
      * @var string
      *
      * @ORM\Column(name="number", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
      * @Assert\Regex(
-     *     pattern="/^.{1,2}[[:space:]][0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]$/",
+     *     pattern="/^.{1,2}[[:space:]][0-9][0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]$/",
      *     match=true,
      *     message="Wrong number format"
      * )

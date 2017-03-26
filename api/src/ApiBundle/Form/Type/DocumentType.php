@@ -21,7 +21,6 @@ class DocumentType extends AbstractType
         $builder
             ->add('consumerId', TextType::class)
             ->add('type', TextType::class)
-            ->add('number', TextType::class)
             ->add('date', DateTimeType::class, ['widget' => 'single_text'])
             ->add('dateOfPayment', DateTimeType::class, ['widget' => 'single_text'])
             ->add('paymentMethod', TextType::class)

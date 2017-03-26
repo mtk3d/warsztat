@@ -10,7 +10,6 @@ namespace ApiBundle\Repository;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
-
     public function createFindOneByIdQuery(int $id, int $userId)
     {
         $query = $this->_em->createQuery(
@@ -28,18 +27,18 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindByConsumerIdQuery(int $id, int $userId)
+    public function createFindByConsumerIdQuery(int $consumerId, int $userId)
     {
         $query = $this->_em->createQuery(
             "
             SELECT d
             FROM ApiBundle:Document d
-            WHERE d.consumerId = :id
+            WHERE d.consumerId = :consumerId
             AND d.userId = :userId
             "
         );
 
-        $query->setParameter('id', $id);
+        $query->setParameter('id', $consumerId);
         $query->setParameter('userId', $userId);
 
         return $query;
@@ -79,6 +78,25 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         );
 
         $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindLastDocumentNumber(int $userId, $type)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.number
+            FROM ApiBundle:Document d
+            WHERE d.userId = :userId
+            AND d.type = :type
+            ORDER BY d.number DESC
+            "
+        );
+
+        $query->setParameter('userId', $userId);
+        $query->setParameter('type', $type);
+        $query->setMaxResults(1);
 
         return $query;
     }
