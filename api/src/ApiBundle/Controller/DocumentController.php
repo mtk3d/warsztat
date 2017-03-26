@@ -45,7 +45,6 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         if ($documents === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        $documents = $this->generateDocumentNumber('Rachunek');
         return $documents;
     }
 
@@ -94,6 +93,9 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
         $document->setUserId($this->getUserId());
         $document->setNumber($this->generateDocumentNumber($document->getType()));
+        $document->setNetto('0');
+        $document->setBrutto('0');
+        $document->setVatSum('0');
         $document->setCreatedAt($dateTime);
         $document->setUpdatedAt($dateTime);
 

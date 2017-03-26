@@ -29,9 +29,6 @@ class DocumentType extends AbstractType
             ->add('bankAccount', TextType::class)
             ->add('place', TextType::class)
             ->add('vat', TextType::class)
-            ->add('netto', TextType::class)
-            ->add('brutto', TextType::class)
-            ->add('vatSum', TextType::class)
             ->add('notes', TextareaType::class)
         ;
     }
