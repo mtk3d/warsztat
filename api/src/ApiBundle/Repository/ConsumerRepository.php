@@ -10,4 +10,36 @@ namespace ApiBundle\Repository;
  */
 class ConsumerRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createFindOneByIdQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Consumer d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindAllQuery(int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Consumer d
+            WHERE d.userId = :userId
+            "
+        );
+
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
 }

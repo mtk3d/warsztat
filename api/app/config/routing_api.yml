@@ -9,3 +9,11 @@ vehicle:
 tire:
     type: rest
     resource: ApiBundle\Controller\TireController
+
+store:
+    type: rest
+    resource: ApiBundle\Controller\StoreController
+
+consumer:
+    type: rest
+    resource: ApiBundle\Controller\ConsumerController

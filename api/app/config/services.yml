@@ -31,6 +31,18 @@ services:
         arguments:
             - ApiBundle\Entity\Tire
 
+    crv.doctrine_entity_repository.store:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\Store
+
+    crv.doctrine_entity_repository.consumer:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\Consumer
+
     utils.document_number.generate:
         class: ApiBundle\Utils\DocumentNumberGenerator
         arguments: ['@service_container']

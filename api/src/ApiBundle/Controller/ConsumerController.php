@@ -2,8 +2,8 @@
 
 namespace ApiBundle\Controller;
 
-use ApiBundle\Entity\Tire;
-use ApiBundle\Form\Type\TireType;
+use ApiBundle\Entity\Consumer;
+use ApiBundle\Form\Type\ConsumerType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\View\RouteRedirectView;
@@ -16,17 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class TireController
+ * Class ConsumerController
  * @package AppBundle\Controller
  *
- * @RouteResource("Tire")
+ * @RouteResource("Consumer")
  */
-class TireController extends FOSRestController implements ClassResourceInterface
+class ConsumerController extends FOSRestController implements ClassResourceInterface
 {
-    
-    private function getTireRepository()
+
+    private function getConsumerRepository()
     {
-        return $this->get('crv.doctrine_entity_repository.tire');
+        return $this->get('crv.doctrine_entity_repository.consumer');
     }
 
     private function getUserId()
@@ -36,46 +36,34 @@ class TireController extends FOSRestController implements ClassResourceInterface
 
     public function cgetAction()
     {
-        $tires = $this->getTireRepository()
+        $consumers = $this->getConsumerRepository()
             ->createFindAllQuery($this->getUserId())
             ->getResult();
 
-        if($tires == null) {
+        if($consumers == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $tires;
-    }
-
-    public function getConsumerAction(int $consumerId)
-    {
-        $tire = $this->getTireRepository()
-            ->createFindByConsumerIdQuery($consumerId, $this->getUserId())
-            ->getResult();
-
-        if ($tire == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-        return $tire;
+        return $consumers;
     }
 
     public function getAction(int $id)
     {
-        $tire = $this->getTireRepository()
+        $consumer = $this->getConsumerRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if($tire == null) {
+        if($consumer == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $tire;
+        return $consumer;
     }
 
     public function postAction(Request $request)
     {
         $dateTime = new \DateTime('now');
-        $tire = new Tire();
+        $consumer = new Consumer();
 
-        $form = $this->createForm(tireType::class, $tire, [
+        $form = $this->createForm(ConsumerType::class, $consumer, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -86,35 +74,35 @@ class TireController extends FOSRestController implements ClassResourceInterface
             return $form;
         }
 
-        $tire->setUserId($this->getUserId());
-        $tire->setCreatedAt($dateTime);
-        $tire->setUpdatedAt($dateTime);
+        $consumer->setUserId($this->getUserId());
+        $consumer->setCreatedAt($dateTime);
+        $consumer->setUpdatedAt($dateTime);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($tire);
+        $em->persist($consumer);
         $em->flush();
 
         $routeOptions = [
-            'id' => $tire->getId(),
+            'id' => $consumer->getId(),
         ];
 
-        return $this->routeRedirectView('get_tire', $routeOptions, Response::HTTP_CREATED);
+        return $this->routeRedirectView('get_consumer', $routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $tire = $this->getTireRepository()
+        $consumer = $this->getConsumerRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($tire == null) {
+        if ($consumer == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $tire->setUpdatedAt($dateTime);
+        $consumer->setUpdatedAt($dateTime);
 
-        $form = $this->createForm(tireType::class, $tire, [
+        $form = $this->createForm(ConsumerType::class, $consumer, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -129,26 +117,26 @@ class TireController extends FOSRestController implements ClassResourceInterface
         $em->flush();
 
         $routeOptions = [
-            'id' => $tire->getId(),
+            'id' => $consumer->getId(),
         ];
 
-        return $this->routeRedirectView('get_tire', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_consumer', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function patchAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $tire = $this->getTireRepository()
+        $consumer = $this->getConsumerRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($tire == null) {
+        if ($consumer == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $tire->setUpdatedAt($dateTime);
+        $consumer->setUpdatedAt($dateTime);
 
-        $form = $this->createForm(tireType::class, $tire, [
+        $form = $this->createForm(ConsumerType::class, $consumer, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -163,24 +151,24 @@ class TireController extends FOSRestController implements ClassResourceInterface
         $em->flush();
 
         $routeOptions = [
-            'id' => $tire->getId(),
+            'id' => $consumer->getId(),
         ];
 
-        return $this->routeRedirectView('get_tire', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_consumer', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function deleteAction(int $id)
     {
-        $tire = $this->getTireRepository()
+        $consumer = $this->getConsumerRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($tire == null) {
+        if ($consumer == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($tire);
+        $em->remove($consumer);
         $em->flush();
 
         return new View(null, Response::HTTP_NO_CONTENT);

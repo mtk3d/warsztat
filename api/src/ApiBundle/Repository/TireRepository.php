@@ -10,7 +10,7 @@ namespace ApiBundle\Repository;
  */
 class TireRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function createFindOneByIdQuery(int $id, int $userId)
+    public function createFindOneByIdQuery(int $id, int $userId)
     {
         $query = $this->_em->createQuery(
             "
