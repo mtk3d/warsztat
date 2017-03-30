@@ -29,13 +29,6 @@ class CarRent
     private $userId;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="consumer_id", type="integer", nullable=true)
-     */
-    private $consumerId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="registration_number", type="string", length=255)
@@ -103,30 +96,6 @@ class CarRent
     public function getUserId()
     {
         return $this->userId;
-    }
-
-    /**
-     * Set consumerId
-     *
-     * @param integer $consumerId
-     *
-     * @return CarRent
-     */
-    public function setConsumerId($consumerId)
-    {
-        $this->consumerId = $consumerId;
-
-        return $this;
-    }
-
-    /**
-     * Get consumerId
-     *
-     * @return int
-     */
-    public function getConsumerId()
-    {
-        return $this->consumerId;
     }
 
     /**

@@ -62,6 +62,18 @@ services:
         arguments:
             - ApiBundle\Entity\User
 
+    crv.doctrine_entity_repository.car_rent:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\CarRent
+
+    crv.doctrine_entity_repository.car_rent_history:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\CarRentHistory
+
     utils.document_number.generate:
         class: ApiBundle\Utils\DocumentNumberGenerator
         arguments: ['@service_container']

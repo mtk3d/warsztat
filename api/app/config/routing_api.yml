@@ -29,3 +29,11 @@ employee:
 user:
     type: rest
     resource: ApiBundle\Controller\UserController
+
+car_rent:
+    type: rest
+    resource: ApiBundle\Controller\CarRentController
+
+car_rent_history:
+    type: rest
+    resource: ApiBundle\Controller\CarRentHistoryController
