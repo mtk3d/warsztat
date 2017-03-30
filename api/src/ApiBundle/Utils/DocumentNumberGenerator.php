@@ -33,7 +33,7 @@ class DocumentNumberGenerator
             $number = explode(" ", $document[0]['number']);
             $number = explode("/", $number[1]);
 
-            if($number[1]==$month) {
+            if($number[1]==$month && $number[2]==$year) {
                 $number = intval($number[0])+1;
 
                 if($number<10)
