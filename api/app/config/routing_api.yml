@@ -2,6 +2,10 @@ document:
     type: rest
     resource: ApiBundle\Controller\DocumentController
 
+document_position:
+    type: rest
+    resource: ApiBundle\Controller\DocumentPositionController
+
 vehicle:
     type: rest
     resource: ApiBundle\Controller\VehicleController

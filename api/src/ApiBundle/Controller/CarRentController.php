@@ -96,7 +96,7 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(CarRentType::class, $carRent, [
+        $form = $this->createForm(CarRentEditType::class, $carRent, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -127,7 +127,7 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(CarRentType::class, $carRent, [
+        $form = $this->createForm(CarRentEditType::class, $carRent, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);

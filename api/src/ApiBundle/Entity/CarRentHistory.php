@@ -178,27 +178,27 @@ class CarRentHistory
     }
 
     /**
-     * Set gas
+     * Set courseDifference
      *
-     * @param string $gas
+     * @param string $courseDifference
      *
      * @return CarRentHistory
      */
-    public function setCourseDifference($gas)
+    public function setCourseDifference($courseDifference)
     {
-        $this->gas = $gas;
+        $this->courseDifference = $courseDifference;
 
         return $this;
     }
 
     /**
-     * Get gas
+     * Get courseDifference
      *
      * @return string
      */
     public function getCourseDifference()
     {
-        return $this->gas;
+        return $this->courseDifference;
     }
 
     /**

@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class CarRentHistoryType extends AbstractType
+class DocumentPositionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,19 +19,25 @@ class CarRentHistoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('carId', TextType::class)
-            ->add('consumerId', TextType::class)
-            ->add('course', TextType::class)
+            ->add('documentId', TextType::class)
+            ->add('service', TextType::class)
+            ->add('itemId', TextType::class)
+            ->add('name', TextType::class)
+            ->add('netto', TextType::class)
+            ->add('brutto', TextType::class)
+            ->add('vat', TextType::class)
+            ->add('vatSum', TextType::class)
+            ->add('quantity', TextType::class)
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'ApiBundle\Entity\CarRentHistory',
+            'data_class' => 'ApiBundle\Entity\DocumentPosition',
         ]);
     }
     public function getName()
     {
-        return 'car_rent_history';
+        return 'document_position';
     }
 }

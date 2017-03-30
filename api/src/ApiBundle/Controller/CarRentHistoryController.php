@@ -90,7 +90,7 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
         }
 
         $course = $request->request->get('course');
-        $courseDifference = intval($request->request->get('course'))-intval($carRent->getCourse());
+        $courseDifference = intval($course)-intval($carRent->getCourse());
 
         $carRent->setCourse($course);
         $carRent->setLoan(true);
@@ -117,7 +117,17 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
     public function deleteAction(int $id)
     {
         $carRentHistory = $this->getCarRentHistoryRepository()
-            ->createFindLastQuery($this->getUserId())
+            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->getOneOrNullResult();
+
+        if ($carRentHistory == null) {
+            return new View(null, Response::HTTP_NOT_FOUND);
+        }
+
+        $carId = $carRentHistory->getCarId();
+
+        $carRentHistory = $this->getCarRentHistoryRepository()
+            ->createFindLastQuery($carId, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($carRentHistory == null || $carRentHistory->getId()!=$id) {
@@ -127,7 +137,7 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
         $id = $carRentHistory->getCarId();
 
         $carRent = $this->getCarRentRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createFindOneByIdQuery($carId, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($carRent == null) {

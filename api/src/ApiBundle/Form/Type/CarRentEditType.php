@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class CarRentHistoryType extends AbstractType
+class CarRentEditType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,19 +19,19 @@ class CarRentHistoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('carId', TextType::class)
-            ->add('consumerId', TextType::class)
-            ->add('course', TextType::class)
+            ->add('registrationNumber', TextType::class)
+            ->add('loan', TextType::class)
+            ->add('notes', TextareaType::class)
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'ApiBundle\Entity\CarRentHistory',
+            'data_class' => 'ApiBundle\Entity\CarRent',
         ]);
     }
     public function getName()
     {
-        return 'car_rent_history';
+        return 'car_rent_edit';
     }
 }

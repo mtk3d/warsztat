@@ -44,7 +44,7 @@ class CarRentHistoryRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindLastQuery(int $userId)
+    public function createFindLastQuery(int $carId, int $userId)
     {
         $query = $this->_em->createQuery(
             "
