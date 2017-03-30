@@ -1,3 +1,11 @@
 document:
     type: rest
     resource: ApiBundle\Controller\DocumentController
+
+vehicle:
+    type: rest
+    resource: ApiBundle\Controller\VehicleController
+
+tire:
+    type: rest
+    resource: ApiBundle\Controller\TireController
