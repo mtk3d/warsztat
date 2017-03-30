@@ -21,7 +21,6 @@ class CarRentType extends AbstractType
         $builder
             ->add('registrationNumber', TextType::class)
             ->add('course', TextType::class)
-            ->add('gas', TextType::class)
             ->add('loan', TextType::class)
             ->add('notes', TextareaType::class)
         ;

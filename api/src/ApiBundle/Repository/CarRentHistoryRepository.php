@@ -27,17 +27,38 @@ class CarRentHistoryRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindAllQuery(int $userId)
+    public function createFindByRentIdQuery(int $carId, int $userId)
     {
         $query = $this->_em->createQuery(
             "
             SELECT d
             FROM ApiBundle:CarRentHistory d
             WHERE d.userId = :userId
+            AND d.carId = :carId
             "
         );
 
         $query->setParameter('userId', $userId);
+        $query->setParameter('carId', $carId);
+
+        return $query;
+    }
+
+    public function createFindLastQuery(int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:CarRentHistory d
+            WHERE d.userId = :userId
+            AND d.carId = :carId
+            ORDER BY d.id DESC
+            "
+        );
+
+        $query->setParameter('userId', $userId);
+        $query->setParameter('carId', $carId);
+        $query->setMaxResults(1);
 
         return $query;
     }

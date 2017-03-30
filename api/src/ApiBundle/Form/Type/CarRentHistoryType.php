@@ -22,7 +22,7 @@ class CarRentHistoryType extends AbstractType
             ->add('carId', TextType::class)
             ->add('consumerId', TextType::class)
             ->add('course', TextType::class)
-            ->add('gas', TextType::class)
+            ->add('courseDifference', TextType::class)
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

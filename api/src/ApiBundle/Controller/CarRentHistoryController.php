@@ -39,16 +39,16 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
         return $this->getUser()->getId();
     }
 
-    public function cgetAction()
+    public function getRentAction(int $carId)
     {
-        $carRentHistorys = $this->getCarRentHistoryRepository()
-            ->createFindAllQuery($this->getUserId())
+        $carRentHistories = $this->getCarRentHistoryRepository()
+            ->createFindByRentIdQuery($carId, $this->getUserId())
             ->getResult();
 
-        if($carRentHistorys == null) {
+        if($carRentHistories == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $carRentHistorys;
+        return $carRentHistories;
     }
 
     public function getAction(int $id)
@@ -89,14 +89,14 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
             return new View(null, Response::HTTP_NOT_MODIFIED);
         }
 
-        $course = intval($request->request->get('course'))+intval($carRent->getCourse());
-        $gas = $request->request->get('gas');
+        $course = $request->request->get('course');
+        $courseDifference = intval($request->request->get('course'))-intval($carRent->getCourse());
 
         $carRent->setCourse($course);
-        $carRent->setGas($gas);
         $carRent->setLoan(true);
 
         $carRentHistory->setUserId($this->getUserId());
+        $carRentHistory->setCourseDifference($courseDifference);
         $carRentHistory->setCreatedAt($dateTime);
         $carRentHistory->setUpdatedAt($dateTime);
 
@@ -114,86 +114,35 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
         return $this->routeRedirectView('get_carrenthistory', $routeOptions, Response::HTTP_CREATED);
     }
 
-    public function putAction(Request $request, int $id)
-    {
-        $dateTime = new \DateTime('now');
-        $carRentHistory = $this->getCarRentHistoryRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if ($carRentHistory == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $carRentHistory->setUpdatedAt($dateTime);
-
-        $form = $this->createForm(CarRentHistoryType::class, $carRentHistory, [
-            'csrf_protection' => false,
-            'allow_extra_fields' => true
-        ]);
-
-        $form->submit($request->request->all());
-
-        if (!$form->isValid()) {
-            return $form;
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        $routeOptions = [
-            'id' => $carRentHistory->getId(),
-        ];
-
-        return $this->routeRedirectView('get_carrenthistory', $routeOptions, Response::HTTP_NO_CONTENT);
-    }
-
-    public function patchAction(Request $request, int $id)
-    {
-        $dateTime = new \DateTime('now');
-        $carRentHistory = $this->getCarRentHistoryRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if ($carRentHistory == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $carRentHistory->setUpdatedAt($dateTime);
-
-        $form = $this->createForm(CarRentHistoryType::class, $carRentHistory, [
-            'csrf_protection' => false,
-            'allow_extra_fields' => true
-        ]);
-
-        $form->submit($request->request->all(), false);
-
-        if (!$form->isValid()) {
-            return $form;
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        $routeOptions = [
-            'id' => $carRentHistory->getId(),
-        ];
-
-        return $this->routeRedirectView('get_carrenthistory', $routeOptions, Response::HTTP_NO_CONTENT);
-    }
-
     public function deleteAction(int $id)
     {
         $carRentHistory = $this->getCarRentHistoryRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createFindLastQuery($this->getUserId())
             ->getOneOrNullResult();
 
-        if ($carRentHistory == null) {
+        if ($carRentHistory == null || $carRentHistory->getId()!=$id) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
+        $id = $carRentHistory->getCarId();
+
+        $carRent = $this->getCarRentRepository()
+            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->getOneOrNullResult();
+
+        if ($carRent == null) {
+            return new View(null, Response::HTTP_NOT_MODIFIED);
+        }
+
+        $course = intval($carRent->getCourse())-intval($carRentHistory->getCourseDifference());
+
+        $carRent->setCourse($course);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($carRentHistory);
+        $em->flush();
+
+        $em->persist($carRent);
         $em->flush();
 
         return new View(null, Response::HTTP_NO_CONTENT);

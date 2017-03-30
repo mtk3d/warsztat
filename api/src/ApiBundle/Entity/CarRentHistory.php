@@ -52,9 +52,9 @@ class CarRentHistory
     /**
      * @var string
      *
-     * @ORM\Column(name="gas", type="string", length=255, nullable=true)
+     * @ORM\Column(name="course_difference", type="string", length=255, nullable=true)
      */
-    private $gas;
+    private $courseDifference;
 
     /**
      * @var \DateTime
@@ -184,7 +184,7 @@ class CarRentHistory
      *
      * @return CarRentHistory
      */
-    public function setGas($gas)
+    public function setCourseDifference($gas)
     {
         $this->gas = $gas;
 
@@ -196,7 +196,7 @@ class CarRentHistory
      *
      * @return string
      */
-    public function getGas()
+    public function getCourseDifference()
     {
         return $this->gas;
     }

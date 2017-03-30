@@ -43,13 +43,6 @@ class CarRent
     private $course;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="gas", type="string", length=255, nullable=true)
-     */
-    private $gas;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="loan", type="boolean")
@@ -144,30 +137,6 @@ class CarRent
     public function getCourse()
     {
         return $this->course;
-    }
-
-    /**
-     * Set gas
-     *
-     * @param string $gas
-     *
-     * @return CarRent
-     */
-    public function setGas($gas)
-    {
-        $this->gas = $gas;
-
-        return $this;
-    }
-
-    /**
-     * Get gas
-     *
-     * @return string
-     */
-    public function getGas()
-    {
-        return $this->gas;
     }
 
     /**
