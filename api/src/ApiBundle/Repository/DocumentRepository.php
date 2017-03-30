@@ -96,7 +96,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
 
         $query->setParameter('userId', $userId);
         $query->setParameter('type', $type);
-                                           $query->setMaxResults(1);
+        $query->setMaxResults(1);
 
         return $query;
     }
