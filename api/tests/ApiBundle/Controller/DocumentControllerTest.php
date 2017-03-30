@@ -47,4 +47,19 @@ class DefaultControllerTest extends WebTestCase
         $client = $this->createAuthenticatedClient();
         $client->request('GET', '/api/pages');
     }
+
+    public function testStoreName()
+    {
+        $json = '{"name":"FOO", "address":"fubar City", "nickname":"fubar"}';
+        $jsonDecode = json_decode($json, true);
+        $name = $jsonDecode['name'];
+        $post = $this->request('POST', '/api/documents', null, array(), array(), array(), $json);
+
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        $output= json_decode($this->client->getResponse()->getContent());
+
+        $this->assertEquals($name, $output->name, 'Name incorrect'); 
+
+    }
 }
