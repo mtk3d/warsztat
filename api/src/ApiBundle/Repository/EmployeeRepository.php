@@ -10,27 +10,35 @@ namespace ApiBundle\Repository;
  */
 class EmployeeRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getList()
+     public function createFindOneByIdQuery(int $id, int $userId)
     {
-        return $this->getEntityManager()
-            ->createQuery("
-                SELECT
-                    e
-                FROM
-                    ApiBundle:Employee e
-            ")
-            ->getArrayResult();
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Employee d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
     }
 
-    public function getById($id)
+    public function createFindAllQuery(int $userId)
     {
-        return $this->getEntityManager()
-            ->createQuery("
-                SELECT
-                    e
-                FROM
-                    ApiBundle:Employee e
-            ")
-            ->getArrayResult();
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Employee d
+            WHERE d.userId = :userId
+            "
+        );
+
+        $query->setParameter('userId', $userId);
+
+        return $query;
     }
 }

@@ -7,6 +7,7 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
     crv.doctrine_entity_repository.document:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
@@ -37,11 +38,29 @@ services:
         arguments:
             - ApiBundle\Entity\Store
 
+    crv.doctrine_entity_repository.service:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\Service
+
     crv.doctrine_entity_repository.consumer:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
             - ApiBundle\Entity\Consumer
+
+    crv.doctrine_entity_repository.employee:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\Employee
+
+    crv.doctrine_entity_repository.user:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\User
 
     utils.document_number.generate:
         class: ApiBundle\Utils\DocumentNumberGenerator

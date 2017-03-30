@@ -10,4 +10,33 @@ namespace ApiBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createFindOneByIdQuery(int $id)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT
+                u.username,
+                u.company,
+                u.name,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.street,
+                u.buildNumber,
+                u.apartmentNumber,
+                u.place,
+                u.postalCode,
+                u.post,
+                u.nip,
+                u.regon
+            FROM ApiBundle:User u
+            WHERE u.id = :id
+            "
+        );
+
+        $query->setParameter('id', $id);
+
+        return $query;
+    }
+    
 }
