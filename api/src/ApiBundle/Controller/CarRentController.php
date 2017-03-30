@@ -83,7 +83,7 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             'id' => $carRent->getId(),
         ];
 
-        return $this->routeRedirectView('get_car_rent', $routeOptions, Response::HTTP_CREATED);
+        return $this->routeRedirectView('get_carrent', $routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
@@ -114,7 +114,7 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             'id' => $carRent->getId(),
         ];
 
-        return $this->routeRedirectView('get_car_rent', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_carrent', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function patchAction(Request $request, int $id)
@@ -145,7 +145,7 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             'id' => $carRent->getId(),
         ];
 
-        return $this->routeRedirectView('get_car_rent', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_carrent', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function deleteAction(int $id)

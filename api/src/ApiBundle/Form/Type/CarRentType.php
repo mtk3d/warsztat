@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class ConsumerType extends AbstractType
+class CarRentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

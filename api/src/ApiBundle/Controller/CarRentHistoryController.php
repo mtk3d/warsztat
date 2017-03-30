@@ -81,9 +81,20 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
 
         $id = $request->request->get('carId');
 
-        $carRent = $this->getCarRentHistoryRepository()
+        $carRent = $this->getCarRentRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
+
+        if ($carRent == null) {
+            return new View(null, Response::HTTP_NOT_MODIFIED);
+        }
+
+        $course = intval($request->request->get('course'))+intval($carRent->getCourse());
+        $gas = $request->request->get('gas');
+
+        $carRent->setCourse($course);
+        $carRent->setGas($gas);
+        $carRent->setLoan(true);
 
         $carRentHistory->setUserId($this->getUserId());
         $carRentHistory->setCreatedAt($dateTime);
@@ -93,11 +104,14 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
         $em->persist($carRentHistory);
         $em->flush();
 
+        $em->persist($carRent);
+        $em->flush();
+
         $routeOptions = [
             'id' => $carRentHistory->getId(),
         ];
 
-        return $this->routeRedirectView('get_car_rent_history', $routeOptions, Response::HTTP_CREATED);
+        return $this->routeRedirectView('get_carrenthistory', $routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
@@ -131,7 +145,7 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
             'id' => $carRentHistory->getId(),
         ];
 
-        return $this->routeRedirectView('get_car_rent_history', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_carrenthistory', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function patchAction(Request $request, int $id)
@@ -165,7 +179,7 @@ class CarRentHistoryController extends FOSRestController implements ClassResourc
             'id' => $carRentHistory->getId(),
         ];
 
-        return $this->routeRedirectView('get_car_rent_history', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_carrenthistory', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function deleteAction(int $id)
