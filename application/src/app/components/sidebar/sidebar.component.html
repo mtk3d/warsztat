@@ -1,12 +1,12 @@
 
   <div class="ui visible inverted left vertical sidebar menu">
-  <div class="avatar-container item">
-        <div class="first-letter-circle">W</div>
-        <h2>Warsztat</h2>
+  <div class="avatar-container item" *ngIf="username">
+        <div class="first-letter-circle">{{firstLetter}}</div>
+        <h2>{{username}}</h2>
         <a class="ui secondary button" href="#">
           Ustawienia
         </a>
-        <a class="ui secondary button" href="#">
+        <a class="ui secondary button" [routerLink]="['/login']">
           Wyloguj
         </a>
   </div>

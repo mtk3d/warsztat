@@ -6,4 +6,8 @@ import { HttpModule } from '@angular/http';
   templateUrl: 'app.component.html',
   providers: [HttpModule]
 })
-export class AppComponent {}
+export class AppComponent {
+    constructor(){
+
+    }
+} 

@@ -41,11 +41,13 @@ import { OrdersComponent } from './components/orders/orders.component';
       },
       {
           path: 'documents',
-          component: DocumentsComponent
+          component: DocumentsComponent,
+          canActivate: [AuthGuard]
       },
       {
           path: 'orders',
-          component: OrdersComponent
+          component: OrdersComponent,
+          canActivate: [AuthGuard]
       },
       {
           path: 'login',

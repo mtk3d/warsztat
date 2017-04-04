@@ -1,3 +1,4 @@
+
  <div style="overflow: hidden">
 
 <div class="ui buttons" style="float: left; margin-right: 30px">
@@ -46,226 +47,24 @@
     <th>Klient</th>
   </tr></thead>
   <tbody>
-    <tr>
+    <tr *ngFor="let document of documents">
     <td class="collapsing">
         <div class="ui fitted checkbox">
           <input type="checkbox"> <label></label>
         </div>
       </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
+      <td><a href="#">{{ document.number }}</a></td>
+      <td>{{ document.type }}</td>
+      <td>{{ document.date | date: 'dd/MM/yyyy'  }}</td>
+      <td>{{ document.date_of_payment | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ document.payment_method }}</td>
+      <td><span *ngIf="document.paid">Tak</span><span *ngIf="!document.paid">Nie</span></td>
       <td>Jan Kowalski</td>
     </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td><a href="#">FV 03/01/2017</a></td>
-      <td>Faktura VAT</td>
-      <td>20.01.2017</td>
-      <td>29.01.2017</td>
-      <td>Gotówka</td>
-      <td>Tak</td>
-      <td>Jan Kowalski</td>
-    </tr>
-    
+
   </tbody>
   <tfoot>
     <tr><th colspan="8">
-    <!-- <div class="ui  blue labeled icon button">
-          <i class="pencil icon"></i> Edytuj
-        </div>
-        <div class="ui  yellow labeled icon button">
-          <i class="search icon"></i> Podgląd
-        </div> -->
         <div class="ui  red labeled icon button disabled">
           <i class="trash icon"></i> Usuń
         </div>

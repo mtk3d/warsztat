@@ -14,6 +14,7 @@ body {
             margin: 0 auto;
             font-weight: bold;
             cursor: default;
+            text-transform: uppercase;
         }
         .avatar-container{
             width: 100%;
