@@ -11,9 +11,11 @@ import { DocumentService } from './_services/document.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { AboutComponent } from './components/about/about.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { PageNotFoundComponent } from './not-found.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
@@ -22,9 +24,11 @@ import { OrdersComponent } from './components/orders/orders.component';
   declarations: [
     AppComponent,
     LoginComponent,
+    AboutComponent,
+    SettingsComponent,
     PageNotFoundComponent,
     SidebarComponent,
-    BreadcrumbsComponent,
+    BreadcrumbComponent,
     DocumentsComponent,
     OrdersComponent
   ],
@@ -45,9 +49,22 @@ import { OrdersComponent } from './components/orders/orders.component';
           canActivate: [AuthGuard]
       },
       {
+          path: 'newdocument',
+          component: DocumentsComponent,
+          canActivate: [AuthGuard]
+      },
+      {
           path: 'orders',
           component: OrdersComponent,
           canActivate: [AuthGuard]
+      },
+      {
+          path: 'settings',
+          component: SettingsComponent
+      },
+      {
+          path: 'about',
+          component: AboutComponent
       },
       {
           path: 'login',

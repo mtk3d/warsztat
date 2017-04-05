@@ -1,6 +1,6 @@
 <div class="ui four column centered grid">
   <div class="column">
-    <div class="ui segment">
+    <div class="ui segment login-container">
       <form class="ui form" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
 
         <div class="field" [ngClass]="{ 'has-error': f.submitted && !username.valid }">

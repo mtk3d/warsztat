@@ -1,20 +1,21 @@
 
   <div class="ui visible inverted left vertical sidebar menu">
-  <div class="avatar-container item" *ngIf="username">
+  <div class="avatar-container item" *ngIf="isLoggedIn()">
         <div class="first-letter-circle">{{firstLetter}}</div>
         <h2>{{username}}</h2>
-        <a class="ui secondary button" href="#">
+        <a class="ui secondary button" [routerLink]="['/settings']">
           Ustawienia
         </a>
         <a class="ui secondary button" [routerLink]="['/login']">
           Wyloguj
         </a>
   </div>
-    <a class="item" [routerLinkActive]="['active']" routerLink="/documents">
+  <div *ngIf="isLoggedIn()">
+    <a class="item" [routerLinkActive]="['active']" [routerLink]="['/documents']">
       <i class="file text outline icon"></i>
       Dokumenty
     </a>
-    <a class="item" [routerLinkActive]="['active']" routerLink="/orders">
+    <a class="item" [routerLinkActive]="['active']" [routerLink]="['/orders']">
       <i class="tasks icon"></i>
       Zlecenia
     </a>
@@ -50,6 +51,23 @@
       <i class="pie chart icon"></i>
       Raporty
     </a>
+</div>
+
+<div *ngIf="!isLoggedIn()">
+  <div class="avatar-container item">
+        <div class="first-letter-circle">W</div>
+        <h2>Warsztat</h2>
+  </div>
+    <a class="item" [routerLinkActive]="['active']" routerLink="/about">
+      <i class="idea icon"></i>
+     O projekcie
+    </a>
+    <a class="item" [routerLinkActive]="['active']" routerLink="/login">
+      <i class="sign in icon"></i>
+     Zaloguj
+    </a>
+</div>
+
     <div class="item item-bottom">
       <a href="https://github.com/mtk3d/warsztat" target="_blank">GitHub <i class="github icon"></i></a>| 
       <a href="https://webmtkblog.wordpress.com/" target="_blank">MTK <i class="code icon"></i></a>| 

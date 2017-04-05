@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   moduleId: module.id,
@@ -7,19 +6,23 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
-    subscription: Subscription;
-    username = 'user';
+    username = '';
     firstLetter = '';
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {} 
+
+  public isLoggedIn() {
       let userData = JSON.parse(localStorage.getItem("currentUser"));
       if(userData)
       {
           this.username = userData.username;
           this.firstLetter = userData.username.substring(0,1);
-      }
-  }  
+          return true;
+       }else{
+          return false;
+       }
+  }
 
 }
