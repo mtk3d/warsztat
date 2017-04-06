@@ -1,5 +1,3 @@
-body {
-        }
         .first-letter-circle{
             width: 100px;
             height: 100px;
@@ -35,3 +33,26 @@ body {
         .login-container {
             margin-top: 20vh!important;
         }
+        .middle {
+            margin-top: 50vh;
+            transform: translate(0, -50%)
+        }
+        .segment {
+            max-height: 100vh;
+        }
+
+::-webkit-scrollbar
+{
+  width: 4px;  /* for vertical scrollbars */
+  height:  4px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.08);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.4);
+}

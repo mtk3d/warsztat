@@ -1,0 +1,60 @@
+        .timetable-container{
+            height: calc(100vh - 40px)!important;
+        }
+        .timetable {
+            width: 100%;
+            border: 1px solid;
+            border-color: rgba(34, 36, 38, 0.14902);
+            border-radius: 3px;
+            overflow: hidden;
+            height: calc(100% - 80px);
+        }
+        .timetable .item {
+            width: 14.28%;
+            float: left;
+        }
+        .timetable .week .item:hover {
+            background-color: #fcfcfc;
+        }
+        .timetable .last {
+            color: #ccc;
+        }
+        .timetable .last a{
+            color: #ccc;
+        }
+        .timetable .week .item {
+            border-right: 1px solid;
+            border-color: rgba(34, 36, 38, 0.14902);
+            height: 100%;
+        }
+        .timetable .week {
+            border-top: 1px solid;
+            border-color: rgba(34, 36, 38, 0.14902);
+            height: calc(calc(100% - 39px) / 5);
+        }
+        .timetable .week .item:last-child {
+            border-right: 0;
+        }
+        .timetable .header {
+            text-align: center;
+            background-color: rgb(249, 250, 251);
+            overflow: hidden;
+        }
+         .timetable .item p {
+            padding: 10px;
+        }
+        .timetable .day {
+            float: right;
+        }
+        .timetable .week {
+            overflow: hidden;
+        }
+        .timetable ul {
+            list-style: none;
+            padding-left: 20px;
+            height: 85%;
+            overflow-y:auto;
+        }
+        .timetable a:hover {
+            text-decoration: underline;
+        }

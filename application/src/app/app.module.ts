@@ -11,12 +11,15 @@ import { DocumentService } from './_services/document.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { AboutComponent } from './components/about/about.component';
+import { TimetableComponent } from './components/timetable/timetable.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { PageNotFoundComponent } from './not-found.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentsComponent } from './components/documents/documents.component';
+import { DocumentComponent } from './components/documents/document.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
 
@@ -24,12 +27,15 @@ import { OrdersComponent } from './components/orders/orders.component';
   declarations: [
     AppComponent,
     LoginComponent,
+    RegisterComponent,
     AboutComponent,
+    TimetableComponent,
     SettingsComponent,
     PageNotFoundComponent,
     SidebarComponent,
     BreadcrumbComponent,
     DocumentsComponent,
+    DocumentComponent,
     OrdersComponent
   ],
   imports: [
@@ -49,6 +55,11 @@ import { OrdersComponent } from './components/orders/orders.component';
           canActivate: [AuthGuard]
       },
       {
+          path: 'documents/:id',
+          component: DocumentComponent,
+          canActivate: [AuthGuard]
+      },
+      {
           path: 'newdocument',
           component: DocumentsComponent,
           canActivate: [AuthGuard]
@@ -60,7 +71,12 @@ import { OrdersComponent } from './components/orders/orders.component';
       },
       {
           path: 'settings',
-          component: SettingsComponent
+          component: SettingsComponent,
+          canActivate: [AuthGuard]
+      },
+      {
+          path: 'timetable',
+          component: TimetableComponent
       },
       {
           path: 'about',
@@ -69,6 +85,11 @@ import { OrdersComponent } from './components/orders/orders.component';
       {
           path: 'login',
           component: LoginComponent
+      },
+      {
+          path: 'register',
+          component: RegisterComponent,
+          canActivate: [!AuthGuard]
       },
       {
           path: '**',

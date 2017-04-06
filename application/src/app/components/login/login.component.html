@@ -18,8 +18,7 @@
             <p>Password is required</p>
           </div>
         </div>
-
-        <button class="ui button" [disabled]="loading">Login</button> <i *ngIf="loading" class="notched circle loading icon"></i>
+        <button class="ui button" [disabled]="loading">Login</button> <i *ngIf="loading" class="ui mini active inline loader"></i>
       </form>
       <div class="ui message" *ngIf="error">
         <div class="content">

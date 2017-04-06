@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+        .first-letter-circle{
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            font-size: 60px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 100px;
+            margin: 20px;
+            background-color: #31578c;
+            color: #fff;
+            margin: 0 auto;
+            font-weight: bold;
+            cursor: default;
+            text-transform: uppercase;
+        }
+        .avatar-container{
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            padding-top: 20px!important;
+            padding-bottom: 20px!important;
+        }
+        .item-bottom{
+            position: absolute!important;
+            bottom: 0!important;
+            width: 100%;
+            text-align: center;
+        }
+        .item-bottom a:hover{
+          text-decoration: underline;
+        }
+        .login-container {
+            margin-top: 20vh!important;
+        }
+        .middle {
+            margin-top: 50vh;
+            transform: translate(0, -50%)
+        }
+        .segment {
+            max-height: 100vh;
+        }
+
+::-webkit-scrollbar
+{
+  width: 4px;  /* for vertical scrollbars */
+  height:  4px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.08);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.4);
+}

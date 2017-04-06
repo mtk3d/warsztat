@@ -1,6 +1,7 @@
 
   <div class="ui visible inverted left vertical sidebar menu">
-  <div class="avatar-container item" *ngIf="isLoggedIn()">
+  <div *ngIf="isLoggedIn()">
+  <div class="avatar-container item">
         <div class="first-letter-circle">{{firstLetter}}</div>
         <h2>{{username}}</h2>
         <a class="ui secondary button" [routerLink]="['/settings']">
@@ -10,7 +11,6 @@
           Wyloguj
         </a>
   </div>
-  <div *ngIf="isLoggedIn()">
     <a class="item" [routerLinkActive]="['active']" [routerLink]="['/documents']">
       <i class="file text outline icon"></i>
       Dokumenty
@@ -43,7 +43,7 @@
       <i class="selected radio icon"></i>
       Opony
     </a>
-    <a class="item">
+    <a class="item" [routerLinkActive]="['active']" routerLink="/timetable">
       <i class="calendar icon"></i>
       Terminarz
     </a>
@@ -65,6 +65,10 @@
     <a class="item" [routerLinkActive]="['active']" routerLink="/login">
       <i class="sign in icon"></i>
      Zaloguj
+    </a>
+    <a class="item" [routerLinkActive]="['active']" routerLink="/register">
+      <i class="add user icon"></i>
+     Zarejestruj
     </a>
 </div>
 
