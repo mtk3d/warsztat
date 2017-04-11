@@ -13,11 +13,11 @@
     <h3 class="ui horizontal divider header">Sprzedawca</h3>
     <div class="ui right floated icon button mini"><i class="write icon"></i></div>
     <p>
-    {{consumer?.name}}<br>
-    <span *ngIf="consumer?.address">{{consumer.address}}</span><br>
-    <span *ngIf="consumer?.postal_code">{{consumer.postal_code}}</span> 
-    <span *ngIf="consumer?.city">{{consumer.city}}</span><br>
-    <span *ngIf="consumer?.nip">{{consumer.nip}}</span>
+    Warsztat<br>
+    Street, 6 /12<br>
+    00-000<br>
+    Warszawa<br>
+    000-000-00-00<br>
   </p>
 </div>
 <div class="ui segment">
@@ -25,14 +25,19 @@
     <div class="ui right floated icon button mini"><i class="write icon"></i></div>
     <p>
     {{consumer?.name}}<br>
-    <span *ngIf="consumer?.address">{{consumer.address}}</span><br>
-    <span *ngIf="consumer?.postal_code">{{consumer.postal_code}}</span> 
-    <span *ngIf="consumer?.city">{{consumer.city}}</span><br>
-    <span *ngIf="consumer?.nip">{{consumer.nip}}</span>
+    <span *ngIf="consumer?.street">{{consumer.street}}, 
+    <span *ngIf="consumer?.build_number">{{consumer.build_number}}</span>
+    <span *ngIf="consumer?.apartment_number">/{{consumer.apartment_number}}</span>
+    </span><br>
+    <span *ngIf="consumer?.postal_code">{{consumer.postal_code}}</span> <br>
+    <span *ngIf="consumer?.place">{{consumer.place}}</span><br>
+    <span *ngIf="consumer?.nip">{{consumer.nip}}</span><br>
   </p>
 </div>
+</div>
 
-  </div>
+
+
 
   <div class="twelve wide column">
 <table class="ui celled table selectable">
@@ -53,34 +58,19 @@
     <th></th>
   </tr></thead>
   <tbody>
-    <tr>
+    <tr *ngFor="let documentPosition of documentPositions">
     <td class="collapsing">
         <div class="ui fitted checkbox">
           <input type="checkbox"> <label></label>
         </div>
       </td>
       <td class="collapsing">1</td>
-      <td>Wymiana paska alternatora</td>
-      <td>1</td>
-      <td>77.00</td>
-      <td>23%</td>
-      <td>23.00</td>
-      <td>100.00</td>
-      <td class="collapsing"><div class="ui  blue icon button mini"><i class="write icon"></i></div></td>
-    </tr>
-    <tr>
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
-        </div>
-      </td>
-      <td class="collapsing">2</td>
-      <td>Pasek alternatora</td>
-      <td>1</td>
-      <td>77.00</td>
-      <td>23%</td>
-      <td>23.00</td>
-      <td>100.00</td>
+      <td>{{ documentPosition.name }}</td>
+      <td>{{ documentPosition.quantity}}</td>
+      <td>{{ documentPosition.netto | number : '1.2-2'}}</td>
+      <td>{{ documentPosition.vat }}%</td>
+      <td>{{ documentPosition.vat_sum | number : '1.2-2'}}</td>
+      <td>{{ documentPosition.brutto | number : '1.2-2'}}</td>
       <td class="collapsing"><div class="ui  blue icon button mini"><i class="write icon"></i></div></td>
     </tr>
     <tr>

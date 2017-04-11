@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import { DocumentService } from '../../_services/document.service';
+import { Document } from '../../_models/document.model';
 
 @Component({
   moduleId: module.id,

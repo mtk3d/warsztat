@@ -8,6 +8,7 @@ import { RouterModule }   from '@angular/router';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { DocumentService } from './_services/document.service';
+import { DocumentPositionService } from './_services/documentPosition.service';
 import { ConsumerService } from './_services/consumer.service';
 
 import { AppComponent } from './app.component';
@@ -109,6 +110,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       AuthGuard,
       AuthenticationService,
       DocumentService,
+      DocumentPositionService,
       ConsumerService
   ],
   bootstrap: [AppComponent]

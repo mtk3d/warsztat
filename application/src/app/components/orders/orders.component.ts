@@ -1,15 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import {Http} from '@angular/http';
+
+
 
 @Component({
   moduleId: module.id,
   selector: 'orders',
   templateUrl: 'orders.component.html'
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy{
 
-  constructor() { }
+  constructor(
+      private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+
   }
 
+  ngOnDestroy() {
+
+  }
+ 
 }
