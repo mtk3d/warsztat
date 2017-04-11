@@ -3,6 +3,7 @@
 namespace ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Consumer
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Consumer
 {
+
     /**
      * @var int
      *

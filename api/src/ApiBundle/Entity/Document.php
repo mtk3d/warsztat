@@ -13,6 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Document
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="Consumer")
+     * @ORM\JoinColumn(name="consumer_id", referencedColumnName="id")
+     */
+    private $consumer;
+
 
     /**
      * @var int

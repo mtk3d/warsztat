@@ -1,2 +1,114 @@
-<h1>Document</h1>
-{{id}}
+<div class="ui grid">
+  <div class="four wide column">
+
+<div class="ui segment">
+<h2 class="ui horizontal divider header">{{ document.number }}</h2>
+<div class="ui right floated icon button mini"><i class="write icon"></i></div>
+<b>Wystawiono:</b> {{ document.date | date: 'dd/MM/yyyy'  }}<br>
+<b>Data płatności:</b> {{ document.date_of_payment | date: 'dd/MM/yyyy'  }}<br>
+<b>Metoda płatności:</b> {{ document.payment_method }}<br>
+<b>Zapłacono:</b> <span *ngIf="document.paid">Tak</span><span *ngIf="!document.paid">Nie</span><br>
+</div>
+<div class="ui segment">
+    <h3 class="ui horizontal divider header">Sprzedawca</h3>
+    <div class="ui right floated icon button mini"><i class="write icon"></i></div>
+    <p>
+    {{consumer?.name}}<br>
+    <span *ngIf="consumer?.address">{{consumer.address}}</span><br>
+    <span *ngIf="consumer?.postal_code">{{consumer.postal_code}}</span> 
+    <span *ngIf="consumer?.city">{{consumer.city}}</span><br>
+    <span *ngIf="consumer?.nip">{{consumer.nip}}</span>
+  </p>
+</div>
+<div class="ui segment">
+    <h3 class="ui horizontal divider header">Nabywca</h3>
+    <div class="ui right floated icon button mini"><i class="write icon"></i></div>
+    <p>
+    {{consumer?.name}}<br>
+    <span *ngIf="consumer?.address">{{consumer.address}}</span><br>
+    <span *ngIf="consumer?.postal_code">{{consumer.postal_code}}</span> 
+    <span *ngIf="consumer?.city">{{consumer.city}}</span><br>
+    <span *ngIf="consumer?.nip">{{consumer.nip}}</span>
+  </p>
+</div>
+
+  </div>
+
+  <div class="twelve wide column">
+<table class="ui celled table selectable">
+  <thead>
+    <tr>
+    <th>
+      <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+    </th>
+    <th>L.p.</th>
+    <th>Nazwa</th>
+    <th>Ilość</th>
+    <th>Netto</th>
+    <th>VAT</th>
+    <th>Kwota VAT</th>
+    <th>Brutto</th>
+    <th></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td class="collapsing">1</td>
+      <td>Wymiana paska alternatora</td>
+      <td>1</td>
+      <td>77.00</td>
+      <td>23%</td>
+      <td>23.00</td>
+      <td>100.00</td>
+      <td class="collapsing"><div class="ui  blue icon button mini"><i class="write icon"></i></div></td>
+    </tr>
+    <tr>
+    <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td class="collapsing">2</td>
+      <td>Pasek alternatora</td>
+      <td>1</td>
+      <td>77.00</td>
+      <td>23%</td>
+      <td>23.00</td>
+      <td>100.00</td>
+      <td class="collapsing"><div class="ui  blue icon button mini"><i class="write icon"></i></div></td>
+    </tr>
+    <tr>
+      <td colspan="4">Razem:</td>
+      <td>{{ document.netto | number : '1.2-2'}}</td>
+      <td>{{ document.vat }}%</td>
+      <td>{{ document.vat_sum | number : '1.2-2'}}</td>
+      <td>{{ document.brutto | number : '1.2-2'}}</td>
+      <td class="collapsing"></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr><th colspan="9">
+    <!-- <div class="ui  blue labeled icon button">
+          <i class="pencil icon"></i> Edytuj
+        </div>
+        <div class="ui  yellow labeled icon button">
+          <i class="search icon"></i> Podgląd
+        </div> -->
+        <div class="ui  red labeled icon button disabled">
+          <i class="trash icon"></i> Usuń
+        </div>
+        <div class="ui  green right floated labeled icon button">
+          <i class="plus icon"></i> Dodaj
+        </div>
+    </th>
+  </tr></tfoot>
+</table>
+
+  </div>
+</div>

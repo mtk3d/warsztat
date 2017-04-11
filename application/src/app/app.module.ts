@@ -8,6 +8,7 @@ import { RouterModule }   from '@angular/router';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { DocumentService } from './_services/document.service';
+import { ConsumerService } from './_services/consumer.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -20,6 +21,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { DocumentComponent } from './components/documents/document.component';
+import { ConsumersComponent } from './components/consumers/consumers.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
 
@@ -36,6 +38,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     BreadcrumbComponent,
     DocumentsComponent,
     DocumentComponent,
+    ConsumersComponent,
     OrdersComponent
   ],
   imports: [
@@ -57,6 +60,11 @@ import { OrdersComponent } from './components/orders/orders.component';
       {
           path: 'documents/:id',
           component: DocumentComponent,
+          canActivate: [AuthGuard]
+      },
+      {
+          path: 'consumers',
+          component: ConsumersComponent,
           canActivate: [AuthGuard]
       },
       {
@@ -100,7 +108,8 @@ import { OrdersComponent } from './components/orders/orders.component';
   providers: [
       AuthGuard,
       AuthenticationService,
-      DocumentService
+      DocumentService,
+      ConsumerService
   ],
   bootstrap: [AppComponent]
 })

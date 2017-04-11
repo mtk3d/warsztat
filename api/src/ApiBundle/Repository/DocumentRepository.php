@@ -14,8 +14,9 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d, c
             FROM ApiBundle:Document d
+            JOIN d.consumer c
             WHERE d.id = :id
             AND d.userId = :userId
             "

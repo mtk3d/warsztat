@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http} from '@angular/http';
 
+import { DocumentService } from '../../_services/document.service';
+
 @Component({
   moduleId: module.id,
   selector: 'document',
@@ -10,15 +12,21 @@ import {Http} from '@angular/http';
 export class DocumentComponent implements OnInit, OnDestroy{
  
     id: number;
+    document: Document[] = [];
+    consumer: any;
   private sub: any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private documentService: DocumentService) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = +params['id']; // (+) converts string 'id' to a number
 
-       // In a real app: dispatch action to load the details here.
+       this.documentService.getDocument(this.id)
+            .subscribe(document => {
+                this.document = document;
+                this.consumer = document['consumer'];
+        });
     });
   }
 
