@@ -13,8 +13,10 @@ export class DocumentConsumerComponent implements OnDestroy, OnInit, OnChanges{
  
     @Input('consumerId') consumerId: number;
     
+    searchStr: string;
     search: boolean = false;
     consumer: Consumer[] = [];
+    consumers: Consumer[] = [];
     private sub: any;
 
     constructor(private consumerService: ConsumerService) {}
@@ -35,7 +37,15 @@ export class DocumentConsumerComponent implements OnDestroy, OnInit, OnChanges{
         }
     }
 
+    searchConsumer() {
+        console.log(this.searchStr);
+    }
+
     searchView() {
+        this.sub = this.consumerService.getConsumers()
+            .subscribe(consumers => {
+            this.consumers = consumers;
+        });
         this.search = true;
     }
 
