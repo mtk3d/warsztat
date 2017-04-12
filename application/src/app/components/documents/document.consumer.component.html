@@ -1,0 +1,21 @@
+<div *ngIf="!isSearchView()">
+<div class="ui right floated icon button mini" (click)="searchView()"><i class="write icon"></i></div>
+<p>
+    {{consumer.name}}<br>
+    <span *ngIf="consumer.street">{{consumer.street}}, 
+        <span *ngIf="consumer.build_number">{{consumer.build_number}}</span>
+        <span *ngIf="consumer.apartment_number">/{{consumer.apartment_number}}</span>
+    </span><br>
+    <span *ngIf="consumer.postal_code">{{consumer.postal_code}}</span> <br>
+    <span *ngIf="consumer.place">{{consumer.place}}</span><br>
+    <span *ngIf="consumer.nip">{{consumer.nip}}</span><br>
+</p>
+</div>
+
+<div *ngIf="isSearchView()">
+    <div class="ui right floated icon button mini" (click)="cancel()"><i class="remove icon"></i></div>
+    <div class="ui small icon input loading">
+        <input type="text" placeholder="Search...">
+        <i class="search icon"></i>
+    </div>
+</div>

@@ -22,6 +22,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { DocumentComponent } from './components/documents/document.component';
+import { DocumentConsumerComponent } from './components/documents/document.consumer.component';
 import { ConsumersComponent } from './components/consumers/consumers.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
@@ -39,6 +40,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     BreadcrumbComponent,
     DocumentsComponent,
     DocumentComponent,
+    DocumentConsumerComponent,
     ConsumersComponent,
     OrdersComponent
   ],

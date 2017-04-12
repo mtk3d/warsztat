@@ -4,10 +4,8 @@ import {Http} from '@angular/http';
 
 import { DocumentService } from '../../_services/document.service';
 import { DocumentPositionService } from '../../_services/documentPosition.service';
-import { ConsumerService } from '../../_services/consumer.service';
 import { Document } from '../../_models/document.model';
 import { DocumentPosition } from '../../_models/documentPosition.model';
-import { Consumer } from '../../_models/consumer.model';
 
 @Component({
   moduleId: module.id,
@@ -19,14 +17,13 @@ export class DocumentComponent implements OnInit, OnDestroy{
     id: number;
     document: Document[] = [];
     documentPositions: DocumentPosition[] = [];
-    consumer: Consumer[] = [];
+    consumerId: number;
   private sub: any;
 
   constructor(
       private route: ActivatedRoute, 
       private documentService: DocumentService,
-      private documentPositionService: DocumentPositionService,
-      private consumerService: ConsumerService
+      private documentPositionService: DocumentPositionService
   ) {}
 
   ngOnInit() {
@@ -36,7 +33,7 @@ export class DocumentComponent implements OnInit, OnDestroy{
        this.documentService.getDocument(this.id)
             .subscribe(document => {
                 this.document = document;
-                this.consumer = document['consumer'];
+                this.consumerId = document['consumer']['id'];
         });
 
         this.documentPositionService.getDocumentPositions(this.id)
@@ -49,6 +46,11 @@ export class DocumentComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  clicked() {
+      this.consumerId += 1;
+      console.log(this.consumerId);
   }
  
 }
