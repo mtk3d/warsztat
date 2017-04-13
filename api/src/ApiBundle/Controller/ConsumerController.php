@@ -174,4 +174,15 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
         return new View(null, Response::HTTP_NO_CONTENT);
     }
 
+    public function getSearchAction(string $searchStr)
+    {
+        $consumers = $this->getConsumerRepository()
+            ->searchQuery($this->getUserId(), $searchStr)
+            ->getResult();
+
+        if($consumers == null) {
+            return new View(null, Response::HTTP_NOT_FOUND);
+        }
+        return $consumers;
+    }
 }

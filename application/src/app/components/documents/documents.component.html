@@ -2,28 +2,35 @@
  <div style="overflow: hidden">
 
 <div class="ui buttons" style="float: left; margin-right: 30px">
-  <button class="ui button">Wszystkie</button>
-  <button class="ui button active">Faktury</button>
-  <button class="ui button">Rachunki</button>
+  <button class="ui button" (click)="typeChange('')" [ngClass]="{'active': checkType('')}">Wszystkie</button>
+  <button class="ui button" (click)="typeChange('FV')" [ngClass]="{'active': checkType('FV')}">Faktury</button>
+  <button class="ui button" (click)="typeChange('Rachunek')" [ngClass]="{'active': checkType('Rachunek')}">Rachunki</button>
 </div>
 
 <div class="ui form" style="float: left; margin-right: 10px">
   <div class="inline field">
     <label>Od</label>
-    <input type="date">
+    <input type="date" [(ngModel)]="from">
   </div>
 </div>
 
 <div class="ui form" style="float: left;">
   <div class="inline field">
     <label>do</label>
-    <input type="date">
+    <input type="date" [(ngModel)]="to">
+  </div>
+</div>
+
+<div class="ui form" style="float: left;">
+  <div class="inline field">
+        <label></label>
+         <button class="ui button" (click)="searchDocuments()">Zatwierdź</button>
   </div>
 </div>
 
 <div class="ui search" style="float: right">
   <div class="ui icon input">
-    <input class="prompt" type="text" placeholder="Szukaj...">
+    <input class="prompt" [(ngModel)]="search" (keyup)="searchDocuments()" type="text" placeholder="Szukaj...">
     <i class="search icon"></i>
   </div>
   <div class="results"></div>
@@ -46,7 +53,7 @@
     <th>Zapłacono</th>
     <th>Klient</th>
   </tr></thead>
-  <tbody>
+  <tbody *ngIf="isReturn()">
     <tr *ngFor="let document of documents">
     <td class="collapsing">
         <div class="ui fitted checkbox">
@@ -63,6 +70,13 @@
     </tr>
 
   </tbody>
+<tbody *ngIf="!isReturn()">
+    <tr>
+        <td colspan="8" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+            Nie znaleziono
+        </td>
+    </tr>
+</tbody>
   <tfoot>
     <tr><th colspan="8">
         <div class="ui  red labeled icon button disabled">

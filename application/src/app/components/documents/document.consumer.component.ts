@@ -35,14 +35,24 @@ export class DocumentConsumerComponent implements OnDestroy, OnInit, OnChanges{
                 this.consumer = consumer;
             });
         }
+        
     }
 
     searchConsumer() {
-        console.log(this.searchStr);
+        let search;
+        if(this.searchStr == ''){search = ' ';}else{search = this.searchStr;}
+        this.sub = this.consumerService.getSearchConsumers(search)
+            .subscribe(consumers => {
+            this.consumers = consumers;
+        });
+    }
+
+    isResponse() {
+        return this.consumers;
     }
 
     searchView() {
-        this.sub = this.consumerService.getConsumers()
+        this.sub = this.consumerService.getSearchConsumers(' ')
             .subscribe(consumers => {
             this.consumers = consumers;
         });

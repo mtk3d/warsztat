@@ -42,4 +42,31 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
+    public function searchQuery(int $userId, string $searchStr)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Consumer d
+            WHERE d.userId = :userId
+            AND d.company LIKE :searchStr
+            OR d.name LIKE :searchStr
+            OR d.nip LIKE :searchStr
+            OR d.phone LIKE :searchStr
+            OR d.email LIKE :searchStr
+            OR d.www LIKE :searchStr
+            OR d.street LIKE :searchStr
+            OR d.place LIKE :searchStr
+            OR d.postalCode LIKE :searchStr
+            OR d.post LIKE :searchStr
+            OR d.notes LIKE :searchStr
+            "
+        );
+
+        $query->setParameter('userId', $userId);
+        $query->setParameter('searchStr', '%'.$searchStr.'%');
+
+        return $query;
+    }
+
 }

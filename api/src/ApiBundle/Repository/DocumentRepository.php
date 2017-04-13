@@ -68,14 +68,51 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindAllQuery(int $userId)
+    public function createFindAllQuery(int $userId, string $type, string $from, string $to, string $search)
     {
+        if($type!='')
+        {
+            $type = "AND d.type = '".$type."'";
+        }
+        if($from!='')
+        {
+            $from = "AND d.date >= '".$from."'";
+        }
+        if($to!='')
+        {
+            $to = "AND d.date <= '".$to."'";
+        }
+        if($search!='')
+        {
+            $searchStr = '%'.$search.'%';
+            $search = "AND (d.number LIKE '".$searchStr
+            ."' OR d.date LIKE '".$searchStr
+            ."' OR d.dateOfPayment LIKE '".$searchStr
+            ."' OR d.paymentMethod LIKE '".$searchStr
+            ."' OR d.notes LIKE '".$searchStr
+            ."' OR c.company LIKE '".$searchStr
+            ."' OR c.name LIKE '".$searchStr
+            ."' OR c.nip LIKE '".$searchStr
+            ."' OR c.phone LIKE '".$searchStr
+            ."' OR c.pesel LIKE '".$searchStr
+            ."' OR c.email LIKE '".$searchStr
+            ."' OR c.www LIKE '".$searchStr
+            ."' OR c.street LIKE '".$searchStr
+            ."' OR c.place LIKE '".$searchStr
+            ."' OR c.postalCode LIKE '".$searchStr
+            ."' OR c.post LIKE '".$searchStr
+            ."' OR c.notes LIKE '".$searchStr."')";
+        }
+
+        $filters = $type.$from.$to.$search;
+
         $query = $this->_em->createQuery(
             "
             SELECT d
             FROM ApiBundle:Document d
+            JOIN d.consumer c
             WHERE d.userId = :userId
-            "
+            ".$filters
         );
 
         $query->setParameter('userId', $userId);

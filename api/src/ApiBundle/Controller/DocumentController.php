@@ -39,15 +39,21 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         return $this->get('utils.document_number.generate')->getNextNumber($this->getUserId(), $type);
     }
 
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
+        $type = $request->query->get('type', '');
+        $from = $request->query->get('from', '');
+        $to = $request->query->get('to', '');
+        $search = $request->query->get('search', '');
+
         $documents = $this->getDocumentRepository()
-            ->createFindAllQuery($this->getUserId())
+            ->createFindAllQuery($this->getUserId(), $type, $from, $to, $search)
             ->getResult();
 
         if($documents == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
+
         return $documents;
     }
 
