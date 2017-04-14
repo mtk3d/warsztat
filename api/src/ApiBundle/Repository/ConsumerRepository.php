@@ -49,7 +49,7 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
             SELECT d
             FROM ApiBundle:Consumer d
             WHERE d.userId = :userId
-            AND d.company LIKE :searchStr
+            AND (d.company LIKE :searchStr
             OR d.name LIKE :searchStr
             OR d.nip LIKE :searchStr
             OR d.phone LIKE :searchStr
@@ -59,7 +59,7 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
             OR d.place LIKE :searchStr
             OR d.postalCode LIKE :searchStr
             OR d.post LIKE :searchStr
-            OR d.notes LIKE :searchStr
+            OR d.notes LIKE :searchStr)
             "
         );
 

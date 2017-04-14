@@ -14,6 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Consumer
 {
 
+    private $documents;
+
     /**
      * @var int
      *

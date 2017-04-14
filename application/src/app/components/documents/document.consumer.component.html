@@ -34,7 +34,9 @@
             <div class="ui divider"></div>
         </div>
     </div>
-    <h3 *ngIf="!isResponse()">Not found</h3>
+    <div style="font-size: 20px; color: #ccc; text-align: center;" *ngIf="!isResponse()">
+        Nie znaleziono
+    </div>
     <div class="ui divider"></div>
     <div class="ui  green labeled mini icon button">
         <i class="plus icon"></i> Nowy klient

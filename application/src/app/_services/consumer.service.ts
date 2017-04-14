@@ -24,13 +24,13 @@ export class ConsumerService {
             .map((response: Response) => response.json());
     }
 
-    getSearchConsumers(searchStr: string): Observable<Consumer[]> {
+    getSearchConsumers(searchStr: string = ''): Observable<Consumer[]> {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/consumers/'+searchStr+'/search', options)
+        return this.http.get('http://localhost:8000/api/consumers?search='+searchStr, options)
             .map((response: Response) => {
                 if(response.status < 200 || response.status >= 300) {
                     return false;

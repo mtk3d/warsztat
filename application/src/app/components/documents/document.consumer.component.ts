@@ -15,18 +15,14 @@ export class DocumentConsumerComponent implements OnDestroy, OnInit, OnChanges{
     
     searchStr: string;
     search: boolean = false;
+    consumersReturn: boolean = true;
     consumer: Consumer[] = [];
     consumers: Consumer[] = [];
     private sub: any;
 
     constructor(private consumerService: ConsumerService) {}
 
-    ngOnInit() {
-        if(this.search)
-        {
-
-        }
-    }
+    ngOnInit() {}
 
     ngOnChanges() {
         if(!!this.consumerId){
@@ -35,27 +31,24 @@ export class DocumentConsumerComponent implements OnDestroy, OnInit, OnChanges{
                 this.consumer = consumer;
             });
         }
-        
     }
 
     searchConsumer() {
-        let search;
-        if(this.searchStr == ''){search = ' ';}else{search = this.searchStr;}
-        this.sub = this.consumerService.getSearchConsumers(search)
+        this.sub = this.consumerService.getSearchConsumers(this.searchStr)
             .subscribe(consumers => {
             this.consumers = consumers;
-        });
+            this.consumersReturn = true;
+        },
+            (err)=>this.consumersReturn = false
+        );
     }
 
     isResponse() {
-        return this.consumers;
+        return this.consumersReturn;
     }
 
     searchView() {
-        this.sub = this.consumerService.getSearchConsumers(' ')
-            .subscribe(consumers => {
-            this.consumers = consumers;
-        });
+        this.searchConsumer();
         this.search = true;
     }
 

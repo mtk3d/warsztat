@@ -1,0 +1,63 @@
+<table class="ui celled table selectable">
+    <thead>
+        <tr>
+            <th>
+                <div class="ui fitted checkbox">
+                    <input type="checkbox"> <label></label>
+                </div>
+            </th>
+            <th>L.p.</th>
+            <th>Nazwa</th>
+            <th>Ilość</th>
+            <th>Netto</th>
+            <th>VAT</th>
+            <th>Kwota VAT</th>
+            <th>Brutto</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody *ngIf="isReturn()">
+        <tr *ngFor="let documentPosition of documentPositions">
+            <td class="collapsing">
+                <div class="ui fitted checkbox">
+                    <input type="checkbox"> <label></label>
+                </div>
+            </td>
+            <td class="collapsing">1</td>
+            <td>{{ documentPosition?.name }}</td>
+            <td>{{ documentPosition?.quantity}}</td>
+            <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
+            <td>{{ documentPosition?.vat }}%</td>
+            <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
+            <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
+            <td class="collapsing"><div class="ui  blue icon button mini"><i class="write icon"></i></div></td>
+        </tr>
+        <tr>
+            <td colspan="4">Razem:</td>
+            <td>{{ document.netto | number : '1.2-2'}}</td>
+            <td>{{ document.vat }}%</td>
+            <td>{{ document.vat_sum | number : '1.2-2'}}</td>
+            <td>{{ document.brutto | number : '1.2-2'}}</td>
+            <td class="collapsing"></td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="!isReturn()">
+        <tr>
+            <td colspan="9" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+                Brak pozycji
+            </td>
+        </tr>   
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="9">
+                <div class="ui  red labeled icon button disabled">
+                    <i class="trash icon"></i> Usuń
+                </div>
+                <div class="ui  green right floated labeled icon button">
+                    <i class="plus icon"></i> Dodaj
+                </div>
+            </th>
+        </tr>
+    </tfoot>
+</table>

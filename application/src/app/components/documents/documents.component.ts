@@ -11,6 +11,8 @@ import { Document } from '../../_models/document.model';
 export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     documents: Document[] = [];
     documentsReturn: boolean = true;
+    delete: Array<number> = [];
+    allDeleteChecked: boolean = false;
     type: string = '';
     from: string;
     to: string;
@@ -31,6 +33,7 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
             },
             (err)=>this.documentsReturn = false
         );
+        this.delete = [];
     }
 
     typeChange(type){
@@ -49,7 +52,88 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
 
     isReturn()
     {
+        if(!this.documentsReturn)
+        {
+            this.documents = [];
+        }
         return this.documentsReturn;
+    }
+
+    addDelete(id)
+    {
+        if(this.delete.indexOf(id) == -1)
+        {
+            this.delete.push(id);
+        }else{
+            this.delete.splice(this.delete.indexOf(id), 1);
+        }
+    }
+
+    allDelete()
+    {
+        if(!this.allDeleteChecked)
+        {
+            this.allDeleteChecked = true;
+            for(let item in this.documents)
+            {
+                let id = this.documents[item].id;
+                if(this.delete.indexOf(id) == -1)
+                {
+                    this.delete.push(id);
+                }
+            }
+        }else{
+            this.allDeleteChecked = false;
+            this.delete = [];
+        }
+    }
+
+    isAllChecked()
+    {
+        let is = true;
+        for(let item in this.documents)
+        {
+            let id = this.documents[item].id;
+            if(this.delete.indexOf(id) == -1)
+            {
+                is = false;
+                this.allDeleteChecked = false;
+            }
+        }
+        if(this.delete.length<=0)
+        {
+            is = false;
+        }
+        if(is)
+        {
+            this.allDeleteChecked = true;
+        }
+        return is;
+    }
+
+    isCheck(id)
+    {
+        if(this.delete.indexOf(id) == -1)
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    isDelete()
+    {
+        if(this.delete.length > 0)
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    deleteChecked()
+    {
+        console.log(this.delete);
     }
 
     ngOnChanges() {

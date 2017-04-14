@@ -13,7 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Document
 {
+
     /**
+     * Many Documents have One Consumer.
      * @ORM\ManyToOne(targetEntity="Consumer")
      * @ORM\JoinColumn(name="consumer_id", referencedColumnName="id")
      */

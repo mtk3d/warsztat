@@ -34,10 +34,12 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
         return $this->getUser()->getId();
     }
 
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
+        $search = $request->query->get('search', '');
+
         $consumers = $this->getConsumerRepository()
-            ->createFindAllQuery($this->getUserId())
+            ->searchQuery($this->getUserId(), $search)
             ->getResult();
 
         if($consumers == null) {
@@ -172,17 +174,5 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
         $em->flush();
 
         return new View(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function getSearchAction(string $searchStr)
-    {
-        $consumers = $this->getConsumerRepository()
-            ->searchQuery($this->getUserId(), $searchStr)
-            ->getResult();
-
-        if($consumers == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-        return $consumers;
     }
 }

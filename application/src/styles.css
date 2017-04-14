@@ -45,6 +45,9 @@
             max-height: 160px;
             overflow-y: auto;
         }
+        .consumers-list div:last-child p{
+            margin-bottom: 0;
+        }
         .consumers-list div:last-child .divider {
             display: none;
         }

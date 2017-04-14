@@ -42,7 +42,7 @@
     <tr>
     <th>
       <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
+          <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()"> <label></label>
         </div>
     </th>
     <th>Numer</th>
@@ -57,7 +57,7 @@
     <tr *ngFor="let document of documents">
     <td class="collapsing">
         <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
+          <input type="checkbox" (change)="addDelete(document.id)" [checked]="isCheck(document.id)"> <label></label>
         </div>
       </td>
       <td><a [routerLink]="['/documents', document.id]">{{ document.number }}</a></td>
@@ -79,9 +79,9 @@
 </tbody>
   <tfoot>
     <tr><th colspan="8">
-        <div class="ui  red labeled icon button disabled">
+        <button class="ui  red labeled icon button" [disabled]="isDelete()" (click)="deleteChecked()">
           <i class="trash icon"></i> Usuń
-        </div>
+        </button>
       <div class="ui right floated pagination menu small">
         <a class="icon item">
           <i class="left chevron icon"></i>
@@ -97,6 +97,6 @@
     </th>
   </tr></tfoot>
 </table>
-<div class="ui green labeled icon button">
+<button class="ui green labeled icon button">
           <i class="file outline icon"></i> Nowy dokument
-        </div>
+        </button>
