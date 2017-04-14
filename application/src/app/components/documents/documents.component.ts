@@ -17,6 +17,8 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     from: string;
     to: string;
     search: string;
+    orderBy: string = 'number';
+    sorting: string = 'ASC';
     sub: any;
  
     constructor(private documentService: DocumentService) { }
@@ -26,7 +28,7 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     searchDocuments() {
-        this.sub = this.documentService.getDocuments(this.type, this.from, this.to, this.search)
+        this.sub = this.documentService.getDocuments(this.type, this.from, this.to, this.search, this.orderBy, this.sorting)
             .subscribe(documents => {
                 this.documents = documents;
                 this.documentsReturn = true;
@@ -57,6 +59,33 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
             this.documents = [];
         }
         return this.documentsReturn;
+    }
+
+    sortingBy(by)
+    {
+        if(this.orderBy == by)
+        {
+            if(this.sorting == 'DESC')
+            {
+                this.sorting = 'ASC';
+            }else{
+                this.sorting = 'DESC';
+            }
+        }else{
+            this.sorting = 'ASC';
+            this.orderBy = by;
+        }
+        this.searchDocuments();
+    }
+
+    order(item)
+    {
+        let ret = '';
+        if(this.orderBy == item)
+        {
+            ret = this.sorting;
+        }
+        return ret;
     }
 
     addDelete(id)

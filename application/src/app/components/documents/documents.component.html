@@ -45,13 +45,34 @@
           <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()"> <label></label>
         </div>
     </th>
-    <th>Numer</th>
-    <th>Typ</th>
-    <th>Data wystawienia</th>
-    <th>Data płatności</th>
-    <th>Metoda płatności</th>
-    <th>Zapłacono</th>
-    <th>Klient</th>
+    <th (click)="sortingBy('number')">Numer 
+        <i class="caret down icon" *ngIf="order('number')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('number')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('type')">Typ 
+        <i class="caret down icon" *ngIf="order('type')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('type')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('date')">Data wystawienia 
+        <i class="caret down icon" *ngIf="order('date')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('date')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('dateOfPayment')">Data płatności 
+        <i class="caret down icon" *ngIf="order('dateOfPayment')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('dateOfPayment')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('paymentMethod')">Metoda płatności 
+        <i class="caret down icon" *ngIf="order('paymentMethod')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('paymentMethod')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('paid')">Zapłacono 
+        <i class="caret down icon" *ngIf="order('paid')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('paid')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('consumer')">Klient 
+        <i class="caret down icon" *ngIf="order('consumer')=='DESC'"></i>
+        <i class="caret up icon" *ngIf="order('consumer')=='ASC'"></i>
+    </th>
   </tr></thead>
   <tbody *ngIf="isReturn()">
     <tr *ngFor="let document of documents">

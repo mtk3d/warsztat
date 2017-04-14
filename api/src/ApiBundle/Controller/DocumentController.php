@@ -45,9 +45,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         $from = $request->query->get('from', '');
         $to = $request->query->get('to', '');
         $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('order_by', '');
+        $sorting = $request->query->get('sorting', '');
 
         $documents = $this->getDocumentRepository()
-            ->createFindAllQuery($this->getUserId(), $type, $from, $to, $search)
+            ->createFindAllQuery($this->getUserId(), $type, $from, $to, $search, $orderBy, $sorting)
             ->getResult();
 
         if($documents == null) {

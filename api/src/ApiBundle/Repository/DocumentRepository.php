@@ -68,7 +68,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindAllQuery(int $userId, string $type, string $from, string $to, string $search)
+    public function createFindAllQuery(int $userId, string $type, string $from, string $to, string $search, string $orderBy, string $sort)
     {
         if($type!='')
         {
@@ -103,8 +103,31 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             ."' OR c.post LIKE '".$searchStr
             ."' OR c.notes LIKE '".$searchStr."')";
         }
+        if($orderBy!='')
+        {
+            if($orderBy == 'number' || 
+                $orderBy == 'type' || 
+                $orderBy == 'date' || 
+                $orderBy == 'dateOfPayment' || 
+                $orderBy == 'paymentMethod' || 
+                $orderBy == 'paid')
+            {
+                $orderBy = 'ORDER BY d.'.$orderBy;
+            }else if($orderBy == 'consumer'){
+                $orderBy = 'ORDER BY c.name';
+            }else{
+                $orderBy = '';
+            }
+        }
+        if($sort!='')
+        {
+            if(($sort != 'ASC' || $sort != 'DESC') && $orderBy == '')
+            {
+                $sort = '';
+            }
+        }
 
-        $filters = $type.$from.$to.$search;
+        $filters = $type.$from.$to.$search.$orderBy.' '.$sort;
 
         $query = $this->_em->createQuery(
             "

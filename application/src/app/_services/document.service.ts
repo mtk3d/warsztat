@@ -13,13 +13,13 @@ export class DocumentService {
         private authenticationService: AuthenticationService) {
     }
  
-    getDocuments(type: string = '', from: string = '', to: string = '', search: string = ''): Observable<Document[]> {
+    getDocuments(type: string = '', from: string = '', to: string = '', search: string = '', orderBy: string = '', sorting: string = ''): Observable<Document[]> {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/api/documents?type='+type+'&from='+from+'&to='+to+'&search='+search, options)
+        return this.http.get('http://localhost:8000/api/documents?type='+type+'&from='+from+'&to='+to+'&search='+search+'&order_by='+orderBy+'&sorting='+sorting, options)
             .map((response: Response) => response.json());
     }
 
