@@ -10,28 +10,22 @@
 <div class="ui form" style="float: left; margin-right: 10px">
   <div class="inline field">
     <label>Od</label>
-    <input type="date" [(ngModel)]="from">
+    <input type="date" [(ngModel)]="from" (change)="searchDocuments()">
   </div>
 </div>
 
 <div class="ui form" style="float: left;">
   <div class="inline field">
     <label>do</label>
-    <input type="date" [(ngModel)]="to">
-  </div>
-</div>
-
-<div class="ui form" style="float: left;">
-  <div class="inline field">
-        <label></label>
-         <button class="ui button" (click)="searchDocuments()">Zatwierdź</button>
+    <input type="date" [(ngModel)]="to" (change)="searchDocuments()">
   </div>
 </div>
 
 <div class="ui search" style="float: right">
+    <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
   <div class="ui icon input">
     <input class="prompt" [(ngModel)]="search" (keyup)="searchDocuments()" type="text" placeholder="Szukaj...">
-    <i class="search icon"></i>
+    <i class="search icon" *ngIf="!isSearch()"></i>
   </div>
   <div class="results"></div>
 </div>
@@ -46,32 +40,39 @@
         </div>
     </th>
     <th (click)="sortingBy('number')">Numer 
-        <i class="caret down icon" *ngIf="order('number')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('number')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('number')==''"></i>
+        <i class="sort descending icon" *ngIf="order('number')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('number')=='ASC'"></i>
     </th>
     <th (click)="sortingBy('type')">Typ 
-        <i class="caret down icon" *ngIf="order('type')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('type')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('type')==''"></i>
+        <i class="sort descending icon" *ngIf="order('type')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('type')=='ASC'"></i>
     </th>
     <th (click)="sortingBy('date')">Data wystawienia 
-        <i class="caret down icon" *ngIf="order('date')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('date')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('date')==''"></i>
+        <i class="sort descending icon" *ngIf="order('date')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('date')=='ASC'"></i>
     </th>
     <th (click)="sortingBy('dateOfPayment')">Data płatności 
-        <i class="caret down icon" *ngIf="order('dateOfPayment')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('dateOfPayment')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('dateOfPayment')==''"></i>
+        <i class="sort descending icon" *ngIf="order('dateOfPayment')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('dateOfPayment')=='ASC'"></i>
     </th>
     <th (click)="sortingBy('paymentMethod')">Metoda płatności 
-        <i class="caret down icon" *ngIf="order('paymentMethod')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('paymentMethod')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('paymentMethod')==''"></i>
+        <i class="sort descending icon" *ngIf="order('paymentMethod')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('paymentMethod')=='ASC'"></i>
     </th>
     <th (click)="sortingBy('paid')">Zapłacono 
-        <i class="caret down icon" *ngIf="order('paid')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('paid')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('paid')==''"></i>
+        <i class="sort descending icon" *ngIf="order('paid')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('paid')=='ASC'"></i>
     </th>
     <th (click)="sortingBy('consumer')">Klient 
-        <i class="caret down icon" *ngIf="order('consumer')=='DESC'"></i>
-        <i class="caret up icon" *ngIf="order('consumer')=='ASC'"></i>
+        <i class="sort icon" *ngIf="order('consumer')==''"></i>
+        <i class="sort descending icon" *ngIf="order('consumer')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('consumer')=='ASC'"></i>
     </th>
   </tr></thead>
   <tbody *ngIf="isReturn()">

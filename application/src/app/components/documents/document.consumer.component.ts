@@ -34,7 +34,7 @@ export class DocumentConsumerComponent implements OnDestroy, OnInit, OnChanges{
     }
 
     searchConsumer() {
-        this.sub = this.consumerService.getSearchConsumers(this.searchStr)
+        this.sub = this.consumerService.getConsumers(this.searchStr)
             .subscribe(consumers => {
             this.consumers = consumers;
             this.consumersReturn = true;

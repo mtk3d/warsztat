@@ -37,9 +37,11 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
     public function cgetAction(Request $request)
     {
         $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('orderby', '');
+        $sort = $request->query->get('sort', '');
 
         $consumers = $this->getConsumerRepository()
-            ->searchQuery($this->getUserId(), $search)
+            ->searchQuery($this->getUserId(), $search, $orderBy, $sort)
             ->getResult();
 
         if($consumers == null) {

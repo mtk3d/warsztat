@@ -16,8 +16,8 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     type: string = '';
     from: string;
     to: string;
-    search: string;
-    orderBy: string = 'number';
+    search: string = '';
+    orderBy: string = 'date';
     sorting: string = 'ASC';
     sub: any;
  
@@ -36,6 +36,7 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
             (err)=>this.documentsReturn = false
         );
         this.delete = [];
+        this.allDeleteChecked = false;
     }
 
     typeChange(type){
@@ -49,6 +50,22 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
             return true;
         }else{
             return false;
+        }
+    }
+
+    clearSearch()
+    {
+        this.search = '';
+        this.searchDocuments();
+    }
+
+    isSearch()
+    {
+        if(this.search == '')
+        {
+            return false;
+        }else{
+            return true;
         }
     }
 
@@ -162,7 +179,11 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
 
     deleteChecked()
     {
-        console.log(this.delete);
+        for(let id in this.delete)
+        {
+            this.sub = this.documentService.deleteDocument(this.delete[id])
+                .subscribe((ok)=>{this.searchDocuments();});
+        }
     }
 
     ngOnChanges() {

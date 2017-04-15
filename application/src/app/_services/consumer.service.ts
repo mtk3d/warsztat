@@ -14,31 +14,14 @@ export class ConsumerService {
         private authenticationService: AuthenticationService) {
     }
  
-    getConsumers(): Observable<Consumer[]> {
+    getConsumers(searchStr: string = '', orderBy: string = '', sort: string = ''): Observable<Consumer[]> {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/consumers', options)
+        return this.http.get('http://localhost:8000/api/consumers?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
             .map((response: Response) => response.json());
-    }
-
-    getSearchConsumers(searchStr: string = ''): Observable<Consumer[]> {
-        // add authorization header with jwt token
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
- 
-        // get users from api
-        return this.http.get('http://localhost:8000/api/consumers?search='+searchStr, options)
-            .map((response: Response) => {
-                if(response.status < 200 || response.status >= 300) {
-                    return false;
-                }else{
-                    return response.json();
-                }
-            });
-
     }
 
     getConsumer(id: number): Observable<Consumer[]> {

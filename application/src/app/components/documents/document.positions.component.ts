@@ -17,6 +17,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy{
     @Input('document') document: Document[] = []; 
     documentPositions: DocumentPosition[] = [];
     positionsReturn: boolean;
+    ordinal: Array<number>;
     private sub: any;
 
   constructor(

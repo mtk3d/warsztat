@@ -17,13 +17,13 @@
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
-        <tr *ngFor="let documentPosition of documentPositions">
+        <tr *ngFor="let documentPosition of documentPositions;  let i = index">
             <td class="collapsing">
                 <div class="ui fitted checkbox">
                     <input type="checkbox"> <label></label>
                 </div>
             </td>
-            <td class="collapsing">1</td>
+            <td class="collapsing">{{ i + 1 }}</td>
             <td>{{ documentPosition?.name }}</td>
             <td>{{ documentPosition?.quantity}}</td>
             <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>

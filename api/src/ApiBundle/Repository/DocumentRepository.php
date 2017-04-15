@@ -121,8 +121,10 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         }
         if($sort!='')
         {
-            if(($sort != 'ASC' || $sort != 'DESC') && $orderBy == '')
+            if(($sort == 'ASC' || $sort == 'DESC') && $orderBy != '')
             {
+                $sort = $sort;
+            }else{
                 $sort = '';
             }
         }

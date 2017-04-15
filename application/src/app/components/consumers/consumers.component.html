@@ -1,22 +1,55 @@
+<div style="overflow: hidden">
+
+<div class="ui search" style="float: right">
+    <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
+  <div class="ui icon input">
+    <input class="prompt" [(ngModel)]="search" (keyup)="searchConsumers()" type="text" placeholder="Szukaj...">
+    <i class="search icon" *ngIf="!isSearch()"></i>
+  </div>
+  <div class="results"></div>
+</div>
+
+</div>
+
 <table class="ui celled table selectable">
   <thead>
     <tr>
     <th>
       <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
+          <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()"> <label></label>
         </div>
     </th>
-    <th>Nazwa</th>
-    <th>Imie i Nazwisko</th>
-    <th>Nazwa firmy</th>
-    <th>Telefon</th>
-    <th>Email</th>
+    <th (click)="sortingBy('name')">Nazwa 
+        <i class="sort icon" *ngIf="order('name')==''"></i>
+        <i class="sort descending icon" *ngIf="order('name')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('name')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('nameSurname')">Imie i Nazwisko
+        <i class="sort icon" *ngIf="order('nameSurname')==''"></i>
+        <i class="sort descending icon" *ngIf="order('nameSurname')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('nameSurname')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('company')">Nazwa firmy
+        <i class="sort icon" *ngIf="order('company')==''"></i>
+        <i class="sort descending icon" *ngIf="order('company')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('company')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('phone')">Telefon
+        <i class="sort icon" *ngIf="order('phone')==''"></i>
+        <i class="sort descending icon" *ngIf="order('phone')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('phone')=='ASC'"></i>
+    </th>
+    <th (click)="sortingBy('email')">Email
+    <i class="sort icon" *ngIf="order('email')==''"></i>
+        <i class="sort descending icon" *ngIf="order('email')=='DESC'"></i>
+        <i class="sort ascending icon" *ngIf="order('email')=='ASC'"></i>
+    </th>
   </tr></thead>
-  <tbody>
+  <tbody *ngIf="isReturn()">
     <tr *ngFor="let consumer of consumers">
     <td class="collapsing">
         <div class="ui fitted checkbox">
-          <input type="checkbox"> <label></label>
+          <input type="checkbox" (change)="addDelete(consumer.id)" [checked]="isCheck(consumer.id)"> <label></label>
         </div>
       </td>
       <td><a [routerLink]="['/consumers', consumer.id]">{{ consumer?.name }}</a></td>
@@ -27,11 +60,18 @@
     </tr>
 
   </tbody>
+  <tbody *ngIf="!isReturn()">
+    <tr>
+        <td colspan="8" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+            Nie znaleziono
+        </td>
+    </tr>
+</tbody>
   <tfoot>
     <tr><th colspan="8">
-        <div class="ui  red labeled icon button disabled">
+        <button class="ui  red labeled icon button" [disabled]="isDelete()" (click)="deleteChecked()">
           <i class="trash icon"></i> Usuń
-        </div>
+        </button>
       <div class="ui right floated pagination menu small">
         <a class="icon item">
           <i class="left chevron icon"></i>

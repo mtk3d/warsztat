@@ -42,8 +42,33 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function searchQuery(int $userId, string $searchStr)
+    public function searchQuery(int $userId, string $searchStr, string $orderBy, string $sort)
     {
+        if($orderBy!='')
+        {
+            if($orderBy == 'name' || 
+                $orderBy == 'namesurname' || 
+                $orderBy == 'company' || 
+                $orderBy == 'phone' || 
+                $orderBy == 'email')
+            {
+                $orderBy = 'ORDER BY d.'.$orderBy;
+            }else{
+                $orderBy = '';
+            }
+        }
+        if($sort!='')
+        {
+            if(($sort == 'ASC' || $sort == 'DESC') && $orderBy != '')
+            {
+                $sort = $sort;
+            }else{
+                $sort = '';
+            }
+        }
+
+        $sorting = $orderBy.' '.$sort;
+
         $query = $this->_em->createQuery(
             "
             SELECT d
@@ -60,7 +85,7 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
             OR d.postalCode LIKE :searchStr
             OR d.post LIKE :searchStr
             OR d.notes LIKE :searchStr)
-            "
+            ".$sorting
         );
 
         $query->setParameter('userId', $userId);
