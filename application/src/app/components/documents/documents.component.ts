@@ -19,6 +19,11 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     search: string = '';
     orderBy: string = 'date';
     sorting: string = 'ASC';
+    pages: number;
+    itemsPerPage: number;
+    actualPage: number = 1;
+    pagesButtons: Array<number> = [];
+    singlePageDocuments: Document[] = [];
     sub: any;
  
     constructor(private documentService: DocumentService) { }
@@ -32,11 +37,19 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(documents => {
                 this.documents = documents;
                 this.documentsReturn = true;
+                this.pagesInit();
             },
             (err)=>this.documentsReturn = false
         );
         this.delete = [];
         this.allDeleteChecked = false;
+    }
+
+    pagesInit()
+    {
+        this.itemsPerPage = Math.floor((window.innerHeight-300)/43);
+        this.pages = Math.ceil(this.documents.length/this.itemsPerPage);
+        this.page(1);
     }
 
     typeChange(type){
@@ -50,6 +63,38 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
             return true;
         }else{
             return false;
+        }
+    }
+
+    page(pageNumber)
+    {
+        this.pagesButtons = [];
+        this.singlePageDocuments = [];
+        this.actualPage = pageNumber;
+        let startItem = (this.actualPage-1) * this.itemsPerPage;
+        let last = this.itemsPerPage;
+        if(this.actualPage == this.pages)
+        {
+            last = this.documents.length-((this.pages-1)*this.itemsPerPage);
+        }
+        for(let i=0; i<last; i++)
+        {
+            if(this.documents[startItem + i] != null)
+            {
+                this.singlePageDocuments[i] = this.documents[startItem + i];
+            }
+        }
+
+        let firstButton = this.actualPage-2;
+
+        let indexOfButton = 0;
+        for(let n = 0; n<5; n++)
+        {
+            if(firstButton+n>0 && firstButton+n<=this.pages)
+            {
+                this.pagesButtons[indexOfButton] = firstButton+n;
+                indexOfButton++;
+            }
         }
     }
 
