@@ -68,32 +68,46 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
 
     page(pageNumber)
     {
-        this.pagesButtons = [];
-        this.singlePageDocuments = [];
-        this.actualPage = pageNumber;
-        let startItem = (this.actualPage-1) * this.itemsPerPage;
-        let last = this.itemsPerPage;
-        if(this.actualPage == this.pages)
+        if(pageNumber>=1 && pageNumber<=this.pages)
         {
-            last = this.documents.length-((this.pages-1)*this.itemsPerPage);
-        }
-        for(let i=0; i<last; i++)
-        {
-            if(this.documents[startItem + i] != null)
+            this.pagesButtons = [];
+            this.singlePageDocuments = [];
+            this.actualPage = pageNumber;
+            let startItem = (this.actualPage-1) * this.itemsPerPage;
+            let last = this.itemsPerPage;
+            if(this.actualPage == this.pages)
             {
-                this.singlePageDocuments[i] = this.documents[startItem + i];
+                last = this.documents.length-((this.pages-1)*this.itemsPerPage);
             }
-        }
-
-        let firstButton = this.actualPage-2;
-
-        let indexOfButton = 0;
-        for(let n = 0; n<5; n++)
-        {
-            if(firstButton+n>0 && firstButton+n<=this.pages)
+            for(let i=0; i<last; i++)
             {
-                this.pagesButtons[indexOfButton] = firstButton+n;
-                indexOfButton++;
+                if(this.documents[startItem + i] != null)
+                {
+                    this.singlePageDocuments[i] = this.documents[startItem + i];
+                }
+            }
+
+            let firstButton, lastButton;
+            if(this.pages<=6)
+            {
+                firstButton = 1;
+                lastButton = this.pages;
+            }else{
+                if(this.actualPage <= 3)
+                {
+                    firstButton = 1;
+                    lastButton = 5;
+                }else if(this.actualPage + 2 >= this.pages) {
+                    firstButton = this.pages - 4;
+                    lastButton = this.pages;
+                } else {
+                    firstButton = this.actualPage - 2;
+                    lastButton = this.actualPage + 2;
+                }
+            }
+
+            for (var i = firstButton; i <= lastButton; i++) {
+                this.pagesButtons.push(i);
             }
         }
     }
@@ -165,9 +179,9 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
         if(!this.allDeleteChecked)
         {
             this.allDeleteChecked = true;
-            for(let item in this.documents)
+            for(let item in this.singlePageDocuments)
             {
-                let id = this.documents[item].id;
+                let id = this.singlePageDocuments[item].id;
                 if(this.delete.indexOf(id) == -1)
                 {
                     this.delete.push(id);
@@ -182,9 +196,9 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     isAllChecked()
     {
         let is = true;
-        for(let item in this.documents)
+        for(let item in this.singlePageDocuments)
         {
-            let id = this.documents[item].id;
+            let id = this.singlePageDocuments[item].id;
             if(this.delete.indexOf(id) == -1)
             {
                 is = false;

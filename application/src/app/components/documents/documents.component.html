@@ -40,39 +40,25 @@
         </div>
     </th>
     <th (click)="sortingBy('number')">Numer 
-        <i class="sort icon" *ngIf="order('number')==''"></i>
-        <i class="sort descending icon" *ngIf="order('number')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('number')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('number')=='DESC'), 'ascending': (order('number')=='ASC')}"></i>
     </th>
     <th (click)="sortingBy('type')">Typ 
-        <i class="sort icon" *ngIf="order('type')==''"></i>
-        <i class="sort descending icon" *ngIf="order('type')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('type')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('type')=='DESC'), 'ascending': (order('type')=='ASC')}"></i>
     </th>
     <th (click)="sortingBy('date')">Data wystawienia 
-        <i class="sort icon" *ngIf="order('date')==''"></i>
-        <i class="sort descending icon" *ngIf="order('date')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('date')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('date')=='DESC'), 'ascending': (order('date')=='ASC')}"></i>
     </th>
     <th (click)="sortingBy('dateOfPayment')">Data płatności 
-        <i class="sort icon" *ngIf="order('dateOfPayment')==''"></i>
-        <i class="sort descending icon" *ngIf="order('dateOfPayment')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('dateOfPayment')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('dateOfPayment')=='DESC'), 'ascending': (order('dateOfPayment')=='ASC')}"></i>
     </th>
     <th (click)="sortingBy('paymentMethod')">Metoda płatności 
-        <i class="sort icon" *ngIf="order('paymentMethod')==''"></i>
-        <i class="sort descending icon" *ngIf="order('paymentMethod')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('paymentMethod')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('paymentMethod')=='DESC'), 'ascending': (order('paymentMethod')=='ASC')}"></i>
     </th>
     <th (click)="sortingBy('paid')">Zapłacono 
-        <i class="sort icon" *ngIf="order('paid')==''"></i>
-        <i class="sort descending icon" *ngIf="order('paid')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('paid')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('paid')=='DESC'), 'ascending': (order('paid')=='ASC')}"></i>
     </th>
     <th (click)="sortingBy('consumer')">Klient 
-        <i class="sort icon" *ngIf="order('consumer')==''"></i>
-        <i class="sort descending icon" *ngIf="order('consumer')=='DESC'"></i>
-        <i class="sort ascending icon" *ngIf="order('consumer')=='ASC'"></i>
+        <i class="sort icon" [ngClass]="{'descending': (order('consumer')=='DESC'), 'ascending': (order('consumer')=='ASC')}"></i>
     </th>
   </tr></thead>
   <tbody *ngIf="isReturn()">
@@ -87,7 +73,7 @@
       <td>{{ document.date | date: 'dd/MM/yyyy'  }}</td>
       <td>{{ document.date_of_payment | date: 'dd/MM/yyyy' }}</td>
       <td>{{ document.payment_method }}</td>
-      <td><span *ngIf="document.paid">Tak</span><span *ngIf="!document.paid">Nie</span></td>
+      <td>{{document.paid ? "Tak" : "Nie"}}</td>
       <td>{{ document.consumer.name }}</td>
     </tr>
 
@@ -105,19 +91,19 @@
           <i class="trash icon"></i> Usuń
         </button>
       <div class="ui right floated pagination menu small">
-        <a class="item" (click)="page(1)" *ngIf="actualPage>1">
+        <a class="item" (click)="page(1)" [ngClass]="{'disabled': (actualPage<=1)}">
           Pierwsza
         </a>
-        <a class="icon item" (click)="page(actualPage-1)" *ngIf="actualPage>1">
+        <a class="icon item" (click)="page(actualPage-1)" [ngClass]="{'disabled': (actualPage<=1)}">
           <i class="left chevron icon"></i>
         </a>
         <span *ngFor="let button of pagesButtons">
             <a class="item" [ngClass]="{'active': (button==actualPage)}" (click)="page(button)">{{button}}</a>
         </span>
-        <a class="icon item" (click)="page(actualPage+1)" *ngIf="actualPage<pages"> 
+        <a class="icon item" (click)="page(actualPage+1)" [ngClass]="{'disabled': (actualPage>=pages)}"> 
           <i class="right chevron icon"></i>
         </a>
-        <a class="item" (click)="page(pages)" *ngIf="actualPage<pages">
+        <a class="item" (click)="page(pages)" [ngClass]="{'disabled': (actualPage>=pages)}">
           Ostatnia
         </a>
       </div>
