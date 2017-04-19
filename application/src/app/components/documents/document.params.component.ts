@@ -7,8 +7,8 @@ import { Document } from '../../_models/document.model';
 
 @Component({
   moduleId: module.id,
-  selector: 'document',
-  templateUrl: 'document.component.html'
+  selector: 'document-params',
+  templateUrl: 'document.params.component.html'
 })
 export class DocumentComponent implements OnInit, OnDestroy{
  
@@ -29,7 +29,7 @@ export class DocumentComponent implements OnInit, OnDestroy{
        this.documentService.getDocument(this.id)
             .subscribe(document => {
                 this.document = document;
-                this.consumerId = document['consumerId'];
+                this.consumerId = document['consumer_id'];
         });
 
     });

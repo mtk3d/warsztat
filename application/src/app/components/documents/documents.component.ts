@@ -86,7 +86,7 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
                     this.singlePageDocuments[i] = this.documents[startItem + i];
                 }
             }
-
+            this.delete = [];
             let firstButton, lastButton;
             if(this.pages<=6)
             {

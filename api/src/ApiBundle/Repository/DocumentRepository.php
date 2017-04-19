@@ -14,9 +14,37 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT d, c
+            SELECT d.id, 
+                d.number, 
+                d.date, 
+                d.dateOfPayment, 
+                d.paymentMethod, 
+                d.paid,
+                d.netto,
+                d.brutto,
+                d.vat,
+                d.vatSum,
+                c.id as consumerId
             FROM ApiBundle:Document d
-            JOIN d.consumer c
+            JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindOneByIdUpdateQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:Document d
             WHERE d.id = :id
             AND d.userId = :userId
             "
@@ -90,18 +118,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             ."' OR d.dateOfPayment LIKE '".$searchStr
             ."' OR d.paymentMethod LIKE '".$searchStr
             ."' OR d.notes LIKE '".$searchStr
-            ."' OR c.company LIKE '".$searchStr
-            ."' OR c.name LIKE '".$searchStr
-            ."' OR c.nip LIKE '".$searchStr
-            ."' OR c.phone LIKE '".$searchStr
-            ."' OR c.pesel LIKE '".$searchStr
-            ."' OR c.email LIKE '".$searchStr
-            ."' OR c.www LIKE '".$searchStr
-            ."' OR c.street LIKE '".$searchStr
-            ."' OR c.place LIKE '".$searchStr
-            ."' OR c.postalCode LIKE '".$searchStr
-            ."' OR c.post LIKE '".$searchStr
-            ."' OR c.notes LIKE '".$searchStr."')";
+            ."' OR c.name LIKE '".$searchStr."')";
         }
         if($orderBy!='')
         {
@@ -133,9 +150,18 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
 
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d.id, 
+                d.number, 
+                d.type, 
+                d.date, 
+                d.dateOfPayment, 
+                d.paymentMethod, 
+                d.paid , 
+                c.id as consumerId, 
+                c.name as consumerName
             FROM ApiBundle:Document d
-            JOIN d.consumer c
+            JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
             WHERE d.userId = :userId
             ".$filters
         );

@@ -4,9 +4,9 @@
             <h2 class="ui horizontal divider header">{{ document.number }}</h2>
             <div class="ui right floated icon button mini"><i class="write icon"></i></div>
             <b>Wystawiono:</b> {{ document.date | date: 'dd/MM/yyyy'  }}<br>
-            <b>Data płatności:</b> {{ document.date_of_payment | date: 'dd/MM/yyyy'  }}<br>
-            <b>Metoda płatności:</b> {{ document.payment_method }}<br>
-            <b>Zapłacono:</b> <span *ngIf="document.paid">Tak</span><span *ngIf="!document.paid">Nie</span><br>
+            <b>Data płatności:</b> {{ document.dateOfPayment | date: 'dd/MM/yyyy'  }}<br>
+            <b>Metoda płatności:</b> {{ document.paymentMethod }}<br>
+            <b>Zapłacono:</b> {{document.paid ? "Tak" : "Nie"}}<br>
         </div>
         <div class="ui segment">
             <h3 class="ui horizontal divider header">Sprzedawca</h3>

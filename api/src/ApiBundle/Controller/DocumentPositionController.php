@@ -71,7 +71,7 @@ class DocumentPositionController extends FOSRestController implements ClassResou
         $documentId = $request->request->get('documentId');
 
         $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($documentId, $this->getUserId())
+            ->createFindOneByIdUpdateQuery($documentId, $this->getUserId())
             ->getOneOrNullResult();
 
         if($document == null) {

@@ -15,14 +15,6 @@ class Document
 {
 
     /**
-     * Many Documents have One Consumer.
-     * @ORM\ManyToOne(targetEntity="Consumer")
-     * @ORM\JoinColumn(name="consumer_id", referencedColumnName="id")
-     */
-    private $consumer;
-
-
-    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
