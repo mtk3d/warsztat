@@ -60,7 +60,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
     public function postAction(Request $request)
     {
-        $dateTime = new \DateTime('now');
         $employee = new Employee();
 
         $form = $this->createForm(EmployeeType::class, $employee, [
@@ -75,8 +74,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         }
 
         $employee->setUserId($this->getUserId());
-        $employee->setCreatedAt($dateTime);
-        $employee->setUpdatedAt($dateTime);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($employee);
@@ -91,7 +88,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
     public function putAction(Request $request, int $id)
     {
-        $dateTime = new \DateTime('now');
         $employee = $this->getEmployeeRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
@@ -100,7 +96,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $employee->setUpdatedAt($dateTime);
 
         $form = $this->createForm(EmployeeType::class, $employee, [
             'csrf_protection' => false,
@@ -125,7 +120,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
     public function patchAction(Request $request, int $id)
     {
-        $dateTime = new \DateTime('now');
         $employee = $this->getemployeeRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
@@ -133,8 +127,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         if ($employee == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-
-        $employee->setUpdatedAt($dateTime);
 
         $form = $this->createForm(EmployeeType::class, $employee, [
             'csrf_protection' => false,

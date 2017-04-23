@@ -2,8 +2,8 @@
 
 namespace ApiBundle\Controller;
 
-use ApiBundle\Entity\DocumentPosition;
-use ApiBundle\Form\Type\DocumentPositionType;
+use ApiBundle\Entity\ServiceOrderPosition;
+use ApiBundle\Form\Type\ServiceOrderPositionType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\View\RouteRedirectView;
@@ -16,22 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class DocumentPositionController
+ * Class ServiceOrderPositionController
  * @package AppBundle\Controller
  *
- * @RouteResource("DocumentPosition")
+ * @RouteResource("ServiceOrderPosition")
  */
-class DocumentPositionController extends FOSRestController implements ClassResourceInterface
+class ServiceOrderPositionController extends FOSRestController implements ClassResourceInterface
 {
 
-    private function getDocumentPositionRepository()
+    private function getServiceOrderPositionRepository()
     {
-        return $this->get('crv.doctrine_entity_repository.document_position');
-    }
-
-    private function getDocumentRepository()
-    {
-        return $this->get('crv.doctrine_entity_repository.document');
+        return $this->get('crv.doctrine_entity_repository.service_order_position');
     }
 
     private function getUserId()
@@ -39,46 +34,35 @@ class DocumentPositionController extends FOSRestController implements ClassResou
         return $this->getUser()->getId();
     }
 
-    public function getDocumentAction(int $documentId)
+    public function getOrderAction(int $orderId)
     {
-        $documentPosition = $this->getDocumentPositionRepository()
-            ->createFindByDocumentIdQuery($documentId, $this->getUserId())
+        $serviceOrderPosition = $this->getServiceOrderPositionRepository()
+            ->createFindByOrderIdQuery($orderId, $this->getUserId())
             ->getResult();
 
-        if ($documentPosition == null) {
+        if ($serviceOrderPosition == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $documentPosition;
+        return $serviceOrderPosition;
     }
 
     public function getAction(int $id)
     {
-        $documentPosition = $this->getDocumentPositionRepository()
+        $serviceOrderPosition = $this->getServiceOrderPositionRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if($documentPosition == null) {
+        if($serviceOrderPosition == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $documentPosition;
+        return $serviceOrderPosition;
     }
 
     public function postAction(Request $request)
     {
-        $dateTime = new \DateTime('now');
-        $documentPosition = new DocumentPosition();
+        $serviceOrderPosition = new ServiceOrderPosition();
 
-        $documentId = $request->request->get('documentId');
-
-        $document = $this->getDocumentRepository()
-            ->createFindOneByIdUpdateQuery($documentId, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $form = $this->createForm(DocumentPositionType::class, $documentPosition, [
+        $form = $this->createForm(ServiceOrderPositionType::class, $serviceOrderPosition, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -89,61 +73,31 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return $form;
         }
 
-        $netto = intval($document->getNetto())+intval($request->request->get('netto'));
-        $brutto = intval($document->getBrutto())+intval($request->request->get('brutto'));
-        $vatSum = intval($document->getVatSum())+intval($request->request->get('vatSum'));
-
-        $document->setNetto($netto);
-        $document->setBrutto($brutto);
-        $document->setVatSum($vatSum);
-
-        $documentPosition->setUserId($this->getUserId());
-        $documentPosition->setDocumentId($documentId);
-        $documentPosition->setCreatedAt($dateTime);
-        $documentPosition->setUpdatedAt($dateTime);
+        $serviceOrderPosition->setUserId($this->getUserId());
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($documentPosition);
-        $em->flush();
-
-        $em->persist($document);
+        $em->persist($serviceOrderPosition);
         $em->flush();
 
         $routeOptions = [
-            'id' => $document->getId(),
+            'id' => $serviceOrderPosition->getId(),
         ];
 
-        return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_CREATED);
+        return $this->routeRedirectView('get_serviceorderposition', $routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
     {
-        $dateTime = new \DateTime('now');
-        $documentPosition = $this->getDocumentPositionRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+        $serviceOrderPosition = $this->getServiceOrderPositionRepository()
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($documentPosition == null) {
+        if ($serviceOrderPosition == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $documentId = $documentPosition->getDocumentId();
 
-        $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($documentId, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if ($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $netto = (intval($document->getNetto()) - intval($documentPosition->getNetto()))+$request->request->get('netto');
-        $brutto = (intval($document->getBrutto()) - intval($documentPosition->getNetto()))+$request->request->get('brutto');
-        $vatSum = (intval($document->getVatSum()) - intval($documentPosition->getNetto()))+$request->request->get('vatSum');
-
-        $documentPosition->setUpdatedAt($dateTime);
-
-        $form = $this->createForm(DocumentPositionType::class, $documentPosition, [
+        $form = $this->createForm(ServiceOrderPositionType::class, $serviceOrderPosition, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -154,20 +108,14 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return $form;
         }
 
-        $document->setNetto($netto);
-        $document->setBrutto($brutto);
-        $document->setVatSum($vatSum);
-
         $em = $this->getDoctrine()->getManager();
-        $em->flush();
-        $em->persist($document);
         $em->flush();
 
         $routeOptions = [
-            'id' => $document->getId(),
+            'id' => $serviceOrderPosition->getId(),
         ];
 
-        return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_serviceorderposition', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     /*public function patchAction(Request $request, int $id)
@@ -206,36 +154,16 @@ class DocumentPositionController extends FOSRestController implements ClassResou
 
     public function deleteAction(int $id)
     {
-        $documentPosition = $this->getDocumentPositionRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+        $serviceOrderPosition = $this->getServiceOrderPositionRepository()
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($documentPosition == null) {
+        if ($serviceOrderPosition == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-
-        $documentId = $documentPosition->getDocumentId();
-
-        $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($documentId, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if ($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $netto = intval($document->getNetto()) - intval($documentPosition->getNetto());
-        $brutto = intval($document->getBrutto()) - intval($documentPosition->getNetto());
-        $vatSum = intval($document->getVatSum()) - intval($documentPosition->getNetto());
-
-        $document->setNetto($netto);
-        $document->setBrutto($brutto);
-        $document->setVatSum($vatSum);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($document);
-        $em->flush();
-        $em->remove($documentPosition);
+        $em->remove($serviceOrderPosition);
         $em->flush();
 
         return new View(null, Response::HTTP_NO_CONTENT);

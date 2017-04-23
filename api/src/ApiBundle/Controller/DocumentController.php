@@ -29,6 +29,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         return $this->get('crv.doctrine_entity_repository.document');
     }
 
+    private function getDocumentPositionRepository()
+    {
+        return $this->get('crv.doctrine_entity_repository.document_position');
+    }
+
     private function getUserId()
     {
         return $this->getUser()->getId();
@@ -199,12 +204,20 @@ class DocumentController extends FOSRestController implements ClassResourceInter
             ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
+        $documentId = $document->getId();
+
+        $documentPosition = $this->getDocumentPositionRepository()
+            ->createFindByDocumentIdQuery($documentId, $this->getUserId())
+            ->getResult();
+
         if ($document == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($document);
+        $em->flush();
+        $em->remove($documentPosition);
         $em->flush();
 
         return new View(null, Response::HTTP_NO_CONTENT);

@@ -10,4 +10,78 @@ namespace ApiBundle\Repository;
  */
 class ServiceOrderPositionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createFindOneByIdQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.id,
+                d.serviceId,
+                d.name,
+                d.netto,
+                d.brutto,
+                d.vat,
+                d.vatSum,
+                d.quantity,
+                d.completed,
+                e.firstName,
+                e.lastName
+            FROM ApiBundle:ServiceOrderPosition d
+            JOIN ApiBundle\Entity\Employee e
+            WITH d.employeeId = e.id
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindByOrderIdQuery(int $orderId, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.id,
+                d.serviceId,
+                d.name,
+                d.netto,
+                d.brutto,
+                d.vat,
+                d.vatSum,
+                d.quantity,
+                d.completed,
+                e.firstName,
+                e.lastName
+            FROM ApiBundle:ServiceOrderPosition d
+            JOIN ApiBundle\Entity\Employee e
+            WITH d.employeeId = e.id
+            WHERE d.orderId = :orderId
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('orderId', $orderId);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createUpdateQuery(int $positionId, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:ServiceOrderPosition d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $positionId);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
 }
