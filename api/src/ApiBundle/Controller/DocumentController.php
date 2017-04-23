@@ -59,22 +59,17 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         return $documents;
     }
 
-    public function getListAction($type)
+    public function getConsumerAction(Request $request, int $consumerId)
     {
+        $type = $request->query->get('type', '');
+        $from = $request->query->get('from', '');
+        $to = $request->query->get('to', '');
+        $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('order_by', '');
+        $sorting = $request->query->get('sorting', '');
+        
         $document = $this->getDocumentRepository()
-            ->createFindByTypeQuery($type, $this->getUserId())
-            ->getResult();
-
-        if($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-        return $document;
-    }
-
-    public function getConsumerAction(int $consumerId)
-    {
-        $document = $this->getDocumentRepository()
-            ->createFindByConsumerIdQuery($consumerId, $this->getUserId())
+            ->createFindByConsumerIdQuery($consumerId, $this->getUserId(), $type, $from, $to, $search, $orderBy, $sorting)
             ->getResult();
 
         if ($document == null) {
@@ -134,7 +129,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     {
         $dateTime = new \DateTime('now');
         $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($document == null) {
@@ -168,7 +163,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     {
         $dateTime = new \DateTime('now');
         $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($document == null) {
@@ -201,7 +196,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
     public function deleteAction(int $id)
     {
         $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($document == null) {

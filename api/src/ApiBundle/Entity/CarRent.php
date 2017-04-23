@@ -31,6 +31,13 @@ class CarRent
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="registration_number", type="string", length=255)
      */
     private $registrationNumber;
@@ -113,6 +120,30 @@ class CarRent
     public function getRegistrationNumber()
     {
         return $this->registrationNumber;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return CarRent
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

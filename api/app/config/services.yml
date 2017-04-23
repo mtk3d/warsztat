@@ -74,6 +74,18 @@ services:
         arguments:
             - ApiBundle\Entity\CarRentHistory
 
+    crv.doctrine_entity_repository.service_order:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\ServiceOrder
+
+    crv.doctrine_entity_repository.service_order_position:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - ApiBundle\Entity\ServiceOrderPosition
+
     utils.document_number.generate:
         class: ApiBundle\Utils\DocumentNumberGenerator
         arguments: ['@service_container']

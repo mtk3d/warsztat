@@ -10,4 +10,167 @@ namespace ApiBundle\Repository;
  */
 class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
 {
+    private function filters(string $from, string $to, string $search, string $orderBy, string $sort)
+    {
+        if($from!='')
+        {
+            $from = "AND d.date >= '".$from."'";
+        }
+        if($to!='')
+        {
+            $to = "AND d.date <= '".$to."'";
+        }
+        if($search!='')
+        {
+            $searchStr = '%'.$search.'%';
+            $search = "AND (d.id LIKE '".$searchStr
+            ."' OR d.date LIKE '".$searchStr
+            ."' OR d.term LIKE '".$searchStr
+            ."' OR d.notes LIKE '".$searchStr
+            ."' OR v.model LIKE '".$searchStr
+            ."' OR v.mark LIKE '".$searchStr
+            ."' OR v.registrationNumber LIKE '".$searchStr
+            ."' OR c.name LIKE '".$searchStr."')";
+        }
+        if($orderBy!='')
+        {
+            if($orderBy == 'id' || 
+                $orderBy == 'date' || 
+                $orderBy == 'term' || 
+                $orderBy == 'completed' || 
+                $orderBy == 'notes')
+            {
+                $orderBy = 'ORDER BY d.'.$orderBy;
+            }else if($orderBy == 'consumer')
+            {
+                $orderBy = 'ORDER BY c.name';
+            }else if($orderBy == 'model' ||
+                $orderBy == 'mark' ||
+                $orderBy == 'registrationNumber')
+            {
+                $orderBy = 'ORDER BY v.'.$orderBy;
+            }else{
+                $orderBy = '';
+            }
+        }
+        if($sort!='')
+        {
+            if(($sort == 'ASC' || $sort == 'DESC') && $orderBy != '')
+            {
+                $sort = $sort;
+            }else{
+                $sort = '';
+            }
+        }
+
+        $filter = $from.$to.$search.$orderBy.' '.$sort;
+        return $filter;
+    }
+
+    public function createFindOneByIdQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.id, 
+                d.date, 
+                d.term, 
+                d.completed, 
+                d.notes, 
+                v.model,
+                v.mark,
+                v.registrationNumber,
+                c.id as consumerId
+            FROM ApiBundle:ServiceOrder d
+            JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
+            LEFT JOIN ApiBundle\Entity\Vehicle v
+            WITH d.vehicleId = v.id
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createUpdateQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:ServiceOrder d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindByConsumerIdQuery(int $consumerId, int $userId, string $from, string $to, string $search, string $orderBy, string $sort)
+    {
+        $filters = $this->filters($from, $to, $search, $orderBy, $sort);
+
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.id, 
+                d.date, 
+                d.term, 
+                d.completed, 
+                d.notes, 
+                v.model,
+                v.mark,
+                v.registrationNumber,
+                c.id as consumerId, 
+                c.name as consumerName
+            FROM ApiBundle:ServiceOrder d
+            JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
+            LEFT JOIN ApiBundle\Entity\Vehicle v
+            WITH d.vehicleId = v.id
+            WHERE d.userId = :userId
+            ".$filters
+        );
+
+        $query->setParameter('consumerId', $consumerId);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindAllQuery(int $userId, string $from, string $to, string $search, string $orderBy, string $sort)
+    {
+        $filters = $this->filters( $from, $to, $search, $orderBy, $sort);
+
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.id, 
+                d.date, 
+                d.term, 
+                d.completed, 
+                d.notes,
+                v.model,
+                v.mark,
+                v.registrationNumber,
+                c.id as consumerId, 
+                c.name as consumerName
+            FROM ApiBundle:ServiceOrder d
+            JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
+            LEFT JOIN ApiBundle\Entity\Vehicle v
+            WITH d.vehicleId = v.id
+            WHERE d.userId = :userId
+            ".$filters
+        );
+
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace ApiBundle\Controller;
 
-use ApiBundle\Entity\CarRent;
-use ApiBundle\Form\Type\CarRentType;
+use ApiBundle\Entity\ServiceOrder;
+use ApiBundle\Form\Type\ServiceOrderType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\View\RouteRedirectView;
@@ -16,17 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class CarRentController
+ * Class ServiceOrderController
  * @package AppBundle\Controller
  *
- * @RouteResource("CarRent")
+ * @RouteResource("ServiceOrder")
  */
-class CarRentController extends FOSRestController implements ClassResourceInterface
+class ServiceOrderController extends FOSRestController implements ClassResourceInterface
 {
 
-    private function getCarRentRepository()
+    private function getServiceOrderRepository()
     {
-        return $this->get('crv.doctrine_entity_repository.car_rent');
+        return $this->get('crv.doctrine_entity_repository.service_order');
     }
 
     private function getUserId()
@@ -36,37 +36,59 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
 
     public function cgetAction(Request $request)
     {
+        $from = $request->query->get('from', '');
+        $to = $request->query->get('to', '');
         $search = $request->query->get('search', '');
         $orderBy = $request->query->get('order_by', '');
         $sorting = $request->query->get('sorting', '');
 
-        $carRents = $this->getCarRentRepository()
-            ->createFindAllQuery($this->getUserId(), $search, $orderBy, $sorting)
+        $serviceOrders = $this->getServiceOrderRepository()
+            ->createFindAllQuery($this->getUserId(), $from, $to, $search, $orderBy, $sorting)
             ->getResult();
-
-        if($carRents == null) {
+            
+        if($serviceOrders == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $carRents;
+
+        return $serviceOrders;
+    }
+
+    public function getConsumerAction(Request $request, int $consumerId)
+    {
+        $from = $request->query->get('from', '');
+        $to = $request->query->get('to', '');
+        $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('order_by', '');
+        $sorting = $request->query->get('sorting', '');
+        
+        $serviceOrder = $this->getServiceOrderRepository()
+            ->createFindByConsumerIdQuery($consumerId, $this->getUserId(), $from, $to, $search, $orderBy, $sorting)
+            ->getResult();
+
+        if ($serviceOrder == null) {
+            return new View(null, Response::HTTP_NOT_FOUND);
+        }
+        return $serviceOrder;
     }
 
     public function getAction(int $id)
     {
-        $carRent = $this->getCarRentRepository()
+        $serviceOrder = $this->getServiceOrderRepository()
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if($carRent == null) {
+        if($serviceOrder == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        return $carRent;
+        return $serviceOrder;
     }
 
     public function postAction(Request $request)
     {
-        $carRent = new CarRent();
+        $dateTime = new \DateTime('now');
+        $serviceOrder = new ServiceOrder();
 
-        $form = $this->createForm(CarRentType::class, $carRent, [
+        $form = $this->createForm(ServiceOrderType::class, $serviceOrder, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -77,30 +99,35 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             return $form;
         }
 
-        $carRent->setUserId($this->getUserId());
+        $serviceOrder->setUserId($this->getUserId());
+        $serviceOrder->setCreatedAt($dateTime);
+        $serviceOrder->setUpdatedAt($dateTime);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($carRent);
+        $em->persist($serviceOrder);
         $em->flush();
 
         $routeOptions = [
-            'id' => $carRent->getId(),
+            'id' => $serviceOrder->getId(),
         ];
 
-        return $this->routeRedirectView('get_carrent', $routeOptions, Response::HTTP_CREATED);
+        return $this->routeRedirectView('get_serviceorder', $routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
     {
-        $carRent = $this->getCarRentRepository()
+        $dateTime = new \DateTime('now');
+        $serviceOrder = $this->getServiceOrderRepository()
             ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($carRent == null) {
+        if ($serviceOrder == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(CarRentEditType::class, $carRent, [
+        $serviceOrder->setUpdatedAt($dateTime);
+
+        $form = $this->createForm(ServiceOrderType::class, $serviceOrder, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -115,23 +142,26 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
         $em->flush();
 
         $routeOptions = [
-            'id' => $carRent->getId(),
+            'id' => $serviceOrder->getId(),
         ];
 
-        return $this->routeRedirectView('get_carrent', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_serviceorder', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function patchAction(Request $request, int $id)
     {
-        $carRent = $this->getCarRentRepository()
+        $dateTime = new \DateTime('now');
+        $serviceOrder = $this->getServiceOrderRepository()
             ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($carRent == null) {
+        if ($serviceOrder == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(CarRentEditType::class, $carRent, [
+        $serviceOrder->setUpdatedAt($dateTime);
+
+        $form = $this->createForm(ServiceOrderType::class, $serviceOrder, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -146,24 +176,24 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
         $em->flush();
 
         $routeOptions = [
-            'id' => $carRent->getId(),
+            'id' => $serviceOrder->getId(),
         ];
 
-        return $this->routeRedirectView('get_carrent', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_serviceorder', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
     public function deleteAction(int $id)
     {
-        $carRent = $this->getCarRentRepository()
+        $serviceOrder = $this->getServiceOrderRepository()
             ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($carRent == null) {
+        if ($serviceOrder == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($carRent);
+        $em->remove($serviceOrder);
         $em->flush();
 
         return new View(null, Response::HTTP_NO_CONTENT);

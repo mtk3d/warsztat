@@ -41,3 +41,11 @@ car_rent:
 car_rent_history:
     type: rest
     resource: ApiBundle\Controller\CarRentHistoryController
+
+service_order:
+    type: rest
+    resource: ApiBundle\Controller\ServiceOrderController
+
+service_order_position:
+    type: rest
+    resource: ApiBundle\Controller\ServiceOrderPositionController
