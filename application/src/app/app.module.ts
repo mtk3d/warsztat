@@ -22,9 +22,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { DocumentComponent } from './components/documents/document.component';
+import { DocumentAddComponent } from './components/documents/document.add.component';
 import { DocumentConsumerComponent } from './components/documents/document.consumer.component';
 import { DocumentPositionsComponent } from './components/documents/document.positions.component';
 import { ConsumersComponent } from './components/consumers/consumers.component';
+import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
 
@@ -41,9 +43,11 @@ import { OrdersComponent } from './components/orders/orders.component';
     BreadcrumbComponent,
     DocumentsComponent,
     DocumentComponent,
+    DocumentAddComponent,
     DocumentConsumerComponent,
     DocumentPositionsComponent,
     ConsumersComponent,
+    ConsumerInputComponent,
     OrdersComponent
   ],
   imports: [
@@ -52,62 +56,19 @@ import { OrdersComponent } from './components/orders/orders.component';
     HttpModule,
     JsonpModule,
     RouterModule.forRoot([
-      {
-        path: '',
-        redirectTo: 'documents',
-        pathMatch: 'full'
-      },
-      {
-          path: 'documents',
-          component: DocumentsComponent,
-          canActivate: [AuthGuard]
-      },
-      {
-          path: 'documents/:id',
-          component: DocumentComponent,
-          canActivate: [AuthGuard]
-      },
-      {
-          path: 'consumers',
-          component: ConsumersComponent,
-          canActivate: [AuthGuard]
-      },
-      {
-          path: 'newdocument',
-          component: DocumentsComponent,
-          canActivate: [AuthGuard]
-      },
-      {
-          path: 'orders',
-          component: OrdersComponent,
-          canActivate: [AuthGuard]
-      },
-      {
-          path: 'settings',
-          component: SettingsComponent,
-          canActivate: [AuthGuard]
-      },
-      {
-          path: 'timetable',
-          component: TimetableComponent
-      },
-      {
-          path: 'about',
-          component: AboutComponent
-      },
-      {
-          path: 'login',
-          component: LoginComponent
-      },
-      {
-          path: 'register',
-          component: RegisterComponent,
-          canActivate: [!AuthGuard]
-      },
-      {
-          path: '**',
-          component: PageNotFoundComponent
-      }
+      {path: '', redirectTo: 'documents', pathMatch: 'full'},
+      {path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard]},
+      {path: 'documents/:id', component: DocumentComponent, canActivate: [AuthGuard]},
+      {path: 'document/add', component: DocumentAddComponent, canActivate: [AuthGuard]},
+      {path: 'consumers', component: ConsumersComponent, canActivate: [AuthGuard]},
+      {path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard]},
+      {path: 'orders', component: OrdersComponent, canActivate: [AuthGuard]},
+      {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
+      {path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard]},
+      {path: 'about', component: AboutComponent},
+      {path: 'login', component: LoginComponent},
+      {path: 'register', component: RegisterComponent, canActivate: [!AuthGuard]},
+      {path: '**', component: PageNotFoundComponent}
     ])
   ],
   providers: [

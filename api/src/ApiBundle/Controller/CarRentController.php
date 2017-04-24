@@ -1,5 +1,4 @@
 <?php
-
 namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\CarRent;
@@ -23,7 +22,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CarRentController extends FOSRestController implements ClassResourceInterface
 {
-
     private function getCarRentRepository()
     {
         return $this->get('crv.doctrine_entity_repository.car_rent');
@@ -39,12 +37,12 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
         $search = $request->query->get('search', '');
         $orderBy = $request->query->get('order_by', '');
         $sorting = $request->query->get('sorting', '');
-
+        
         $carRents = $this->getCarRentRepository()
             ->createFindAllQuery($this->getUserId(), $search, $orderBy, $sorting)
             ->getResult();
 
-        if($carRents == null) {
+        if ($carRents == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $carRents;
@@ -56,7 +54,7 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if($carRent == null) {
+        if ($carRent == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $carRent;
@@ -168,5 +166,4 @@ class CarRentController extends FOSRestController implements ClassResourceInterf
 
         return new View(null, Response::HTTP_NO_CONTENT);
     }
-
 }

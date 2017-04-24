@@ -217,8 +217,11 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         $em = $this->getDoctrine()->getManager();
         $em->remove($document);
         $em->flush();
-        $em->remove($documentPosition);
-        $em->flush();
+        foreach($documentPosition as $position)
+        {
+            $em->remove($position);
+            $em->flush();
+        }
 
         return new View(null, Response::HTTP_NO_CONTENT);
     }

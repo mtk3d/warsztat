@@ -1,115 +1,113 @@
-
- <div style="overflow: hidden">
-
-<div class="ui buttons" style="float: left; margin-right: 30px">
-  <button class="ui button" (click)="typeChange('')" [ngClass]="{'active': checkType('')}">Wszystkie</button>
-  <button class="ui button" (click)="typeChange('FV')" [ngClass]="{'active': checkType('FV')}">Faktury</button>
-  <button class="ui button" (click)="typeChange('Rachunek')" [ngClass]="{'active': checkType('Rachunek')}">Rachunki</button>
-</div>
-
-<div class="ui form" style="float: left; margin-right: 10px">
-  <div class="inline field">
-    <label>Od</label>
-    <input type="date" [(ngModel)]="from" (change)="searchDocuments()">
-  </div>
-</div>
-
-<div class="ui form" style="float: left;">
-  <div class="inline field">
-    <label>do</label>
-    <input type="date" [(ngModel)]="to" (change)="searchDocuments()">
-  </div>
-</div>
-
-<div class="ui search" style="float: right">
-    <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
-  <div class="ui icon input">
-    <input class="prompt" [(ngModel)]="search" (keyup)="searchDocuments()" type="text" placeholder="Szukaj...">
-    <i class="search icon" *ngIf="!isSearch()"></i>
-  </div>
-  <div class="results"></div>
-</div>
-
-</div>
-        <table class="ui celled table selectable">
-  <thead>
-    <tr>
-    <th>
-      <div class="ui fitted checkbox">
-          <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()"> <label></label>
+<div style="overflow: hidden">
+    <div class="ui buttons" style="float: left; margin-right: 30px">
+        <button class="ui button" (click)="typeChange('')" [ngClass]="{'active': checkType('')}">Wszystkie</button>
+        <button class="ui button" (click)="typeChange('FV')" [ngClass]="{'active': checkType('FV')}">Faktury</button>
+        <button class="ui button" (click)="typeChange('Rachunek')" [ngClass]="{'active': checkType('Rachunek')}">Rachunki</button>
+    </div>
+    <div class="ui form" style="float: left; margin-right: 10px">
+        <div class="inline field">
+            <label>Od</label>
+            <input type="date" [(ngModel)]="from" (change)="searchDocuments()">
         </div>
-    </th>
-    <th (click)="sortingBy('number')">Numer 
-        <i class="sort icon" [ngClass]="{'descending': (order('number')=='DESC'), 'ascending': (order('number')=='ASC')}"></i>
-    </th>
-    <th (click)="sortingBy('type')">Typ 
-        <i class="sort icon" [ngClass]="{'descending': (order('type')=='DESC'), 'ascending': (order('type')=='ASC')}"></i>
-    </th>
-    <th (click)="sortingBy('date')">Data wystawienia 
-        <i class="sort icon" [ngClass]="{'descending': (order('date')=='DESC'), 'ascending': (order('date')=='ASC')}"></i>
-    </th>
-    <th (click)="sortingBy('dateOfPayment')">Data płatności 
-        <i class="sort icon" [ngClass]="{'descending': (order('dateOfPayment')=='DESC'), 'ascending': (order('dateOfPayment')=='ASC')}"></i>
-    </th>
-    <th (click)="sortingBy('paymentMethod')">Metoda płatności 
-        <i class="sort icon" [ngClass]="{'descending': (order('paymentMethod')=='DESC'), 'ascending': (order('paymentMethod')=='ASC')}"></i>
-    </th>
-    <th (click)="sortingBy('paid')">Zapłacono 
-        <i class="sort icon" [ngClass]="{'descending': (order('paid')=='DESC'), 'ascending': (order('paid')=='ASC')}"></i>
-    </th>
-    <th (click)="sortingBy('consumer')">Klient 
-        <i class="sort icon" [ngClass]="{'descending': (order('consumer')=='DESC'), 'ascending': (order('consumer')=='ASC')}"></i>
-    </th>
-  </tr></thead>
-  <tbody *ngIf="isReturn()">
-    <tr *ngFor="let document of singlePageDocuments">
-    <td class="collapsing">
-        <div class="ui fitted checkbox">
-          <input type="checkbox" (change)="addDelete(document.id)" [checked]="isCheck(document.id)"> <label></label>
+    </div>
+    <div class="ui form" style="float: left;">
+        <div class="inline field">
+            <label>do</label>
+            <input type="date" [(ngModel)]="to" (change)="searchDocuments()">
         </div>
-      </td>
-      <td><a [routerLink]="['/documents', document.id]">{{ document.number }}</a></td>
-      <td>{{ document.type }}</td>
-      <td>{{ document.date | date: 'dd/MM/yyyy'  }}</td>
-      <td>{{ document.dateOfPayment | date: 'dd/MM/yyyy' }}</td>
-      <td>{{ document.paymentMethod }}</td>
-      <td>{{document.paid ? "Tak" : "Nie"}}</td>
-      <td><a [routerLink]="['/consumers', document.consumerId]">{{ document.consumerName }}</a></td>
-    </tr>
-
-  </tbody>
-<tbody *ngIf="!isReturn()">
-    <tr>
-        <td colspan="8" class="ui center aligned" style="font-size: 20px; color: #ccc;">
-            Nie znaleziono
-        </td>
-    </tr>
-</tbody>
-  <tfoot>
-    <tr><th colspan="8">
-        <button class="ui  red labeled icon button" [disabled]="isDelete()" (click)="deleteChecked()">
-          <i class="trash icon"></i> Usuń
-        </button>
-      <div class="ui right floated pagination menu small">
-        <a class="item" (click)="page(1)" [ngClass]="{'disabled': (actualPage<=1)}">
+    </div>
+    <div class="ui search" style="float: right">
+        <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
+        <div class="ui icon input">
+            <input class="prompt" [(ngModel)]="search" (keyup)="searchDocuments()" type="text" placeholder="Szukaj...">
+            <i class="search icon" *ngIf="!isSearch()"></i>
+        </div>
+        <div class="results"></div>
+    </div>
+</div>
+<table class="ui celled table selectable">
+    <thead>
+        <tr>
+            <th>
+                <div class="ui fitted checkbox">
+                    <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()">
+                    <label></label>
+                </div>
+            </th>
+            <th (click)="sortingBy('number')">Numer
+                <i class="sort icon" [ngClass]="{'descending': (order('number')=='DESC'), 'ascending': (order('number')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('type')">Typ
+                <i class="sort icon" [ngClass]="{'descending': (order('type')=='DESC'), 'ascending': (order('type')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('date')">Data wystawienia
+                <i class="sort icon" [ngClass]="{'descending': (order('date')=='DESC'), 'ascending': (order('date')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('dateOfPayment')">Data płatności
+                <i class="sort icon" [ngClass]="{'descending': (order('dateOfPayment')=='DESC'), 'ascending': (order('dateOfPayment')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('paymentMethod')">Metoda płatności
+                <i class="sort icon" [ngClass]="{'descending': (order('paymentMethod')=='DESC'), 'ascending': (order('paymentMethod')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('paid')">Zapłacono
+                <i class="sort icon" [ngClass]="{'descending': (order('paid')=='DESC'), 'ascending': (order('paid')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('consumer')">Klient
+                <i class="sort icon" [ngClass]="{'descending': (order('consumer')=='DESC'), 'ascending': (order('consumer')=='ASC')}"></i>
+            </th>
+        </tr>
+    </thead>
+    <tbody *ngIf="isReturn()">
+        <tr *ngFor="let document of singlePageDocuments">
+            <td class="collapsing">
+                <div class="ui fitted checkbox">
+                    <input type="checkbox" (change)="addDelete(document.id)" [checked]="isCheck(document.id)">
+                    <label></label>
+                </div>
+            </td>
+            <td><a [routerLink]="['/documents', document.id]">{{ document.number }}</a></td>
+            <td>{{ document.type }}</td>
+            <td>{{ document.date | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ document.dateOfPayment | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ document.paymentMethod }}</td>
+            <td>{{document.paid ? "Tak" : "Nie"}}</td>
+            <td><a [routerLink]="['/consumers', document.consumerId]">{{ document.consumerName }}</a></td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="!isReturn()">
+        <tr>
+            <td colspan="8" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+                Nie znaleziono
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="8">
+                <button class="ui  red labeled icon button" [disabled]="isDelete()" (click)="deleteChecked()">
+                    <i class="trash icon"></i> Usuń
+                </button>
+                <div class="ui right floated pagination menu small">
+                    <a class="item" (click)="page(1)" [ngClass]="{'disabled': (actualPage<=1)}">
           Pierwsza
         </a>
-        <a class="icon item" (click)="page(actualPage-1)" [ngClass]="{'disabled': (actualPage<=1)}">
-          <i class="left chevron icon"></i>
-        </a>
-        <span *ngFor="let button of pagesButtons">
+                    <a class="icon item" (click)="page(actualPage-1)" [ngClass]="{'disabled': (actualPage<=1)}">
+                        <i class="left chevron icon"></i>
+                    </a>
+                    <span *ngFor="let button of pagesButtons">
             <a class="item" [ngClass]="{'active': (button==actualPage)}" (click)="page(button)">{{button}}</a>
         </span>
-        <a class="icon item" (click)="page(actualPage+1)" [ngClass]="{'disabled': (actualPage>=pages)}"> 
-          <i class="right chevron icon"></i>
-        </a>
-        <a class="item" (click)="page(pages)" [ngClass]="{'disabled': (actualPage>=pages)}">
+                    <a class="icon item" (click)="page(actualPage+1)" [ngClass]="{'disabled': (actualPage>=pages)}">
+                        <i class="right chevron icon"></i>
+                    </a>
+                    <a class="item" (click)="page(pages)" [ngClass]="{'disabled': (actualPage>=pages)}">
           Ostatnia
         </a>
-      </div>
-    </th>
-  </tr></tfoot>
+                </div>
+            </th>
+        </tr>
+    </tfoot>
 </table>
-<button class="ui green labeled icon button">
-          <i class="file outline icon"></i> Nowy dokument
-        </button>
+<button class="ui green labeled icon button" [routerLink]="['/document/add']">
+    <i class="file outline icon"></i> Nowy dokument
+</button>

@@ -3,7 +3,8 @@
         <tr>
             <th>
                 <div class="ui fitted checkbox">
-                    <input type="checkbox"> <label></label>
+                    <input type="checkbox">
+                    <label></label>
                 </div>
             </th>
             <th>L.p.</th>
@@ -20,7 +21,8 @@
         <tr *ngFor="let documentPosition of documentPositions;  let i = index">
             <td class="collapsing">
                 <div class="ui fitted checkbox">
-                    <input type="checkbox"> <label></label>
+                    <input type="checkbox">
+                    <label></label>
                 </div>
             </td>
             <td class="collapsing">{{ i + 1 }}</td>
@@ -30,7 +32,9 @@
             <td>{{ documentPosition?.vat }}%</td>
             <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
             <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
-            <td class="collapsing"><div class="ui  blue icon button mini"><i class="write icon"></i></div></td>
+            <td class="collapsing">
+                <div class="ui  blue icon button mini"><i class="write icon"></i></div>
+            </td>
         </tr>
         <tr>
             <td colspan="4">Razem:</td>
@@ -46,7 +50,7 @@
             <td colspan="9" class="ui center aligned" style="font-size: 20px; color: #ccc;">
                 Brak pozycji
             </td>
-        </tr>   
+        </tr>
     </tbody>
     <tfoot>
         <tr>

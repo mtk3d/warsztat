@@ -70,8 +70,13 @@ class DocumentPositionController extends FOSRestController implements ClassResou
 
         $documentId = $request->request->get('documentId');
 
+        if(!isset($documentId))
+        {
+            return new View(null, Response::HTTP_NOT_FOUND);
+        }
+
         $document = $this->getDocumentRepository()
-            ->createFindOneByIdUpdateQuery($documentId, $this->getUserId())
+            ->createUpdateQuery($documentId, $this->getUserId())
             ->getOneOrNullResult();
 
         if($document == null) {

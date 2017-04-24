@@ -1,80 +1,64 @@
-
-  <div class="ui visible inverted left vertical sidebar menu">
-  <div *ngIf="isLoggedIn()">
-  <div class="avatar-container item">
-        <div class="first-letter-circle">{{firstLetter}}</div>
-        <h2>{{username}}</h2>
-        <a class="ui secondary button" [routerLink]="['/settings']">
+<div class="ui visible inverted left vertical sidebar menu">
+    <div *ngIf="isLoggedIn()">
+        <div class="avatar-container item">
+            <div class="first-letter-circle">{{firstLetter}}</div>
+            <h2>{{username}}</h2>
+            <a class="ui secondary button" [routerLink]="['/settings']">
           Ustawienia
         </a>
-        <a class="ui secondary button" [routerLink]="['/login']">
+            <a class="ui secondary button" [routerLink]="['/login']">
           Wyloguj
         </a>
-  </div>
-    <a class="item" [routerLinkActive]="['active']" [routerLink]="['/documents']">
-      <i class="file text outline icon"></i>
-      Dokumenty
-    </a>
-    <a class="item" [routerLinkActive]="['active']" [routerLink]="['/orders']">
-      <i class="tasks icon"></i>
-      Zlecenia
-    </a>
-    <a class="item" [routerLinkActive]="['active']" [routerLink]="['/consumers']">
-      <i class="users icon"></i>
-      Klienci
-    </a>
-    <a class="item">
-      <i class="car icon"></i>
-      Pojzady
-    </a>
-    <a class="item">
-      <i class="user icon"></i>
-      Pracownicy
-    </a>
-    <a class="item">
-      <i class="configure icon"></i>
-      Usługi
-    </a>
-    <a class="item">
-      <i class="grid layout icon"></i>
-      Magazyn
-    </a>
-    <a class="item">
-      <i class="selected radio icon"></i>
-      Opony
-    </a>
-    <a class="item" [routerLinkActive]="['active']" routerLink="/timetable">
-      <i class="calendar icon"></i>
-      Terminarz
-    </a>
-    <a class="item">
-      <i class="pie chart icon"></i>
-      Raporty
-    </a>
-</div>
-
-<div *ngIf="!isLoggedIn()">
-  <div class="avatar-container item">
-        <div class="first-letter-circle">W</div>
-        <h2>Warsztat</h2>
-  </div>
-    <a class="item" [routerLinkActive]="['active']" routerLink="/about">
-      <i class="idea icon"></i>
-     O projekcie
-    </a>
-    <a class="item" [routerLinkActive]="['active']" routerLink="/login">
-      <i class="sign in icon"></i>
-     Zaloguj
-    </a>
-    <a class="item" [routerLinkActive]="['active']" routerLink="/register">
-      <i class="add user icon"></i>
-     Zarejestruj
-    </a>
-</div>
-
-    <div class="item item-bottom">
-      <a href="https://github.com/mtk3d/warsztat" target="_blank">GitHub <i class="github icon"></i></a>| 
-      <a href="https://webmtkblog.wordpress.com/" target="_blank">MTK <i class="code icon"></i></a>| 
-      <a href="http://uczestnicy.dajsiepoznac.pl/profil/mateusz-cholewka" target="_blank">DSP2017 <img src="./assets/img/dsp2017.png" style="height: 11px"></a>
+        </div>
+        <a class="item" [routerLinkActive]="['active']" [routerLink]="['/documents']">
+            <i class="file text outline icon"></i> Dokumenty
+        </a>
+        <a class="item" [routerLinkActive]="['active']" [routerLink]="['/orders']">
+            <i class="tasks icon"></i> Zlecenia
+        </a>
+        <a class="item" [routerLinkActive]="['active']" [routerLink]="['/consumers']">
+            <i class="users icon"></i> Klienci
+        </a>
+        <a class="item">
+            <i class="car icon"></i> Pojzady
+        </a>
+        <a class="item">
+            <i class="user icon"></i> Pracownicy
+        </a>
+        <a class="item">
+            <i class="configure icon"></i> Usługi
+        </a>
+        <a class="item">
+            <i class="grid layout icon"></i> Magazyn
+        </a>
+        <a class="item">
+            <i class="selected radio icon"></i> Opony
+        </a>
+        <a class="item" [routerLinkActive]="['active']" routerLink="/timetable">
+            <i class="calendar icon"></i> Terminarz
+        </a>
+        <a class="item">
+            <i class="pie chart icon"></i> Raporty
+        </a>
     </div>
-  </div>
+    <div *ngIf="!isLoggedIn()">
+        <div class="avatar-container item">
+            <div class="first-letter-circle">W</div>
+            <h2>Warsztat</h2>
+        </div>
+        <a class="item" [routerLinkActive]="['active']" routerLink="/about">
+            <i class="idea icon"></i> O projekcie
+        </a>
+        <a class="item" [routerLinkActive]="['active']" routerLink="/login">
+            <i class="sign in icon"></i> Zaloguj
+        </a>
+        <a class="item" [routerLinkActive]="['active']" routerLink="/register">
+            <i class="add user icon"></i> Zarejestruj
+        </a>
+    </div>
+    <div class="item item-bottom">
+        <a href="https://github.com/mtk3d/warsztat" target="_blank">GitHub <i class="github icon"></i></a>|
+        <a href="https://webmtkblog.wordpress.com/" target="_blank">MTK <i class="code icon"></i></a>|
+        <a href="http://uczestnicy.dajsiepoznac.pl/profil/mateusz-cholewka" target="_blank">DSP2017 <img src="./assets/img/dsp2017.png" style="height: 11px"></a>
+    </div>
+</div>
