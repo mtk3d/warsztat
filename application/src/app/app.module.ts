@@ -58,8 +58,8 @@ import { OrdersComponent } from './components/orders/orders.component';
     RouterModule.forRoot([
       {path: '', redirectTo: 'documents', pathMatch: 'full'},
       {path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard]},
+      {path: 'documents/add', component: DocumentAddComponent, canActivate: [AuthGuard]},
       {path: 'documents/:id', component: DocumentComponent, canActivate: [AuthGuard]},
-      {path: 'document/add', component: DocumentAddComponent, canActivate: [AuthGuard]},
       {path: 'consumers', component: ConsumersComponent, canActivate: [AuthGuard]},
       {path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard]},
       {path: 'orders', component: OrdersComponent, canActivate: [AuthGuard]},

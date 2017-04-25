@@ -18,7 +18,7 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     to: string;
     search: string = '';
     orderBy: string = 'date';
-    sorting: string = 'ASC';
+    sorting: string = 'DESC';
     pages: number;
     itemsPerPage: number;
     actualPage: number = 1;

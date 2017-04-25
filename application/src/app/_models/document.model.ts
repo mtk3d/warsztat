@@ -4,17 +4,15 @@ export class Document {
     type: string;
     number: string;
     date: string;
-    date_of_payment: string;
-    payment_method: string;
+    dateOfPayment: string;
+    paymentMethod: string;
     paid: boolean;
     bank: string;
-    bank_account: string;
+    bankAccount: string;
     place: string;
     vat: number;
     netto: number;
     brutto: number;
-    vat_sum: number;
+    vatSum: number;
     notes: string;
-    created_at: string;
-    updated_at: string;
 }

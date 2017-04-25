@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ServiceOrderPositionController extends FOSRestController implements ClassResourceInterface
 {
-
     private function getServiceOrderPositionRepository()
     {
         return $this->get('crv.doctrine_entity_repository.service_order_position');
@@ -52,7 +51,7 @@ class ServiceOrderPositionController extends FOSRestController implements ClassR
             ->createFindOneByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if($serviceOrderPosition == null) {
+        if ($serviceOrderPosition == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         return $serviceOrderPosition;
@@ -168,5 +167,4 @@ class ServiceOrderPositionController extends FOSRestController implements ClassR
 
         return new View(null, Response::HTTP_NO_CONTENT);
     }
-
 }
