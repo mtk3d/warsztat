@@ -51,21 +51,28 @@
             <td class="collapsing"></td>
             <td class="collapsing"></td>
             <td>
-                <select name="skills" class="ui fluid search dropdown"></select>
-            </td>
-            <td class="collapsing">
-                <div class="ui input small-value">
-                    <input type="text" name="quantity" [(ngModel)]="addPosition.quantity">
+                <div class="ui form">
+                    <div class="field">
+                        <select class="ui search dropdown">
+                            <option value="">Wybierz</option>
+                            <option *ngFor="let service of services" value="{{ service.id }}">{{ service.name }}</option>
+                        </select>
+                    </div>
                 </div>
             </td>
             <td class="collapsing">
                 <div class="ui input small-value">
-                    <input type="text" name="netto" [(ngModel)]="addPosition.netto">
+                    <input type="text" name="quantity" [(ngModel)]="addPosition.quantity" (blur)="quantityBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="netto" [(ngModel)]="addPosition.netto" (blur)="nettoBlur()">
                 </div>
             </td>
             <td class="collapsing">
                 <div class="ui right labeled input small-value">
-                    <input type="text" name="vat" style="width: 50px;" [(ngModel)]="addPosition.vat">
+                    <input type="text" name="vat" style="width: 50px;" [(ngModel)]="addPosition.vat" (blur)="vatBlur()">
                     <div class="ui basic label">
                         %
                     </div>
@@ -73,12 +80,12 @@
             </td>
             <td class="collapsing">
                 <div class="ui input small-value">
-                    <input type="text" name="vatSum" [(ngModel)]="addPosition.vatSum">
+                    <input type="text" name="vatSum" [(ngModel)]="addPosition.vatSum" (blur)="vatSumBlur()">
                 </div>
             </td>
             <td class="collapsing">
                 <div class="ui input small-value">
-                    <input type="text" name="brutto" [(ngModel)]="addPosition.brutto">
+                    <input type="text" name="brutto" [(ngModel)]="addPosition.brutto" (blur)="bruttoBlur()">
                 </div>
             </td>
             <td class="collapsing">

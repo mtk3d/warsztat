@@ -10,6 +10,7 @@ import { AuthenticationService } from './_services/authentication.service';
 import { DocumentService } from './_services/document.service';
 import { DocumentPositionService } from './_services/documentPosition.service';
 import { ConsumerService } from './_services/consumer.service';
+import { ServiceService } from './_services/service.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -76,7 +77,8 @@ import { OrdersComponent } from './components/orders/orders.component';
       AuthenticationService,
       DocumentService,
       DocumentPositionService,
-      ConsumerService
+      ConsumerService,
+      ServiceService
   ],
   bootstrap: [AppComponent]
 })
