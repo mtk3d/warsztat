@@ -284,6 +284,17 @@
   </div>
 </div>
 
+<div class="ui fluid multiple search normal selection dropdown">
+                    <input type="hidden" name="country">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Select Country</div>
+                    <div class="menu">
+                        <div class="item" data-value="af">Wymiana opon</div>
+                        <div class="item" data-value="af">Wymiana oleju</div>
+                        <div class="item" data-value="af">Lakierowanie</div>
+                    </div>
+                </div>
+
 <!-- content end -->
 
 </div>
@@ -293,5 +304,18 @@
 
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>
 <script src="./node_modules/semantic-ui/dist/semantic.min.js"></script>
+<script type="text/javascript">
+        $('.ui.normal.dropdown')
+  .dropdown({
+    maxSelections: 3
+  })
+;
+$('.ui.special.dropdown')
+  .dropdown({
+    useLabels: false,
+    maxSelections: 3
+  })
+;
+</script>
 </body>
 </html>

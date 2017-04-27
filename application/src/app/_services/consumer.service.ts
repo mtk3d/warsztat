@@ -33,4 +33,18 @@ export class ConsumerService {
         return this.http.get('http://localhost:8000/api/consumers/'+id, options)
             .map((response: Response) => response.json());
     }
+
+    create(consumer: Consumer) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+ 
+        return this.http.post('http://localhost:8000/api/consumers', consumer,  options);
+    }
+
+    delete(id: number){
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.delete('http://localhost:8000/api/consumers/'+id, options);
+    }
 }

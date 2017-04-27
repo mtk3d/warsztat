@@ -1,11 +1,10 @@
-<div *ngIf="!isSearchView()">
+<div *ngIf="isConsumerView()">
     <div class="ui right floated icon button mini" (click)="searchView()"><i class="write icon"></i></div>
     <p>
         {{consumer.name}}
         <br>
         <span *ngIf="consumer.street">{{consumer.street}}
-        <span *ngIf="consumer.build_number">, {{consumer.build_number}}</span>
-        <span *ngIf="consumer.apartment_number">/{{consumer.apartment_number}}</span>
+        <span *ngIf="consumer.build_number">, {{consumer.build_number}}</span><span *ngIf="consumer.apartment_number">/{{consumer.apartment_number}}</span>
         </span>
         <br>
         <span *ngIf="consumer.postal_code">{{consumer.postal_code}} </span>
@@ -45,7 +44,78 @@
         Nie znaleziono
     </div>
     <div class="ui divider"></div>
-    <div class="ui  green labeled mini icon button">
+    <div class="ui  green labeled mini icon button" (click)="addConsumer()">
         <i class="user icon"></i> Nowy klient
+    </div>
+</div>
+<div *ngIf="isAddView()">
+    <b style="font-size:1.07142857rem;">Nowy klient</b>
+    <div class="ui icon button mini right floated" (click)="searchView()"><i class="remove icon"></i></div>
+    <div style="max-height: calc(100vh - 400px); overflow-y:scroll; width: 100%; padding-right: 10px; margin-top: 20px;">
+        <form class="ui form">
+            <div class="field">
+                <label>Firma</label>
+                <input type="text" name="company" placeholder="Firma (niewymagane)" [(ngModel)]="consumerAdd.company">
+            </div>
+            <div class="field">
+                <label>Imię</label>
+                <input type="text" name="first-name" placeholder="Imię" [(ngModel)]="consumerAdd.firstName">
+            </div>
+            <div class="field">
+                <label>Nazwisko</label>
+                <input type="text" name="last-name" placeholder="Nazwisko" [(ngModel)]="consumerAdd.lastName">
+            </div>
+            <div class="field">
+                <label>NIP</label>
+                <input type="text" name="nip" placeholder="NIP" [(ngModel)]="consumerAdd.nip">
+            </div>
+            <div class="field">
+                <label>PESEL</label>
+                <input type="text" name="pesel" placeholder="PESEL" [(ngModel)]="consumerAdd.pesel">
+            </div>
+            <div class="field">
+                <label>Telefon</label>
+                <input type="text" name="phone" placeholder="Telefon (niewymagane)" [(ngModel)]="consumerAdd.phone">
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="text" name="email" placeholder="Email (niewymagane)" [(ngModel)]="consumerAdd.email">
+            </div>
+            <div class="field">
+                <label>WWW</label>
+                <input type="text" name="www" placeholder="WWW (niewymagane)" [(ngModel)]="consumerAdd.www">
+            </div>
+            <div class="field">
+                <label>Bank</label>
+                <input type="text" name="bank" placeholder="Bank (niewymagane)" [(ngModel)]="consumerAdd.bank">
+            </div>
+            <div class="field">
+                <label>Numer konta</label>
+                <input type="text" name="bankAccount" placeholder="Numer konta (niewymagane)" [(ngModel)]="consumerAdd.bankAccount">
+            </div>
+            <div class="field">
+                <label>Ulica</label>
+                <input type="text" name="street" placeholder="Ulica (niewymagane)" [(ngModel)]="consumerAdd.street">
+            </div>
+            <div class="field">
+                <label>Nr budynku</label>
+                <input type="text" name="buildNumber" placeholder="Numer budynku (niewymagane)" [(ngModel)]="consumerAdd.buildNumber">
+            </div>
+            <div class="field">
+                <label>Numer mieszkania</label>
+                <input type="text" name="apartmentNumber" placeholder="Numer mieszkania (niewymagane)" [(ngModel)]="consumerAdd.apartmentNumber">
+            </div>
+            <div class="field">
+                <label>Kod pocztowy</label>
+                <input type="text" name="postalCode" placeholder="Kod pocztowy (niewymagane)" [(ngModel)]="consumerAdd.postalCode">
+            </div>
+            <div class="field">
+                <label>Miasto</label>
+                <input type="text" name="place" placeholder="Miasto (niewymagane)" [(ngModel)]="consumerAdd.place">
+            </div>
+            <div class="ui  green labeled icon button" (click)="create()">
+                <i class="user icon"></i> Dodaj
+            </div>
+        </form>
     </div>
 </div>

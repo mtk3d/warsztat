@@ -34,6 +34,7 @@
             <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
             <td class="collapsing">
                 <div class="ui  blue icon button mini"><i class="write icon"></i></div>
+                <div class="ui  red icon button mini"><i class="remove icon"></i></div>
             </td>
         </tr>
         <tr>
@@ -45,7 +46,48 @@
             <td class="collapsing"></td>
         </tr>
     </tbody>
-    <tbody *ngIf="!isReturn()">
+    <tbody *ngIf="isAddView()">
+        <tr>
+            <td class="collapsing"></td>
+            <td class="collapsing"></td>
+            <td>
+                <select name="skills" class="ui fluid search dropdown"></select>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="quantity" [(ngModel)]="addPosition.quantity">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="netto" [(ngModel)]="addPosition.netto">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui right labeled input small-value">
+                    <input type="text" name="vat" style="width: 50px;" [(ngModel)]="addPosition.vat">
+                    <div class="ui basic label">
+                        %
+                    </div>
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="vatSum" [(ngModel)]="addPosition.vatSum">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="brutto" [(ngModel)]="addPosition.brutto">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui  green icon button mini"><i class="checkmark icon"></i></div>
+                <div class="ui  red icon button mini" (click)="closeAdd()"><i class="remove icon"></i></div>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="noReturn()">
         <tr>
             <td colspan="9" class="ui center aligned" style="font-size: 20px; color: #ccc;">
                 Brak pozycji
@@ -58,7 +100,7 @@
                 <div class="ui  red labeled icon button disabled">
                     <i class="trash icon"></i> Usuń
                 </div>
-                <div class="ui  green right floated labeled icon button">
+                <div class="ui  green right floated labeled icon button" (click)="addView()">
                     <i class="plus icon"></i> Dodaj
                 </div>
             </th>

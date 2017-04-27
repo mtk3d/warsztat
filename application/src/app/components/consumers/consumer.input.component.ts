@@ -16,8 +16,10 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
     consumerId: number;
     searchStr: string;
     search: boolean = false;
+    add: boolean = false;
     consumersReturn: boolean = true;
     consumer: Consumer[] = [];
+    consumerAdd: any = {};
     consumers: Consumer[] = [];
     private sub: any;
 
@@ -60,10 +62,29 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
     searchView() {
         this.searchConsumer();
         this.search = true;
+        this.add = false;
     }
 
     isSearchView() {
         return this.search;
+    }
+
+    isConsumerView() {
+        if(this.search == true || this.add == true)
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    addConsumer() {
+        this.search = false;
+        this.add = true;
+    }
+
+    isAddView() {
+        return this.add;
     }
 
     isSetConsumer(){
@@ -75,6 +96,21 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
         }
     }
 
+    create() {
+        let company = '';
+        if(typeof this.consumerAdd['company'] !== 'undefined')
+        {
+            company = this.consumerAdd['company']+' - ';
+        }
+        this.consumerAdd['name'] = company+this.consumerAdd['firstName']+' '+this.consumerAdd['lastName'];
+        this.sub = this.consumerService.create(this.consumerAdd)
+            .subscribe((ok)=>{
+                this.searchView();
+                this.searchConsumer();
+                this.sub.unsubscribe();
+            });
+    }
+
     apply(id) {
         this.consumerId = id;
         this.search = false;
@@ -84,6 +120,7 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
 
     cancel() {
         this.search = false;
+        this.add = false;
     }
 
     ngOnDestroy() {

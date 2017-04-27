@@ -78,6 +78,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 d.brutto,
                 d.vat,
                 d.vatSum,
+                d.place,
                 c.id as consumerId
             FROM ApiBundle:Document d
             JOIN ApiBundle\Entity\Consumer c
