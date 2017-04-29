@@ -17,42 +17,32 @@
             <th class="collapsing"></th>
         </tr>
     </thead>
-    <tbody *ngIf="isReturn()">
-        <tr *ngFor="let documentPosition of documentPositions;  let i = index">
-            <td class="collapsing">
-                <div class="ui fitted checkbox">
-                    <input type="checkbox">
-                    <label></label>
-                </div>
-            </td>
-            <td class="collapsing">{{ i + 1 }}</td>
-            <td>{{ documentPosition?.name }}</td>
-            <td>{{ documentPosition?.quantity}}</td>
-            <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
-            <td>{{ documentPosition?.vat }}%</td>
-            <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
-            <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
-            <td class="collapsing">
-                <div class="ui  blue icon button mini"><i class="write icon"></i></div>
-                <div class="ui  red icon button mini"><i class="remove icon"></i></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">Razem:</td>
-            <td>{{ document.netto | number : '1.2-2'}}</td>
-            <td>{{ document.vat }}%</td>
-            <td>{{ document.vatSum | number : '1.2-2'}}</td>
-            <td>{{ document.brutto | number : '1.2-2'}}</td>
-            <td class="collapsing"></td>
-        </tr>
-    </tbody>
-    <tbody *ngIf="isAddView()">
-        <tr>
+    <tbody>
+            <tr *ngFor="let documentPosition of documentPositions;  let i = index">
+                <td class="collapsing">
+                    <div class="ui fitted checkbox">
+                        <input type="checkbox">
+                        <label></label>
+                    </div>
+                </td>
+                <td class="collapsing">{{ i + 1 }}</td>
+                <td>{{ documentPosition?.name }}</td>
+                <td>{{ documentPosition?.quantity}}</td>
+                <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
+                <td>{{ documentPosition?.vat }}%</td>
+                <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
+                <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
+                <td class="collapsing">
+                    <div class="ui  blue icon button mini"><i class="write icon"></i></div>
+                    <div class="ui  red icon button mini"><i class="remove icon"></i></div>
+                </td>
+            </tr>
+        <tr *ngIf="isAddView()">
             <td colspan="2" style="text-align: center;">
+                <span>{{ typeOfPosition() }}</span>
                 <div class="ui toggle fitted checkbox">
                     <input type="checkbox" (change)="changePositionType()">
                     <label></label>
-                    <span>{{ typeOfPosition() }}</span>
                 </div>
             </td>
             <td>
@@ -94,9 +84,17 @@
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui  green icon button mini"><i class="checkmark icon"></i></div>
+                <div class="ui  green icon button mini" (click)="addNewPosition()"><i class="checkmark icon"></i></div>
                 <div class="ui  red icon button mini" (click)="closeAdd()"><i class="remove icon"></i></div>
             </td>
+        </tr>
+        <tr *ngIf="isReturn()">
+            <td colspan="4">Razem:</td>
+            <td>{{ document.netto | number : '1.2-2'}}</td>
+            <td>{{ document.vat }}%</td>
+            <td>{{ document.vatSum | number : '1.2-2'}}</td>
+            <td>{{ document.brutto | number : '1.2-2'}}</td>
+            <td class="collapsing"></td>
         </tr>
     </tbody>
     <tbody *ngIf="noReturn()">
@@ -112,7 +110,7 @@
                 <div class="ui  red labeled icon button disabled">
                     <i class="trash icon"></i> Usuń
                 </div>
-                <div class="ui  green right floated labeled icon button" (click)="addView()">
+                <div class="ui  green right floated labeled icon button" (click)="addView()" [ngClass]="{'disabled': isAddView()}">
                     <i class="plus icon"></i> Dodaj
                 </div>
             </th>

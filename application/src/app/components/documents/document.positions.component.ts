@@ -38,7 +38,12 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   ) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
+    this.getPositions();
+    this.serviceSearch();
+  }
+
+  getPositions() {
+      this.sub = this.route.params.subscribe(params => {
         this.documentPositionService.getDocumentPositions(this.documentId)
             .subscribe(documentPositions => {
                 this.documentPositions = documentPositions;
@@ -49,7 +54,6 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
                 this.positionsReturn = false; this.notFound = true;
             });
     });
-    this.serviceSearch();
   }
 
   serviceSearch() {
@@ -57,10 +61,9 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
         this.serviceService.get()
             .subscribe(services => {
                 this.services = services;
-                console.log(this.services);
             },
             (err)=>{
-
+                //error
             }
         );
     });
@@ -80,8 +83,23 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       return this.add;
   }
 
+  addNewPosition(){
+      if(this.addPosition['name']!='')
+      {
+          this.sub = this.documentPositionService.create(this.addPosition)
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.closeAdd();
+                    this.getPositions();
+                });
+      }
+  }
+
   addView(){
+      this.addPosition['documentId'] = this.documentId;
+      this.addPosition['service'] = this.positionType.toString();
       this.addPosition['quantity'] = 1;
+      this.addPosition['name'] = '';
       this.addPosition['vat'] = 23;
       this.addPosition['netto'] = 0;
       this.addPosition['vatSum'] = 0;
@@ -93,20 +111,20 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
 
   changePositionType() {
       this.positionType = !this.positionType;
-      console.log(this.positionType);
+      this.addPosition['service'] = this.positionType;
   }
 
   typeOfPosition() {
       if(this.positionType) {
-          return "Magazyn";
-      }else{
           return "Usługi";
+      }else{
+          return "Magazyn";
       }
   }
 
   closeAdd(){
       this.add = false;
-      this.notFound = true;
+      this.getPositions();
       this.addPosition = {};
   }
 
@@ -122,6 +140,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.addPosition['quantity'] = 1;
       if(value == '')
       {
+           this.addPosition['name'] = '';
            this.addPosition['netto'] = 0;
            this.addPosition['brutto'] = 0;
            this.addPosition['vatSum'] = 0;
@@ -129,10 +148,12 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
           this.sub = this.route.params.subscribe(params => {
             this.serviceService.getSingle(value)
                 .subscribe(position => {
+                   this.addPosition['name'] = position['name'];
                    this.addPosition['netto'] = position['netto'];
                    this.addPosition['brutto'] = position['brutto'];
                    this.addPosition['vatSum'] = position['vat_sum'];
                    this.addPosition['vat'] = position['vat'];
+                   this.addPosition['itemId'] = position['id'];
                 },
                 (err)=>{
                     //error
