@@ -1,20 +1,20 @@
 <table class="ui celled table selectable">
     <thead>
         <tr>
-            <th>
+            <th class="collapsing">
                 <div class="ui fitted checkbox">
                     <input type="checkbox">
                     <label></label>
                 </div>
             </th>
-            <th>L.p.</th>
+            <th class="collapsing">L.p.</th>
             <th>Nazwa</th>
             <th>Ilość</th>
             <th>Netto</th>
             <th>VAT</th>
             <th>Kwota VAT</th>
             <th>Brutto</th>
-            <th></th>
+            <th class="collapsing"></th>
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
@@ -48,14 +48,19 @@
     </tbody>
     <tbody *ngIf="isAddView()">
         <tr>
-            <td class="collapsing"></td>
-            <td class="collapsing"></td>
+            <td colspan="2" style="text-align: center;">
+                <div class="ui toggle fitted checkbox">
+                    <input type="checkbox" (change)="changePositionType()">
+                    <label></label>
+                    <span>{{ typeOfPosition() }}</span>
+                </div>
+            </td>
             <td>
                 <div class="ui form">
                     <div class="field">
-                        <select class="ui search dropdown">
+                        <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
                             <option value="">Wybierz</option>
-                            <option *ngFor="let service of services" value="{{ service.id }}">{{ service.name }}</option>
+                            <option *ngFor="let service of services" value="{{ service.id }}" value="{{ service.id }}">{{ service.name }}</option>
                         </select>
                     </div>
                 </div>

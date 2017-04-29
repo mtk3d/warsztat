@@ -28,6 +28,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     services: Service[] = [];
     lastQuantity: number = 1;
     lastVat: number = 23;
+    positionType: boolean = false;
     private sub: any;
 
   constructor(
@@ -87,6 +88,20 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.addPosition['brutto'] = 0;
       this.add = true;
       this.notFound = false;
+      this.positionType = false;
+  }
+
+  changePositionType() {
+      this.positionType = !this.positionType;
+      console.log(this.positionType);
+  }
+
+  typeOfPosition() {
+      if(this.positionType) {
+          return "Magazyn";
+      }else{
+          return "Usługi";
+      }
   }
 
   closeAdd(){
@@ -99,14 +114,41 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
+  doublePrecision(n) {
+      return Math.round((n * 100) / 100);
+  }
+
+  nameSelect(value) {
+      this.addPosition['quantity'] = 1;
+      if(value == '')
+      {
+           this.addPosition['netto'] = 0;
+           this.addPosition['brutto'] = 0;
+           this.addPosition['vatSum'] = 0;
+      }else{
+          this.sub = this.route.params.subscribe(params => {
+            this.serviceService.getSingle(value)
+                .subscribe(position => {
+                   this.addPosition['netto'] = position['netto'];
+                   this.addPosition['brutto'] = position['brutto'];
+                   this.addPosition['vatSum'] = position['vat_sum'];
+                   this.addPosition['vat'] = position['vat'];
+                },
+                (err)=>{
+                    //error
+                });
+          });
+      }
+  }
+
   nettoBlur(){
       if(!this.isNumeric(this.addPosition['netto']))
       {
           this.addPosition['netto'] = 0;
       }
-      this.addPosition['netto'] = Math.round(this.addPosition['netto'] * this.addPosition['quantity']*100)/100;
-      this.addPosition['vatSum'] = Math.round(((this.addPosition['netto'] * this.addPosition['vat'])/77)*100)/100;
-      this.addPosition['brutto'] = Math.round((this.addPosition['netto'] + this.addPosition['vatSum'])*100)/100;
+      this.addPosition['netto'] = this.doublePrecision(this.addPosition['netto']);
+      this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['netto'] * this.addPosition['vat']) / (100 - this.addPosition['vat']));
+      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['vatSum'] * 100) / this.addPosition['vat']);
   }
 
   vatSumBlur(){
@@ -114,9 +156,9 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       {
           this.addPosition['vatSum'] = 0;
       }
-      this.addPosition['vatSum'] = Math.round(this.addPosition['vatSum']*this.addPosition['quantity']*100)/100;
-      this.addPosition['netto'] = Math.round((this.addPosition['vatSum']*77)/this.addPosition['vat']*100)/100;
-      this.addPosition['brutto'] = Math.round((this.addPosition['netto'] + this.addPosition['vatSum'])*100)/100;
+      this.addPosition['vatSum'] = this.doublePrecision(this.addPosition['vatSum']);
+      this.addPosition['netto'] = this.doublePrecision((this.addPosition['vatSum'] * (100 - this.addPosition['vat'])) / this.addPosition['vat']);
+      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['vatSum'] * 100) / this.addPosition['vat']);
   }
 
   quantityBlur(){
@@ -124,23 +166,21 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       {
           this.addPosition['quantity'] = 1;
       }
-      this.addPosition['brutto'] = this.addPosition['brutto']/this.lastQuantity;
+      this.addPosition['quantity'] = this.doublePrecision(this.addPosition['quantity']);
+      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['brutto'] / this.lastQuantity) * this.addPosition['quantity']);
+      this.addPosition['netto'] = this.doublePrecision((this.addPosition['netto'] / this.lastQuantity) * this.addPosition['quantity']);
+      this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['vatSum'] / this.lastQuantity) * this.addPosition['quantity']);
       this.lastQuantity = this.addPosition['quantity'];
-      this.addPosition['brutto'] = Math.round(this.addPosition['brutto'] * this.addPosition['quantity']*100)/100;
-      this.addPosition['netto'] = Math.round(((this.addPosition['brutto'] * 77)/100)*100)/100;
-      this.addPosition['vatSum'] = Math.round((this.addPosition['brutto'] - this.addPosition['netto'])*100)/100;
   }
 
   vatBlur(){
-      if(!this.isNumeric(this.addPosition['vat']))
+      if(!this.isNumeric(this.addPosition['vat']) || this.addPosition['vat']<0 || this.addPosition['vat']>100)
       {
           this.addPosition['vat'] = 0;
       }
-      this.addPosition['vatSum'] = this.addPosition['vatSum']/this.addPosition['quantity'];
-      this.addPosition['vatSum'] = (Math.round(((this.addPosition['vatSum'] * this.lastVat)/this.addPosition['vat'])*100)/100)*this.addPosition['quantity'];
-      this.addPosition['netto'] = (Math.round(((this.addPosition['vatSum'] * 77)/this.addPosition['vat'])*100)/100)*this.addPosition['quantity'];
-      this.addPosition['brutto'] = (Math.round((this.addPosition['netto'] + this.addPosition['vatSum'])*100)/100)*this.addPosition['quantity'];
-      this.lastVat = this.addPosition['vat'];
+      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['netto'] * 100) / (100 - this.addPosition['vat']));
+      this.addPosition['vatSum'] = this.doublePrecision(this.addPosition['brutto'] - this.addPosition['netto']);
+      this.lastVat = this.doublePrecision(this.addPosition['vat']);
   }
 
   bruttoBlur(){
@@ -148,8 +188,9 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       {
           this.addPosition['brutto'] = 0;
       }
-      this.addPosition['vatSum'] = Math.round(((this.addPosition['brutto'] * this.addPosition['vat'])/100)*100)/100;
-      this.addPosition['netto'] = Math.round((this.addPosition['brutto'] - this.addPosition['vatSum'])*100)/100;
+      this.addPosition['brutto'] = this.doublePrecision(this.addPosition['brutto']);
+      this.addPosition['netto'] = this.doublePrecision((this.addPosition['brutto'] * (100 - this.addPosition['vat'])) / 100);
+      this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['brutto'] * this.addPosition['vat']) / 100);
   }
 
   ngOnDestroy() {
