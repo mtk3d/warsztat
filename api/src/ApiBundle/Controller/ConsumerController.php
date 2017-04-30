@@ -97,7 +97,7 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
     {
         $dateTime = new \DateTime('now');
         $consumer = $this->getConsumerRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($consumer == null) {
@@ -131,7 +131,7 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
     {
         $dateTime = new \DateTime('now');
         $consumer = $this->getConsumerRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($consumer == null) {
@@ -164,7 +164,7 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
     public function deleteAction(int $id)
     {
         $consumer = $this->getConsumerRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($consumer == null) {

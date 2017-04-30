@@ -29,7 +29,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     notFound: boolean = true;
     selectItems: any = [];
     lastQuantity: number = 1;
-    lastVat: number = 23;
+    lastVat: number = this.document['vat'];
     positionType: boolean = false;
     private sub: any;
 
@@ -120,7 +120,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.addPosition['service'] = this.positionType.toString();
       this.addPosition['quantity'] = 1;
       this.addPosition['name'] = '';
-      this.addPosition['vat'] = 23;
+      this.addPosition['vat'] = this.document['vat'];
       this.addPosition['netto'] = 0;
       this.addPosition['vatSum'] = 0;
       this.addPosition['brutto'] = 0;

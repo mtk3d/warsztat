@@ -34,10 +34,14 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         return $this->getUser()->getId();
     }
 
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
+        $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('order_by', '');
+        $sorting = $request->query->get('sorting', '');
+        
         $employees = $this->getEmployeeRepository()
-            ->createFindAllQuery($this->getUserId())
+            ->createFindAllQuery($this->getUserId(), $search, $orderBy, $sorting)
             ->getResult();
 
         if($employees == null) {
@@ -89,7 +93,7 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     public function putAction(Request $request, int $id)
     {
         $employee = $this->getEmployeeRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($employee == null) {
@@ -121,7 +125,7 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     public function patchAction(Request $request, int $id)
     {
         $employee = $this->getemployeeRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($employee == null) {
@@ -152,7 +156,7 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     public function deleteAction(int $id)
     {
         $employee = $this->getEmployeeRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($employee == null) {

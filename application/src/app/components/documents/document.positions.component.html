@@ -18,25 +18,25 @@
         </tr>
     </thead>
     <tbody>
-            <tr *ngFor="let documentPosition of documentPositions;  let i = index">
-                <td class="collapsing">
-                    <div class="ui fitted checkbox">
-                        <input type="checkbox">
-                        <label></label>
-                    </div>
-                </td>
-                <td class="collapsing" style="text-align: center;">{{ i + 1 }}</td>
-                <td>{{ documentPosition?.name }}</td>
-                <td>{{ documentPosition?.quantity}}</td>
-                <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
-                <td>{{ documentPosition?.vat }}%</td>
-                <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
-                <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
-                <td class="collapsing" style="text-align: center;">
-                    <div class="ui  blue icon button mini"><i class="write icon"></i></div>
-                    <div class="ui  red icon button mini"><i class="remove icon"></i></div>
-                </td>
-            </tr>
+        <tr *ngFor="let documentPosition of documentPositions;  let i = index">
+            <td class="collapsing">
+                <div class="ui fitted checkbox">
+                    <input type="checkbox">
+                    <label></label>
+                </div>
+            </td>
+            <td class="collapsing" style="text-align: center;">{{ i + 1 }}</td>
+            <td>{{ documentPosition?.name }}</td>
+            <td>{{ documentPosition?.quantity}}</td>
+            <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
+            <td>{{ documentPosition?.vat }}%</td>
+            <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
+            <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
+            <td class="collapsing" style="text-align: center;">
+                <div class="ui  blue icon button mini"><i class="write icon"></i></div>
+                <div class="ui  red icon button mini"><i class="remove icon"></i></div>
+            </td>
+        </tr>
         <tr *ngIf="isAddView()">
             <td colspan="2" style="text-align: center;">
                 <span>{{ typeOfPosition() }}</span>
@@ -91,7 +91,7 @@
         <tr *ngIf="isReturn()">
             <td colspan="4">Razem:</td>
             <td>{{ document.netto | number : '1.2-2'}}</td>
-            <td>{{ document.vat }}%</td>
+            <td></td>
             <td>{{ document.vatSum | number : '1.2-2'}}</td>
             <td>{{ document.brutto | number : '1.2-2'}}</td>
             <td class="collapsing"></td>

@@ -2,7 +2,7 @@
     <div class="ui search" style="float: right">
         <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
         <div class="ui icon input">
-            <input class="prompt" [(ngModel)]="search" (keyup)="searchConsumers()" type="text" placeholder="Szukaj...">
+            <input class="prompt" [(ngModel)]="search" (keyup)="searchVehicles()" type="text" placeholder="Szukaj...">
             <i class="search icon" *ngIf="!isSearch()"></i>
         </div>
         <div class="results"></div>
@@ -17,36 +17,32 @@
                     <label></label>
                 </div>
             </th>
-            <th (click)="sortingBy('name')">Nazwa
-                <i class="sort icon" [ngClass]="{'descending': (order('name')=='DESC'), 'ascending': (order('name')=='ASC')}"></i>
+            <th (click)="sortingBy('registrationNumber')">Numer rejestracyjny
+                <i class="sort icon" [ngClass]="{'descending': (order('registrationNumber')=='DESC'), 'ascending': (order('registrationNumber')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('firstName')">Imie i Nazwisko
-                <i class="sort icon" [ngClass]="{'descending': (order('firstName')=='DESC'), 'ascending': (order('firstName')=='ASC')}"></i>
+            <th (click)="sortingBy('mark')">Marka
+                <i class="sort icon" [ngClass]="{'descending': (order('mark')=='DESC'), 'ascending': (order('mark')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('company')">Nazwa firmy
-                <i class="sort icon" [ngClass]="{'descending': (order('company')=='DESC'), 'ascending': (order('company')=='ASC')}"></i>
+            <th (click)="sortingBy('model')">Model
+                <i class="sort icon" [ngClass]="{'descending': (order('model')=='DESC'), 'ascending': (order('model')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('phone')">Telefon
-                <i class="sort icon" [ngClass]="{'descending': (order('phone')=='DESC'), 'ascending': (order('phone')=='ASC')}"></i>
-            </th>
-            <th (click)="sortingBy('email')">Email
-                <i class="sort icon" [ngClass]="{'descending': (order('email')=='DESC'), 'ascending': (order('email')=='ASC')}"></i>
+            <th (click)="sortingBy('engine')">Silnik
+                <i class="sort icon" [ngClass]="{'descending': (order('engine')=='DESC'), 'ascending': (order('engine')=='ASC')}"></i>
             </th>
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
-        <tr *ngFor="let consumer of consumers">
+        <tr *ngFor="let vehicle of vehicles">
             <td class="collapsing">
                 <div class="ui fitted checkbox">
-                    <input type="checkbox" (change)="addDelete(consumer.id)" [checked]="isCheck(consumer.id)">
+                    <input type="checkbox" (change)="addDelete(vehicle.id)" [checked]="isCheck(vehicle.id)">
                     <label></label>
                 </div>
             </td>
-            <td><a [routerLink]="['/consumers', consumer.id]">{{ consumer?.name }}</a></td>
-            <td>{{ consumer?.firstName }} {{ consumer?.lastName }}</td>
-            <td>{{ consumer?.company }}</td>
-            <td>{{ consumer?.phone }}</td>
-            <td>{{ consumer?.email }}</td>
+            <td><a [routerLink]="['/vehicles', vehicle.id]">{{ vehicle?.registrationNumber }}</a></td>
+            <td>{{ vehicle?.mark }}</td>
+            <td>{{ vehicle?.model }}</td>
+            <td>{{ vehicle?.engine }}</td>
         </tr>
     </tbody>
     <tbody *ngIf="!isReturn()">
@@ -79,5 +75,5 @@
     </tfoot>
 </table>
 <div class="ui green labeled icon button">
-    <i class="user icon"></i> Nowy klient
+    <i class="car icon"></i> Nowy pojazd
 </div>

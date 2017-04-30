@@ -34,10 +34,14 @@ class VehicleController extends FOSRestController implements ClassResourceInterf
         return $this->getUser()->getId();
     }
 
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
+        $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('orderby', '');
+        $sort = $request->query->get('sort', '');
+
         $vehicles = $this->getVehicleRepository()
-            ->createFindAllQuery($this->getUserId())
+            ->createFindAllQuery($this->getUserId(), $search, $orderBy, $sort)
             ->getResult();
 
         if($vehicles == null) {
@@ -105,7 +109,7 @@ class VehicleController extends FOSRestController implements ClassResourceInterf
     {
         $dateTime = new \DateTime('now');
         $vehicle = $this->getVehicleRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($vehicle == null) {
@@ -139,7 +143,7 @@ class VehicleController extends FOSRestController implements ClassResourceInterf
     {
         $dateTime = new \DateTime('now');
         $vehicle = $this->getVehicleRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($vehicle == null) {
@@ -172,7 +176,7 @@ class VehicleController extends FOSRestController implements ClassResourceInterf
     public function deleteAction(int $id)
     {
         $vehicle = $this->getVehicleRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateByIdQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($vehicle == null) {

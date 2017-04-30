@@ -17,17 +17,25 @@
         <div class="ui segment">
             <h3 class="ui horizontal divider header">Sprzedawca</h3>
             <p>
-                Warsztat
-                <br> Street, 6 /12
-                <br> 00-000
-                <br> Warszawa
-                <br> 000-000-00-00
+                {{userData.name}}
+                <br>
+                <span *ngIf="userData.street">{{userData.street}}<span *ngIf="userData.buildNumber">, {{userData.buildNumber}}</span><span *ngIf="userData.apartmentNumber">/{{userData.apartmentNumber}}</span>
+                </span>
+                <br>
+                <span *ngIf="userData.postalCode">{{userData.postalCode}} </span>
+                <span *ngIf="userData.place">{{userData.place}}</span>
+                <br>
+                <span *ngIf="userData.nip">NIP {{userData.nip}}</span>
                 <br>
             </p>
         </div>
         <div class="ui segment">
             <h3 class="ui horizontal divider header">Nabywca</h3>
-            <document-consumer [consumerId]=consumerId></document-consumer>
+            <!-- <document-consumer [consumerId]=consumerId></document-consumer> -->
+            <consumer-input [consumerId]=consumerId (consumerOutput)="setConsumerId($event)"></consumer-input>
+        </div>
+        <div class="ui blue labeled icon button">
+            <i class="print icon"></i> Drukuj
         </div>
     </div>
     <div class="twelve wide column">

@@ -14,6 +14,40 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
+            SELECT d.id,
+                d.company,
+                d.firstName,
+                d.lastName,
+                d.name,
+                d.nip,
+                d.phone,
+                d.email,
+                d.www,
+                d.bank,
+                d.bankAccount,
+                d.street,
+                d.buildNumber,
+                d.apartmentNumber,
+                d.place,
+                d.postalCode,
+                d.post,
+                d.notes
+            FROM ApiBundle:Consumer d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createUpdateByIdQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
             SELECT d
             FROM ApiBundle:Consumer d
             WHERE d.id = :id
@@ -31,7 +65,24 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d.id,
+                d.company,
+                d.firstName,
+                d.lastName,
+                d.name,
+                d.nip,
+                d.phone,
+                d.email,
+                d.www,
+                d.bank,
+                d.bankAccount,
+                d.street,
+                d.buildNumber,
+                d.apartmentNumber,
+                d.place,
+                d.postalCode,
+                d.post,
+                d.notes
             FROM ApiBundle:Consumer d
             WHERE d.userId = :userId
             "
@@ -47,7 +98,7 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
         if($orderBy!='')
         {
             if($orderBy == 'name' || 
-                $orderBy == 'namesurname' || 
+                $orderBy == 'firstName' || 
                 $orderBy == 'company' || 
                 $orderBy == 'phone' || 
                 $orderBy == 'email')
@@ -71,7 +122,24 @@ class ConsumerRepository extends \Doctrine\ORM\EntityRepository
 
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d.id,
+                d.company,
+                d.firstName,
+                d.lastName,
+                d.name,
+                d.nip,
+                d.phone,
+                d.email,
+                d.www,
+                d.bank,
+                d.bankAccount,
+                d.street,
+                d.buildNumber,
+                d.apartmentNumber,
+                d.place,
+                d.postalCode,
+                d.post,
+                d.notes
             FROM ApiBundle:Consumer d
             WHERE d.userId = :userId
             AND (d.company LIKE :searchStr

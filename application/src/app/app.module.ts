@@ -12,6 +12,8 @@ import { DocumentPositionService } from './_services/documentPosition.service';
 import { ConsumerService } from './_services/consumer.service';
 import { ServiceService } from './_services/service.service';
 import { StoreService } from './_services/store.service';
+import { UserDataService } from './_services/userData.service';
+import { VehicleService } from './_services/vehicle.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -25,10 +27,14 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { DocumentsComponent } from './components/documents/documents.component';
 import { DocumentComponent } from './components/documents/document.component';
 import { DocumentAddComponent } from './components/documents/document.add.component';
-import { DocumentConsumerComponent } from './components/documents/document.consumer.component';
 import { DocumentPositionsComponent } from './components/documents/document.positions.component';
 import { ConsumersComponent } from './components/consumers/consumers.component';
 import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
+import { VehiclesComponent } from './components/vehicles/vehicles.component';
+import { EmployeesComponent } from './components/employees/employees.component';
+import { ServicesComponent } from './components/services/services.component';
+import { StoresComponent } from './components/stores/stores.component';
+import { TiresComponent } from './components/tires/tires.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
 
@@ -46,10 +52,14 @@ import { OrdersComponent } from './components/orders/orders.component';
     DocumentsComponent,
     DocumentComponent,
     DocumentAddComponent,
-    DocumentConsumerComponent,
     DocumentPositionsComponent,
     ConsumersComponent,
     ConsumerInputComponent,
+    VehiclesComponent,
+    EmployeesComponent,
+    ServicesComponent,
+    StoresComponent,
+    TiresComponent,
     OrdersComponent
   ],
   imports: [
@@ -67,6 +77,11 @@ import { OrdersComponent } from './components/orders/orders.component';
       {path: 'orders', component: OrdersComponent, canActivate: [AuthGuard]},
       {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
       {path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard]},
+      {path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard]},
+      {path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard]},
+      {path: 'services', component: ServicesComponent, canActivate: [AuthGuard]},
+      {path: 'stores', component: StoresComponent, canActivate: [AuthGuard]},
+      {path: 'tires', component: TiresComponent, canActivate: [AuthGuard]},
       {path: 'about', component: AboutComponent},
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent, canActivate: [!AuthGuard]},
@@ -80,7 +95,9 @@ import { OrdersComponent } from './components/orders/orders.component';
       DocumentPositionService,
       ConsumerService,
       ServiceService,
-      StoreService
+      StoreService,
+      UserDataService,
+      VehicleService
   ],
   bootstrap: [AppComponent]
 })

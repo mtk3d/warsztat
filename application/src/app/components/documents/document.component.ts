@@ -1,25 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http} from '@angular/http';
 
 import { DocumentService } from '../../_services/document.service';
+import { UserDataService } from '../../_services/userData.service';
 import { Document } from '../../_models/document.model';
+import { UserData } from '../../_models/userData.model';
 
 @Component({
   moduleId: module.id,
   selector: 'document',
   templateUrl: 'document.component.html'
 })
-export class DocumentComponent implements OnInit, OnDestroy{
+export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
  
     id: number;
     document: Document[] = [];
+    userData: UserData[] = [];
     consumerId: number;
     private sub: any;
 
   constructor(
       private route: ActivatedRoute, 
-      private documentService: DocumentService
+      private documentService: DocumentService,
+      private userDataService: UserDataService
   ) {}
 
   ngOnInit() {
@@ -33,6 +37,21 @@ export class DocumentComponent implements OnInit, OnDestroy{
         });
 
     });
+
+    this.sub = this.route.params.subscribe(params => {
+       this.userDataService.get()
+            .subscribe(userData => {
+                this.userData = userData;
+        });
+    });
+  }
+
+  ngOnChanges() {
+         
+  }
+
+  setConsumerId(id) {
+      console.log(id);
   }
 
   ngOnDestroy() {

@@ -14,6 +14,26 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
+            SELECT d.id,
+                d.firstName,
+                d.lastName,
+                d.position
+            FROM ApiBundle:Employee d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createUpdateByIdQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
             SELECT d
             FROM ApiBundle:Employee d
             WHERE d.id = :id
@@ -29,15 +49,45 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
 
     public function createFindAllQuery(int $userId)
     {
+        if($orderBy!='')
+        {
+            if($orderBy == 'firstName' || 
+                $orderBy == 'lastName' || 
+                $orderBy == 'position')
+            {
+                $orderBy = 'ORDER BY d.'.$orderBy;
+            }else{
+                $orderBy = '';
+            }
+        }
+        if($sort!='')
+        {
+            if(($sort == 'ASC' || $sort == 'DESC') && $orderBy != '')
+            {
+                $sort = $sort;
+            }else{
+                $sort = '';
+            }
+        }
+
+        $sorting = $orderBy.' '.$sort;
+
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d.id,
+                d.firstName,
+                d.lastName,
+                d.position
             FROM ApiBundle:Employee d
             WHERE d.userId = :userId
-            "
+            AND (d.firstName LIKE :searchStr
+            OR d.lastName LIKE :searchStr
+            OR d.position LIKE :searchStr
+            ".$sorting
         );
 
         $query->setParameter('userId', $userId);
+        $query->setParameter('searchStr', '%'.$searchStr.'%');
 
         return $query;
     }

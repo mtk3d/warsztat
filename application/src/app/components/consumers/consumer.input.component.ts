@@ -12,8 +12,8 @@ import { Consumer } from '../../_models/consumer.model';
 })
 export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
  
+    @Input('consumerId') consumerId: number;
     @Output() consumerOutput = new EventEmitter();
-    consumerId: number;
     searchStr: string;
     search: boolean = false;
     add: boolean = false;
@@ -35,6 +35,10 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
             .subscribe(consumer => {
                 this.consumer = consumer;
             });
+        }
+        if(typeof this.consumerId != 'undefined')
+        {
+            this.cancel();
         }
     }
 

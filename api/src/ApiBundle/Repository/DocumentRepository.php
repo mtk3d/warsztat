@@ -81,7 +81,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 d.place,
                 c.id as consumerId
             FROM ApiBundle:Document d
-            JOIN ApiBundle\Entity\Consumer c
+            LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             WHERE d.id = :id
             AND d.userId = :userId
@@ -127,7 +127,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 c.id as consumerId, 
                 c.name as consumerName
             FROM ApiBundle:Document d
-            JOIN ApiBundle\Entity\Consumer c
+            LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             WHERE d.consumerId = :consumerId
             AND d.userId = :userId
@@ -156,7 +156,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 c.id as consumerId, 
                 c.name as consumerName
             FROM ApiBundle:Document d
-            JOIN ApiBundle\Entity\Consumer c
+            LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             WHERE d.userId = :userId
             ".$filters

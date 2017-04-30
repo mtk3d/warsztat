@@ -1,16 +1,16 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 
-import { ConsumerService } from '../../_services/consumer.service';
-import { Consumer } from '../../_models/consumer.model';
+import { VehicleService } from '../../_services/vehicle.service';
+import { Vehicle } from '../../_models/vehicle.model';
 
 @Component({
   moduleId: module.id,
-  selector: 'consumers',
-  templateUrl: 'consumers.component.html'
+  selector: 'vehicles',
+  templateUrl: 'vehicles.component.html'
 })
-export class ConsumersComponent implements OnInit, OnDestroy {
-    consumers: Consumer[] = [];
-    consumersReturn: boolean;
+export class VehiclesComponent implements OnInit, OnDestroy {
+    vehicles: Vehicle[] = [];
+    vehiclesReturn: boolean;
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
     search: string = '';
@@ -18,19 +18,19 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     sorting: string = 'ASC';
     sub: any;
  
-    constructor(private consumerService: ConsumerService) { }
+    constructor(private vehicleService: VehicleService) { }
  
     ngOnInit() {
-        this.searchConsumers();
+        this.searchVehicles();
     }
 
-    searchConsumers() {
-        this.sub = this.consumerService.getConsumers(this.search, this.orderBy, this.sorting)
-            .subscribe(consumers => {
-                this.consumers = consumers;
-                this.consumersReturn = true;
+    searchVehicles() {
+        this.sub = this.vehicleService.getAll(this.search, this.orderBy, this.sorting)
+            .subscribe(vehicles => {
+                this.vehicles = vehicles;
+                this.vehiclesReturn = true;
             },
-            (err)=>this.consumersReturn = false
+            (err)=>this.vehiclesReturn = false
         );
         this.delete = [];
         this.allDeleteChecked = false;
@@ -50,7 +50,7 @@ export class ConsumersComponent implements OnInit, OnDestroy {
             this.sorting = 'ASC';
             this.orderBy = by;
         }
-        this.searchConsumers();
+        this.searchVehicles();
     }
 
     order(item)
@@ -66,7 +66,7 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     clearSearch()
     {
         this.search = '';
-        this.searchConsumers();
+        this.searchVehicles();
     }
 
     isSearch()
@@ -81,11 +81,11 @@ export class ConsumersComponent implements OnInit, OnDestroy {
 
     isReturn()
     {
-        if(!this.consumersReturn)
+        if(!this.vehiclesReturn)
         {
-            this.consumers = [];
+            this.vehicles = [];
         }
-        return this.consumersReturn;
+        return this.vehiclesReturn;
     }
 
     addDelete(id)
@@ -103,9 +103,9 @@ export class ConsumersComponent implements OnInit, OnDestroy {
         if(!this.allDeleteChecked)
         {
             this.allDeleteChecked = true;
-            for(let item in this.consumers)
+            for(let item in this.vehicles)
             {
-                let id = this.consumers[item].id;
+                let id = this.vehicles[item].id;
                 if(this.delete.indexOf(id) == -1)
                 {
                     this.delete.push(id);
@@ -120,9 +120,9 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     isAllChecked()
     {
         let is = true;
-        for(let item in this.consumers)
+        for(let item in this.vehicles)
         {
-            let id = this.consumers[item].id;
+            let id = this.vehicles[item].id;
             if(this.delete.indexOf(id) == -1)
             {
                 is = false;
@@ -164,8 +164,8 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     {
         for(let id in this.delete)
         {
-            this.sub = this.consumerService.delete(this.delete[id])
-                .subscribe((ok)=>{this.searchConsumers();});
+            this.sub = this.vehicleService.delete(this.delete[id])
+                .subscribe((ok)=>{this.searchVehicles();});
         }
     }
 

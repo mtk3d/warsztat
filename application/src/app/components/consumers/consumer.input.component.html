@@ -1,16 +1,16 @@
+{{ cosnumerId }}
 <div *ngIf="isConsumerView()">
     <div class="ui right floated icon button mini" (click)="searchView()"><i class="write icon"></i></div>
     <p>
         {{consumer.name}}
         <br>
-        <span *ngIf="consumer.street">{{consumer.street}}
-        <span *ngIf="consumer.build_number">, {{consumer.build_number}}</span><span *ngIf="consumer.apartment_number">/{{consumer.apartment_number}}</span>
+        <span *ngIf="consumer.street">{{consumer.street}}<span *ngIf="consumer.buildNumber">, {{consumer.buildNumber}}</span><span *ngIf="consumer.apartmentNumber">/{{consumer.apartmentNumber}}</span>
         </span>
         <br>
-        <span *ngIf="consumer.postal_code">{{consumer.postal_code}} </span>
+        <span *ngIf="consumer.postalCode">{{consumer.postalCode}} </span>
         <span *ngIf="consumer.place">{{consumer.place}}</span>
         <br>
-        <span *ngIf="consumer.nip">{{consumer.nip}}</span>
+        <span *ngIf="consumer.nip">NIP {{consumer.nip}}</span>
         <br>
     </p>
 </div>
@@ -26,15 +26,13 @@
             <p class="consumers-list-item" (click)="apply(consumer.id)">
                 {{consumer.name}}
                 <br>
-                <span *ngIf="consumer.street">{{consumer.street}}
-                    <span *ngIf="consumer.build_number">, {{consumer.build_number}}</span>
-                <span *ngIf="consumer.apartment_number">/{{consumer.apartment_number}}</span>
+                <span *ngIf="consumer.street">{{consumer.street}}<span *ngIf="consumer.buildNumber">, {{consumer.buildNumber}}</span><span *ngIf="consumer.apartmentNumber">/{{consumer.apartmentNumber}}</span>
                 </span>
                 <br>
-                <span *ngIf="consumer.postal_code">{{consumer.postal_code}} </span>
+                <span *ngIf="consumer.postalCode">{{consumer.postalCode}} </span>
                 <span *ngIf="consumer.place">{{consumer.place}}</span>
                 <br>
-                <span *ngIf="consumer.nip">{{consumer.nip}}</span>
+                <span *ngIf="consumer.nip">NIP {{consumer.nip}}</span>
                 <br>
             </p>
             <div class="ui divider"></div>
