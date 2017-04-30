@@ -11,6 +11,7 @@ import { DocumentService } from './_services/document.service';
 import { DocumentPositionService } from './_services/documentPosition.service';
 import { ConsumerService } from './_services/consumer.service';
 import { ServiceService } from './_services/service.service';
+import { StoreService } from './_services/store.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -78,7 +79,8 @@ import { OrdersComponent } from './components/orders/orders.component';
       DocumentService,
       DocumentPositionService,
       ConsumerService,
-      ServiceService
+      ServiceService,
+      StoreService
   ],
   bootstrap: [AppComponent]
 })

@@ -25,14 +25,14 @@
                         <label></label>
                     </div>
                 </td>
-                <td class="collapsing">{{ i + 1 }}</td>
+                <td class="collapsing" style="text-align: center;">{{ i + 1 }}</td>
                 <td>{{ documentPosition?.name }}</td>
                 <td>{{ documentPosition?.quantity}}</td>
                 <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
                 <td>{{ documentPosition?.vat }}%</td>
                 <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
                 <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
-                <td class="collapsing">
+                <td class="collapsing" style="text-align: center;">
                     <div class="ui  blue icon button mini"><i class="write icon"></i></div>
                     <div class="ui  red icon button mini"><i class="remove icon"></i></div>
                 </td>
@@ -50,13 +50,13 @@
                     <div class="field">
                         <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
                             <option value="">Wybierz</option>
-                            <option *ngFor="let service of services" value="{{ service.id }}" value="{{ service.id }}">{{ service.name }}</option>
+                            <option *ngFor="let item of selectItems" value="{{ item.id }}">{{ item.name }}</option>
                         </select>
                     </div>
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui input small-value">
+                <div class="ui input smaller-value">
                     <input type="text" name="quantity" [(ngModel)]="addPosition.quantity" (blur)="quantityBlur()">
                 </div>
             </td>

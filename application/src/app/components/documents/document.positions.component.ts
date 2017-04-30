@@ -4,9 +4,11 @@ import {Http} from '@angular/http';
 
 import { DocumentPositionService } from '../../_services/documentPosition.service';
 import { ServiceService } from '../../_services/service.service';
+import { StoreService } from '../../_services/store.service';
 import { DocumentPosition } from '../../_models/documentPosition.model';
 import { Document } from '../../_models/document.model';
 import { Service } from '../../_models/service.model';
+import { Store } from '../../_models/store.model';
 
 declare var $: any;
 
@@ -25,7 +27,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     add: any;
     addPosition: any = {};
     notFound: boolean = true;
-    services: Service[] = [];
+    selectItems: any = [];
     lastQuantity: number = 1;
     lastVat: number = 23;
     positionType: boolean = false;
@@ -34,12 +36,13 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   constructor(
       private route: ActivatedRoute, 
       private documentPositionService: DocumentPositionService,
-      private serviceService: ServiceService
+      private serviceService: ServiceService,
+      private storeService: StoreService
   ) {}
 
   ngOnInit() {
     this.getPositions();
-    this.serviceSearch();
+    this.storeSearch();
   }
 
   getPositions() {
@@ -60,7 +63,24 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.sub = this.route.params.subscribe(params => {
         this.serviceService.get()
             .subscribe(services => {
-                this.services = services;
+                this.selectItems = services;
+            },
+            (err)=>{
+                //error
+            }
+        );
+    });
+  }
+
+  getAll(){
+
+  }
+
+  storeSearch() {
+      this.sub = this.route.params.subscribe(params => {
+        this.storeService.get()
+            .subscribe(stores => {
+                this.selectItems = stores;
             },
             (err)=>{
                 //error
@@ -107,11 +127,25 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.add = true;
       this.notFound = false;
       this.positionType = false;
+      this.storeSearch();
   }
 
   changePositionType() {
       this.positionType = !this.positionType;
-      this.addPosition['service'] = this.positionType;
+      if(this.positionType) {
+          this.serviceSearch();
+          this.addPosition['name'] = '';
+          this.addPosition['netto'] = 0;
+          this.addPosition['brutto'] = 0;
+          this.addPosition['vatSum'] = 0;
+      }else{
+          this.storeSearch();
+          this.addPosition['name'] = '';
+          this.addPosition['netto'] = 0;
+          this.addPosition['brutto'] = 0;
+          this.addPosition['vatSum'] = 0;
+      }
+      this.addPosition['service'] = this.positionType.toString();
   }
 
   typeOfPosition() {
@@ -132,8 +166,8 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
-  doublePrecision(n) {
-      return Math.round((n * 100) / 100);
+  doublePrecision(num) {
+      return Math.round(num * 100) / 100;
   }
 
   nameSelect(value) {
@@ -145,20 +179,38 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
            this.addPosition['brutto'] = 0;
            this.addPosition['vatSum'] = 0;
       }else{
-          this.sub = this.route.params.subscribe(params => {
-            this.serviceService.getSingle(value)
-                .subscribe(position => {
-                   this.addPosition['name'] = position['name'];
-                   this.addPosition['netto'] = position['netto'];
-                   this.addPosition['brutto'] = position['brutto'];
-                   this.addPosition['vatSum'] = position['vat_sum'];
-                   this.addPosition['vat'] = position['vat'];
-                   this.addPosition['itemId'] = position['id'];
-                },
-                (err)=>{
-                    //error
-                });
-          });
+          if(this.positionType)
+          {
+              this.sub = this.route.params.subscribe(params => {
+                this.serviceService.getSingle(value)
+                    .subscribe(position => {
+                       this.addPosition['name'] = position['name'];
+                       this.addPosition['netto'] = position['netto'];
+                       this.addPosition['brutto'] = position['brutto'];
+                       this.addPosition['vatSum'] = position['vat_sum'];
+                       this.addPosition['vat'] = position['vat'];
+                       this.addPosition['itemId'] = position['id'];
+                    },
+                    (err)=>{
+                        //error
+                    });
+              });
+          }else{
+              this.sub = this.route.params.subscribe(params => {
+                this.storeService.getSingle(value)
+                    .subscribe(position => {
+                       this.addPosition['name'] = position['name'];
+                       this.addPosition['netto'] = position['netto'];
+                       this.addPosition['brutto'] = position['brutto'];
+                       this.addPosition['vatSum'] = position['vat_sum'];
+                       this.addPosition['vat'] = position['vat'];
+                       this.addPosition['itemId'] = position['id'];
+                    },
+                    (err)=>{
+                        //error
+                    });
+              });
+          }
       }
   }
 

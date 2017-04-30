@@ -84,40 +84,11 @@
 }
 
 .small-value input {
-    width: 60px;
+    width: 80px;
 }
 
-.hints-list{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    z-index: 100;
-    border: solid 1px #ccc;
-    background-color: #fff;
-    border-radius: 4px;
-    margin-top: 37px;
-    max-height: 120px;
-    overflow-y: scroll;
-    overflow-x: auto;
-}
-
-.hints-list li{
-    padding: 10px 20px 10px 20px;
-    color: #666;
-    overflow: hidden;
-    cursor: pointer;
-    max-width: 400px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.hints-list li:last-child{
-    border: none;
-}
-
-.hints-list li:hover{
-    background-color: rgba(0,0,0,.05)!important;
+.smaller-value input {
+    width: 55px;
 }
 
 ::-webkit-scrollbar {
