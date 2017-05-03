@@ -167,7 +167,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindLastDocumentNumber(int $userId, $type)
+    public function createFindLastDocumentNumber(int $userId, $type, $date)
     {
         $query = $this->_em->createQuery(
             "
@@ -175,12 +175,14 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             FROM ApiBundle:Document d
             WHERE d.userId = :userId
             AND d.type = :type
-            ORDER BY d.number DESC
+            AND d.date <= :date
+            ORDER BY d.id DESC
             "
         );
 
         $query->setParameter('userId', $userId);
         $query->setParameter('type', $type);
+        $query->setParameter('date', $date);
         $query->setMaxResults(1);
 
         return $query;

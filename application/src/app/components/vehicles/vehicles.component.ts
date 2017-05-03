@@ -14,7 +14,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
     search: string = '';
-    orderBy: string = 'name';
+    orderBy: string = 'registerNumber';
     sorting: string = 'ASC';
     sub: any;
  

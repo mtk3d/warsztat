@@ -29,10 +29,13 @@ import { DocumentComponent } from './components/documents/document.component';
 import { DocumentAddComponent } from './components/documents/document.add.component';
 import { DocumentPositionsComponent } from './components/documents/document.positions.component';
 import { ConsumersComponent } from './components/consumers/consumers.component';
+import { ConsumerAddComponent } from './components/consumers/consumer.add.component';
 import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
+import { VehicleAddComponent } from './components/vehicles/vehicle.add.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
+import { ServiceAddComponent } from './components/services/service.add.component';
 import { StoresComponent } from './components/stores/stores.component';
 import { TiresComponent } from './components/tires/tires.component';
 import { OrdersComponent } from './components/orders/orders.component';
@@ -54,10 +57,13 @@ import { OrdersComponent } from './components/orders/orders.component';
     DocumentAddComponent,
     DocumentPositionsComponent,
     ConsumersComponent,
+    ConsumerAddComponent,
     ConsumerInputComponent,
     VehiclesComponent,
+    VehicleAddComponent,
     EmployeesComponent,
     ServicesComponent,
+    ServiceAddComponent,
     StoresComponent,
     TiresComponent,
     OrdersComponent
@@ -73,13 +79,16 @@ import { OrdersComponent } from './components/orders/orders.component';
       {path: 'documents/add', component: DocumentAddComponent, canActivate: [AuthGuard]},
       {path: 'documents/:id', component: DocumentComponent, canActivate: [AuthGuard]},
       {path: 'consumers', component: ConsumersComponent, canActivate: [AuthGuard]},
+      {path: 'consumers/add', component: ConsumerAddComponent, canActivate: [AuthGuard]},
       {path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard]},
       {path: 'orders', component: OrdersComponent, canActivate: [AuthGuard]},
       {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
       {path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard]},
       {path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard]},
+      {path: 'vehicles/add', component: VehicleAddComponent, canActivate: [AuthGuard]},
       {path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard]},
       {path: 'services', component: ServicesComponent, canActivate: [AuthGuard]},
+      {path: 'services/add', component: ServiceAddComponent, canActivate: [AuthGuard]},
       {path: 'stores', component: StoresComponent, canActivate: [AuthGuard]},
       {path: 'tires', component: TiresComponent, canActivate: [AuthGuard]},
       {path: 'about', component: AboutComponent},

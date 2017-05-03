@@ -21,6 +21,7 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
     consumer: Consumer[] = [];
     consumerAdd: any = {};
     consumers: Consumer[] = [];
+    loading: boolean = true;
     private sub: any;
 
     constructor(private consumerService: ConsumerService) {}
@@ -34,6 +35,7 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
             this.sub = this.consumerService.getConsumer(this.consumerId)
             .subscribe(consumer => {
                 this.consumer = consumer;
+                this.loading = false;
             });
         }
         if(typeof this.consumerId != 'undefined')
@@ -43,34 +45,33 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
     }
 
     loadConsumer() {
+        this.loading = true;
         this.sub = this.consumerService.getConsumer(this.consumerId)
              .subscribe(consumer => {
                  this.consumer = consumer;
+                 this.loading = false;
              });
     }
 
     searchConsumer() {
+        this.loading = true;
         this.sub = this.consumerService.getConsumers(this.searchStr)
             .subscribe(consumers => {
                 this.consumers = consumers;
                 this.consumersReturn = true;
+                this.loading = false;
             },
-                (err)=>this.consumersReturn = false
+                (err)=>{
+                    this.consumersReturn = false
+                    this.loading = false;
+                }
             );
-    }
-
-    isResponse() {
-        return this.consumersReturn;
     }
 
     searchView() {
         this.searchConsumer();
         this.search = true;
         this.add = false;
-    }
-
-    isSearchView() {
-        return this.search;
     }
 
     isConsumerView() {
@@ -87,10 +88,6 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
         this.add = true;
     }
 
-    isAddView() {
-        return this.add;
-    }
-
     isSetConsumer(){
         if(typeof this.consumerId !== 'undefined')
         {
@@ -101,6 +98,7 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
     }
 
     create() {
+        this.loading = true;
         let company = '';
         if(typeof this.consumerAdd['company'] !== 'undefined')
         {
@@ -112,6 +110,7 @@ export class ConsumerInputComponent implements OnDestroy, OnInit, OnChanges{
                 this.searchView();
                 this.searchConsumer();
                 this.sub.unsubscribe();
+                this.loading = false;
             });
     }
 

@@ -18,6 +18,8 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
     document: Document[] = [];
     userData: UserData[] = [];
     consumerId: number;
+    userDataLoading: boolean = true;
+    documentDataLoading: boolean = true;
     private sub: any;
 
   constructor(
@@ -34,6 +36,7 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
             .subscribe(document => {
                 this.document = document;
                 this.consumerId = document['consumerId'];
+                this.documentDataLoading = false;
         });
 
     });
@@ -42,6 +45,7 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
        this.userDataService.get()
             .subscribe(userData => {
                 this.userData = userData;
+                this.userDataLoading = false;
         });
     });
   }

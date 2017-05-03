@@ -5,7 +5,7 @@
                 <div class="column">
                     <h4 class="ui dividing header">Dane do dokumentu</h4>
                     <div class="field">
-                        <label>Typ dokumentu</label>
+                        <label>Typ dokumentu *</label>
                         <div class="ui selection dropdown">
                             <input type="hidden" name="card[type]">
                             <div class="default text">Typ dokumentu</div>
@@ -21,13 +21,13 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label>Data wystawienia</label>
+                        <label>Data wystawienia *</label>
                         <div class="field">
                             <input type="date" name="date" [ngModel]="document.date | date:'y-MM-dd'">
                         </div>
                     </div>
                     <div class="field">
-                        <label>Stawka VAT</label>
+                        <label>Domyślna stawka VAT</label>
                         <div class="field">
                             <div class="ui right labeled input">
                                 <input type="text" name="vat" placeholder="VAT" [(ngModel)]="document.vat">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label>Miejsce</label>
+                        <label>Miejsce *</label>
                         <div class="field">
                             <input type="text" name="place" placeholder="Miejsce" [(ngModel)]="document.place">
                         </div>
@@ -51,13 +51,13 @@
                 <div class="column">
                     <h4 class="ui dividing header">Płatność</h4>
                     <div class="field">
-                        <label>Data płatności</label>
+                        <label>Data płatności *</label>
                         <div class="field">
                             <input type="date" name="dateOfPayment" [ngModel]="document.dateOfPayment  | date:'y-MM-dd'">
                         </div>
                     </div>
                     <div class="field">
-                        <label>Metoda płatności</label>
+                        <label>Metoda płatności *</label>
                         <div class="ui selection dropdown">
                             <input type="hidden" name="card[type]">
                             <div class="default text">Metoda płatności</div>
@@ -95,12 +95,12 @@
                     <div class="field">
                         <div class="ui toggle checkbox">
                             <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="document.paid">
-                            <label>Zapłacono</label>
+                            <label>Zapłacono *</label>
                         </div>
                     </div>
                 </div>
                 <div class="column">
-                    <h4 class="ui dividing header">Klient</h4>
+                    <h4 class="ui dividing header">Klient *</h4>
                     <div class="ui segment">
                         <consumer-input (consumerOutput)="setConsumerId($event)"></consumer-input>
                     </div>

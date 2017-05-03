@@ -12,10 +12,10 @@ class DocumentNumberGenerator
         $this->container = $container;
     }
 
-    public function getNextNumber(int $userId, $type)
+    public function getNextNumber(int $userId, $type, $date)
     {
         $document = $this->container->get('crv.doctrine_entity_repository.document')
-            ->createFindLastDocumentNumber($userId, $type)
+            ->createFindLastDocumentNumber($userId, $type, $date)
             ->getResult();
 
         if($type=='Rachunek')
@@ -23,9 +23,9 @@ class DocumentNumberGenerator
         else if($type=='FV')
             $type='FV';
 
-        $date = new \DateTime('now');
         $month = $date->format('m');
         $year = $date->format('Y');
+
 
         if ($document == null) {
             $number = '001';

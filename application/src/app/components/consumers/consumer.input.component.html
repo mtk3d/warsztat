@@ -1,3 +1,6 @@
+<div class="ui active inverted dimmer" *ngIf="loading">
+    <div class="ui loader"></div>
+</div>
 {{ cosnumerId }}
 <div *ngIf="isConsumerView()">
     <div class="ui right floated icon button mini" (click)="searchView()"><i class="write icon"></i></div>
@@ -14,14 +17,14 @@
         <br>
     </p>
 </div>
-<div *ngIf="isSearchView()">
+<div *ngIf="search">
     <div class="ui right floated icon button mini" (click)="cancel()" *ngIf="isSetConsumer()"><i class="remove icon"></i></div>
     <div class="ui small icon input loading">
         <input type="text" [(ngModel)]="searchStr" (keyup)="searchConsumer()" placeholder="Search...">
         <!-- <i class="search icon"></i> -->
     </div>
     <div class="ui divider"></div>
-    <div class="consumers-list" *ngIf="isResponse()">
+    <div class="consumers-list" *ngIf="consumersReturn">
         <div *ngFor="let consumer of consumers">
             <p class="consumers-list-item" (click)="apply(consumer.id)">
                 {{consumer.name}}
@@ -38,7 +41,7 @@
             <div class="ui divider"></div>
         </div>
     </div>
-    <div style="font-size: 20px; color: #ccc; text-align: center;" *ngIf="!isResponse()">
+    <div style="font-size: 20px; color: #ccc; text-align: center;" *ngIf="!consumersReturn">
         Nie znaleziono
     </div>
     <div class="ui divider"></div>
@@ -46,7 +49,7 @@
         <i class="user icon"></i> Nowy klient
     </div>
 </div>
-<div *ngIf="isAddView()">
+<div *ngIf="add">
     <b style="font-size:1.07142857rem;">Nowy klient</b>
     <div class="ui icon button mini right floated" (click)="searchView()"><i class="remove icon"></i></div>
     <div style="max-height: calc(100vh - 400px); overflow-y:scroll; width: 100%; padding-right: 10px; margin-top: 20px;">

@@ -17,6 +17,7 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     orderBy: string = 'name';
     sorting: string = 'ASC';
     sub: any;
+    deleteLoading: boolean = false;
  
     constructor(private consumerService: ConsumerService) { }
  
@@ -162,10 +163,14 @@ export class ConsumersComponent implements OnInit, OnDestroy {
 
     deleteChecked()
     {
+        this.deleteLoading = true;
         for(let id in this.delete)
         {
             this.sub = this.consumerService.delete(this.delete[id])
-                .subscribe((ok)=>{this.searchConsumers();});
+                .subscribe((ok)=>{
+                    this.searchConsumers();
+                    this.deleteLoading = false;
+                });
         }
     }
 

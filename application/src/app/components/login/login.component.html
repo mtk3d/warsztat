@@ -12,7 +12,7 @@
           <label for="password">Password</label>
           <input type="password" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required>
         </div>
-        <button class="ui button" [disabled]="loading">Login</button> <i *ngIf="loading" class="ui mini active inline loader"></i>
+        <button class="ui button" [disabled]="loading" [ngClass]="{'loading': loading}">Login</button>
       </form>
       <div class="ui red message" *ngIf="error">
         <div class="content">

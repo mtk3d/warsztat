@@ -1,0 +1,51 @@
+<div class="ui segment" style="max-height: 100%;">
+    <form class="ui form">
+        <div class="ui relaxed grid">
+            <div class="two column row">
+                <div class="column">
+                    <h4 class="ui dividing header">Podstawowe dane</h4>
+                    <div class="field">
+                        <label>Marka</label>
+                        <div class="field">
+                            <input type="text" name="mark" placeholder="Marka" [(ngModel)]="vehicle.mark">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Model</label>
+                        <div class="field">
+                            <input type="text" name="model" placeholder="Model" [(ngModel)]="vehicle.model">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Silnik</label>
+                        <div class="field">
+                            <input type="text" name="engine" placeholder="Silnik" [(ngModel)]="vehicle.engine">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Numer rejestracyjny</label>
+                        <div class="field">
+                            <input type="text" name="registrationNumber" placeholder="Numer rejestracyjny" [(ngModel)]="vehicle.registrationNumber">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Notatki</label>
+                        <div class="field">
+                            <textarea type="text" name="notes" placeholder="Notatki" [(ngModel)]="vehicle.notes" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <h4 class="ui dividing header">Klient</h4>
+                    <div class="ui segment">
+                        <consumer-input (consumerOutput)="setConsumerId($event)"></consumer-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="ui  green labeled icon button" (click)="add()">
+        <i class="plus icon"></i> Dodaj
+    </div>
+</div>

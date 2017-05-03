@@ -39,9 +39,9 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         return $this->getUser()->getId();
     }
 
-    private function generateDocumentNumber($type)
+    private function generateDocumentNumber($type, $date)
     {
-        return $this->get('utils.document_number.generate')->getNextNumber($this->getUserId(), $type);
+        return $this->get('utils.document_number.generate')->getNextNumber($this->getUserId(), $type, $date);
     }
 
     public function cgetAction(Request $request)
@@ -112,7 +112,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         }
 
         $document->setUserId($this->getUserId());
-        $document->setNumber($this->generateDocumentNumber($document->getType()));
+        $document->setNumber($this->generateDocumentNumber($document->getType(), $document->getDate()->modify('+1 day')));
         $document->setNetto('0');
         $document->setBrutto('0');
         $document->setVatSum('0');
