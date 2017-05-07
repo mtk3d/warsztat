@@ -35,6 +35,8 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
     deleteLoading: boolean = false;
+    editedPosition: any = {};
+    edit: boolean = false;
     unit: string = "";
     private sub: any;
 
@@ -64,6 +66,24 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
             });
     });
   }
+
+  // editPosition(id){
+  //     this.getPositions();
+
+  //     let index = this.documentPositions.map( (el) => el.id ).indexOf(id)
+
+  //     this.editedPosition['name'] = this.documentPositions[index]['name'];
+  //     this.editedPosition['netto'] = this.documentPositions[index]['netto'];
+  //     this.editedPosition['vat'] = this.documentPositions[index]['vat'];
+  //     this.editedPosition['vatSum'] = this.documentPositions[index]['vatSum'];
+  //     this.editedPosition['brutto'] = this.documentPositions[index]['brutto'];
+  //     console.log(this.editedPosition);
+  //     this.documentPositions.splice(index, 1);
+  // }
+
+  // isEditing(id) {
+  //     return true;
+  // }
 
   setDocumentSum() {
       this.documentSum['netto'] = 0;

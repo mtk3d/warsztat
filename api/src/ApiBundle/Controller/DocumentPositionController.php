@@ -75,14 +75,6 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $document = $this->getDocumentRepository()
-            ->createUpdateQuery($documentId, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
         $form = $this->createForm(DocumentPositionType::class, $documentPosition, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
@@ -94,14 +86,6 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return $form;
         }
 
-        $netto = intval($document->getNetto())+intval($request->request->get('netto'));
-        $brutto = intval($document->getBrutto())+intval($request->request->get('brutto'));
-        $vatSum = intval($document->getVatSum())+intval($request->request->get('vatSum'));
-
-        $document->setNetto($netto);
-        $document->setBrutto($brutto);
-        $document->setVatSum($vatSum);
-
         $documentPosition->setUserId($this->getUserId());
         $documentPosition->setDocumentId($documentId);
         $documentPosition->setCreatedAt($dateTime);
@@ -111,11 +95,8 @@ class DocumentPositionController extends FOSRestController implements ClassResou
         $em->persist($documentPosition);
         $em->flush();
 
-        $em->persist($document);
-        $em->flush();
-
         $routeOptions = [
-            'id' => $document->getId(),
+            'id' => $documentPosition->getDocumentId(),
         ];
 
         return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_CREATED);
@@ -132,20 +113,6 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $documentId = $documentPosition->getDocumentId();
-
-        $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($documentId, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if ($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $netto = (intval($document->getNetto()) - intval($documentPosition->getNetto()))+$request->request->get('netto');
-        $brutto = (intval($document->getBrutto()) - intval($documentPosition->getNetto()))+$request->request->get('brutto');
-        $vatSum = (intval($document->getVatSum()) - intval($documentPosition->getNetto()))+$request->request->get('vatSum');
-
         $documentPosition->setUpdatedAt($dateTime);
 
         $form = $this->createForm(DocumentPositionType::class, $documentPosition, [
@@ -159,17 +126,11 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return $form;
         }
 
-        $document->setNetto($netto);
-        $document->setBrutto($brutto);
-        $document->setVatSum($vatSum);
-
         $em = $this->getDoctrine()->getManager();
-        $em->flush();
-        $em->persist($document);
         $em->flush();
 
         $routeOptions = [
-            'id' => $document->getId(),
+            'id' => $documentPosition->getDocumentId(),
         ];
 
         return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_NO_CONTENT);
@@ -219,27 +180,7 @@ class DocumentPositionController extends FOSRestController implements ClassResou
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $documentId = $documentPosition->getDocumentId();
-
-        $document = $this->getDocumentRepository()
-            ->createUpdateQuery($documentId, $this->getUserId())
-            ->getOneOrNullResult();
-
-        if ($document == null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-
-        $netto = intval($document->getNetto()) - intval($documentPosition->getNetto());
-        $brutto = intval($document->getBrutto()) - intval($documentPosition->getNetto());
-        $vatSum = intval($document->getVatSum()) - intval($documentPosition->getNetto());
-
-        $document->setNetto($netto);
-        $document->setBrutto($brutto);
-        $document->setVatSum($vatSum);
-
         $em = $this->getDoctrine()->getManager();
-        $em->persist($document);
-        $em->flush();
         $em->remove($documentPosition);
         $em->flush();
 

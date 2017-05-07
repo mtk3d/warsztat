@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import {Http} from '@angular/http';
 import { Router } from '@angular/router';
 
-import { DocumentService } from '../../_services/document.service';
-import { Document } from '../../_models/document.model';
+import { VehicleService } from '../../_services/vehicle.service';
+import { Vehicle } from '../../_models/vehicle.model';
 
 declare var $: any;
 
@@ -16,45 +16,41 @@ declare var $: any;
 export class VehicleAddComponent implements OnInit, OnDestroy, OnChanges{
  
     id: number;
-    document: any = {};
     private sub: any;
-    vehicle: any = [];
+    vehicle: any = {};
 
   constructor(
       private router: Router,
       private route: ActivatedRoute, 
-      private documentService: DocumentService
+      private vehicleService: VehicleService
   ) {}
 
   ngOnInit() {
-      let today = new Date();
-      this.document['date'] = today.toISOString();
-      this.document['dateOfPayment'] = today.toISOString();
-      this.document['paid'] = false;
     $('.ui.checkbox').checkbox();
     $('.ui.dropdown')
       .dropdown()
     ;
   }
 
-  type(type) {
-      this.document['type'] = type;
-  }
-
-  paymentMethod(type) {
-      this.document['paymentMethod'] = type;
-  }
-
   add(){
-      this.sub = this.documentService.create(this.document)
+      this.sub = this.vehicleService.create(this.vehicle)
             .subscribe((ok)=>{
-                this.router.navigate(['/documents']);
+                this.router.navigate(['/vehicles']);
                 this.sub.unsubscribe();
             });
   }
 
   setConsumerId(consumerId){
-      this.document['consumerId'] = consumerId;
+      this.vehicle['consumerId'] = consumerId;
+  }
+
+  buttonActive(){
+      if(typeof this.vehicle['consumerId'] != 'undefined')
+      {
+          return true;
+      }else{
+          return false;
+      }
   }
 
   ngOnChanges(){

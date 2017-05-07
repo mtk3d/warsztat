@@ -19,6 +19,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let documentPosition of documentPositions;  let i = index">
+        <!-- <ng-container *ngIf="isEditing(documentPosition.id)"> -->
             <td class="collapsing">
                 <div class="ui fitted checkbox">
                     <input type="checkbox" (change)="addDelete(documentPosition.id)" [checked]="isCheck(documentPosition.id)">
@@ -27,14 +28,16 @@
             </td>
             <td class="collapsing" style="text-align: center;">{{ i + 1 }}</td>
             <td>{{ documentPosition?.name }}</td>
-            <td>{{ documentPosition?.quantity}}</td>
+            <td>{{ documentPosition?.quantity }} {{ documentPosition?.unit}}</td>
             <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
             <td>{{ documentPosition?.vat }}%</td>
             <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
             <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
             <td class="collapsing" style="text-align: center;">
+                <!-- <div class="ui  blue icon button mini" (click)="editPosition(documentPosition.id)"><i class="edit icon"></i></div> -->
                 <div class="ui  red icon button mini" (click)="deleteById(documentPosition.id)"><i class="remove icon"></i></div>
             </td>
+        <!-- </ng-container> -->
         </tr>
         <tr *ngIf="add">
             <td colspan="2" style="text-align: center;">
