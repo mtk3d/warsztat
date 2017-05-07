@@ -1,1 +1,90 @@
-<h1>Stores</h1>
+<div style="overflow: hidden">
+    <div class="ui search" style="float: right">
+        <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
+        <div class="ui icon input">
+            <input class="prompt" [(ngModel)]="search" (keyup)="searchstores()" type="text" placeholder="Szukaj...">
+            <i class="search icon" *ngIf="!isSearch()"></i>
+        </div>
+        <div class="results"></div>
+    </div>
+</div>
+<table class="ui celled table selectable">
+    <thead>
+        <tr>
+            <th>
+                <div class="ui fitted checkbox">
+                    <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()">
+                    <label></label>
+                </div>
+            </th>
+            <th (click)="sortingBy('name')">Nazwa
+                <i class="sort icon" [ngClass]="{'descending': (order('name')=='DESC'), 'ascending': (order('name')=='ASC')}"></i>
+            </th>
+            <th>Ilość</th>
+            <th (click)="sortingBy('firstName')">Netto
+                <i class="sort icon" [ngClass]="{'descending': (order('firstName')=='DESC'), 'ascending': (order('firstName')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('company')">VAT
+                <i class="sort icon" [ngClass]="{'descending': (order('company')=='DESC'), 'ascending': (order('company')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('phone')">Kwota VAT
+                <i class="sort icon" [ngClass]="{'descending': (order('phone')=='DESC'), 'ascending': (order('phone')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('email')">Brutto
+                <i class="sort icon" [ngClass]="{'descending': (order('email')=='DESC'), 'ascending': (order('email')=='ASC')}"></i>
+            </th>
+        </tr>
+    </thead>
+    <tbody *ngIf="isReturn()">
+        <tr *ngFor="let store of stores">
+            <td class="collapsing">
+                <div class="ui fitted checkbox">
+                    <input type="checkbox" (change)="addDelete(store.id)" [checked]="isCheck(store.id)">
+                    <label></label>
+                </div>
+            </td>
+            <td><a [routerLink]="['/stores', store.id]">{{ store?.name }}</a></td>
+            <td>{{ store?.quantity }} {{ store?.unit }}</td>
+            <td>{{ store?.netto | number : '1.2-2'}}</td>
+            <td>{{ store?.vat | number : '1.2-2'}}</td>
+            <td>{{ store?.vat_sum | number : '1.2-2'}}</td>
+            <td>{{ store?.brutto | number : '1.2-2'}}</td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="!isReturn()">
+        <tr>
+            <td colspan="8" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+                Nie znaleziono
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="8">
+                <button class="ui  red labeled icon button" [disabled]="isDelete() || deleteLoading" [ngClass]="{'loading': deleteLoading}" (click)="deleteChecked()">
+                    <i class="trash icon"></i> Usuń
+                </button>
+                <div class="ui right floated pagination menu small">
+                    <a class="item" (click)="page(1)" [ngClass]="{'disabled': (actualPage<=1)}">
+          Pierwsza
+        </a>
+                    <a class="icon item" (click)="page(actualPage-1)" [ngClass]="{'disabled': (actualPage<=1)}">
+                        <i class="left chevron icon"></i>
+                    </a>
+                    <span *ngFor="let button of pagesButtons">
+            <a class="item" [ngClass]="{'active': (button==actualPage)}" (click)="page(button)">{{button}}</a>
+        </span>
+                    <a class="icon item" (click)="page(actualPage+1)" [ngClass]="{'disabled': (actualPage>=pages)}">
+                        <i class="right chevron icon"></i>
+                    </a>
+                    <a class="item" (click)="page(pages)" [ngClass]="{'disabled': (actualPage>=pages)}">
+          Ostatnia
+        </a>
+                </div>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+<div class="ui green labeled icon button" [routerLink]="['/stores/add']">
+    <i class="add icon"></i> Nowa pozycja
+</div>

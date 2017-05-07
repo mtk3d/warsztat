@@ -5,20 +5,32 @@
                 <td>
                     <div class="field">
                         <label>Nazwa</label>
-                        <input type="text" name="name" placeholder="Nazwa" [(ngModel)]="service.name">
+                        <input type="text" name="name" placeholder="Nazwa" [(ngModel)]="store.name">
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div class="field">
+                        <label>Ilość</label>
+                        <input type="text" name="quantity" [(ngModel)]="store.quantity">
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div class="field">
+                        <label>Jednostka</label>
+                        <input type="text" name="unit" [(ngModel)]="store.unit">
                     </div>
                 </td>
                 <td style="width: 10%">
                     <div class="field">
                         <label>Netto</label>
-                        <input type="text" name="netto" [(ngModel)]="service.netto" (blur)="nettoBlur()">
+                        <input type="text" name="netto" [(ngModel)]="store.netto" (blur)="nettoBlur()">
                     </div>
                 </td>
                 <td style="width: 10%">
                     <div class="field small-value">
                         <label>VAT</label>
                         <div class="ui right labeled input small-value">
-                            <input type="text" name="vat" style="width: 50px;" [(ngModel)]="service.vat" (blur)="vatBlur()">
+                            <input type="text" name="vat" style="width: 50px;" [(ngModel)]="store.vat" (blur)="vatBlur()">
                             <div class="ui basic label">
                                 %
                             </div>
@@ -28,13 +40,13 @@
                 <td style="width: 10%">
                     <div class="field">
                         <label>Kwota VAT</label>
-                        <input type="text" name="vatSum" [(ngModel)]="service.vatSum" (blur)="vatSumBlur()">
+                        <input type="text" name="vatSum" [(ngModel)]="store.vatSum" (blur)="vatSumBlur()">
                     </div>
                 </td>
                 <td style="width: 10%">
                     <div class="field">
                         <label>Brutto</label>
-                        <input type="text" name="brutto" [(ngModel)]="service.brutto" (blur)="bruttoBlur()">
+                        <input type="text" name="brutto" [(ngModel)]="store.brutto" (blur)="bruttoBlur()">
                     </div>
                 </td>
             </tr>

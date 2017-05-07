@@ -3,7 +3,7 @@
         <tr>
             <th class="collapsing">
                 <div class="ui fitted checkbox">
-                    <input type="checkbox">
+                    <input type="checkbox"  (change)="allDelete()" [checked]="isAllChecked()">
                     <label></label>
                 </div>
             </th>
@@ -21,7 +21,7 @@
         <tr *ngFor="let documentPosition of documentPositions;  let i = index">
             <td class="collapsing">
                 <div class="ui fitted checkbox">
-                    <input type="checkbox">
+                    <input type="checkbox" (change)="addDelete(documentPosition.id)" [checked]="isCheck(documentPosition.id)">
                     <label></label>
                 </div>
             </td>
@@ -33,11 +33,10 @@
             <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
             <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
             <td class="collapsing" style="text-align: center;">
-                <div class="ui  blue icon button mini"><i class="write icon"></i></div>
-                <div class="ui  red icon button mini"><i class="remove icon"></i></div>
+                <div class="ui  red icon button mini" (click)="deleteById(documentPosition.id)"><i class="remove icon"></i></div>
             </td>
         </tr>
-        <tr *ngIf="isAddView()">
+        <tr *ngIf="add">
             <td colspan="2" style="text-align: center;">
                 <span>{{ typeOfPosition() }}</span>
                 <div class="ui toggle fitted checkbox">
@@ -50,14 +49,20 @@
                     <div class="field">
                         <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
                             <option value="">Wybierz</option>
-                            <option *ngFor="let item of selectItems" value="{{ item.id }}">{{ item.name }}</option>
+                            <option *ngFor="let item of selectItems;" value="{{ item.id }}">{{ item.name }}</option>
                         </select>
                     </div>
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui input smaller-value">
+                <div class="ui input smaller-value" *ngIf="positionType">
                     <input type="text" name="quantity" [(ngModel)]="addPosition.quantity" (blur)="quantityBlur()">
+                </div>
+                <div class="ui right labeled input small-value" *ngIf="!positionType">
+                    <input type="text" name="quantity" style="width: 50px;" [(ngModel)]="addPosition.quantity" (blur)="quantityBlur()">
+                    <div class="ui basic label">
+                        {{ unit }}
+                    </div>
                 </div>
             </td>
             <td class="collapsing">
@@ -84,20 +89,19 @@
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui  green icon button mini" (click)="addNewPosition()"><i class="checkmark icon"></i></div>
                 <div class="ui  red icon button mini" (click)="closeAdd()"><i class="remove icon"></i></div>
             </td>
         </tr>
-        <tr *ngIf="isReturn()">
+        <tr *ngIf="positionsReturn">
             <td colspan="4">Razem:</td>
-            <td>{{ document.netto | number : '1.2-2'}}</td>
+            <td>{{ documentSum?.netto | number : '1.2-2'}}</td>
             <td></td>
-            <td>{{ document.vatSum | number : '1.2-2'}}</td>
-            <td>{{ document.brutto | number : '1.2-2'}}</td>
+            <td>{{ documentSum?.vatSum | number : '1.2-2'}}</td>
+            <td>{{ documentSum?.brutto | number : '1.2-2'}}</td>
             <td class="collapsing"></td>
         </tr>
     </tbody>
-    <tbody *ngIf="noReturn()">
+    <tbody *ngIf="notFound">
         <tr>
             <td colspan="9" class="ui center aligned" style="font-size: 20px; color: #ccc;">
                 Brak pozycji
@@ -107,11 +111,14 @@
     <tfoot>
         <tr>
             <th colspan="9">
-                <div class="ui  red labeled icon button disabled">
+                <button class="ui  red labeled icon button" [disabled]="isDelete() || deleteLoading" [ngClass]="{'loading': deleteLoading}" (click)="deleteChecked()">
                     <i class="trash icon"></i> Usuń
-                </div>
-                <div class="ui  green right floated labeled icon button" (click)="addView()" [ngClass]="{'disabled': isAddView()}">
+                </button>
+                <div class="ui  green right floated labeled icon button" (click)="addView()" *ngIf="!add">
                     <i class="plus icon"></i> Dodaj
+                </div>
+                <div class="ui  green right floated labeled icon button" (click)="addNewPosition()" *ngIf="add">
+                    <i class="checkmark icon"></i> Zatwierdź
                 </div>
             </th>
         </tr>

@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
 import { DocumentPositionService } from '../../_services/documentPosition.service';
 import { ServiceService } from '../../_services/service.service';
 import { StoreService } from '../../_services/store.service';
+import { DocumentService } from '../../_services/document.service';
 import { DocumentPosition } from '../../_models/documentPosition.model';
 import { Document } from '../../_models/document.model';
 import { Service } from '../../_models/service.model';
@@ -20,7 +21,7 @@ declare var $: any;
 export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
 
     @Input('id') documentId: number; 
-    @Input('document') document: Document[] = []; 
+    documentSum: Array<number> = []; 
     documentPositions: DocumentPosition[] = [];
     positionsReturn: boolean;
     ordinal: Array<number>;
@@ -29,15 +30,19 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     notFound: boolean = true;
     selectItems: any = [];
     lastQuantity: number = 1;
-    lastVat: number = this.document['vat'];
+    lastVat: number = 23;
     positionType: boolean = false;
+    delete: Array<number> = [];
+    allDeleteChecked: boolean = false;
+    deleteLoading: boolean = false;
+    unit: string = "";
     private sub: any;
 
   constructor(
       private route: ActivatedRoute, 
       private documentPositionService: DocumentPositionService,
       private serviceService: ServiceService,
-      private storeService: StoreService
+      private storeService: StoreService,
   ) {}
 
   ngOnInit() {
@@ -52,11 +57,25 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
                 this.documentPositions = documentPositions;
                 this.positionsReturn = true;
                 this.notFound = false;
+                this.setDocumentSum();
             },
             (err)=>{
                 this.positionsReturn = false; this.notFound = true;
             });
     });
+  }
+
+  setDocumentSum() {
+      this.documentSum['netto'] = 0;
+      this.documentSum['brutto'] = 0;
+      this.documentSum['vatSum'] = 0;
+      
+      for(let id in this.documentPositions)
+        {
+            this.documentSum['netto'] += this.documentPositions[id]['netto'];
+            this.documentSum['brutto'] += this.documentPositions[id]['brutto'];
+            this.documentSum['vatSum'] += this.documentPositions[id]['vat_sum'];
+        }
   }
 
   serviceSearch() {
@@ -89,18 +108,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     });
   }
 
-  ngOnChanges() {}
-
-  isReturn(){
-      return this.positionsReturn;
-  }
-
-  noReturn(){
-      return this.notFound;
-  }
-
-  isAddView(){      
-      return this.add;
+  ngOnChanges() {
   }
 
   addNewPosition(){
@@ -120,7 +128,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.addPosition['service'] = this.positionType.toString();
       this.addPosition['quantity'] = 1;
       this.addPosition['name'] = '';
-      this.addPosition['vat'] = this.document['vat'];
+      this.addPosition['vat'] = 23;
       this.addPosition['netto'] = 0;
       this.addPosition['vatSum'] = 0;
       this.addPosition['brutto'] = 0;
@@ -134,17 +142,14 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.positionType = !this.positionType;
       if(this.positionType) {
           this.serviceSearch();
-          this.addPosition['name'] = '';
-          this.addPosition['netto'] = 0;
-          this.addPosition['brutto'] = 0;
-          this.addPosition['vatSum'] = 0;
       }else{
           this.storeSearch();
-          this.addPosition['name'] = '';
-          this.addPosition['netto'] = 0;
-          this.addPosition['brutto'] = 0;
-          this.addPosition['vatSum'] = 0;
       }
+      this.addPosition['name'] = '';
+      this.addPosition['netto'] = 0;
+      this.addPosition['brutto'] = 0;
+      this.addPosition['vatSum'] = 0;
+      this.unit = "";
       this.addPosition['service'] = this.positionType.toString();
   }
 
@@ -178,6 +183,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
            this.addPosition['netto'] = 0;
            this.addPosition['brutto'] = 0;
            this.addPosition['vatSum'] = 0;
+           this.unit = "";
       }else{
           if(this.positionType)
           {
@@ -205,6 +211,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
                        this.addPosition['vatSum'] = position['vat_sum'];
                        this.addPosition['vat'] = position['vat'];
                        this.addPosition['itemId'] = position['id'];
+                       this.unit = position['unit'];
                     },
                     (err)=>{
                         //error
@@ -265,6 +272,97 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.addPosition['netto'] = this.doublePrecision((this.addPosition['brutto'] * (100 - this.addPosition['vat'])) / 100);
       this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['brutto'] * this.addPosition['vat']) / 100);
   }
+
+  addDelete(id)
+    {
+        if(this.delete.indexOf(id) == -1)
+        {
+            this.delete.push(id);
+        }else{
+            this.delete.splice(this.delete.indexOf(id), 1);
+        }
+    }
+
+    allDelete()
+    {
+        if(!this.allDeleteChecked)
+        {
+            this.allDeleteChecked = true;
+            for(let item in this.documentPositions)
+            {
+                let id = this.documentPositions[item].id;
+                if(this.delete.indexOf(id) == -1)
+                {
+                    this.delete.push(id);
+                }
+            }
+        }else{
+            this.allDeleteChecked = false;
+            this.delete = [];
+        }
+    }
+
+    isAllChecked()
+    {
+        let is = true;
+        for(let item in this.documentPositions)
+        {
+            let id = this.documentPositions[item].id;
+            if(this.delete.indexOf(id) == -1)
+            {
+                is = false;
+                this.allDeleteChecked = false;
+            }
+        }
+        if(this.delete.length<=0)
+        {
+            is = false;
+        }
+        if(is)
+        {
+            this.allDeleteChecked = true;
+        }
+        return is;
+    }
+
+    isCheck(id)
+    {
+        if(this.delete.indexOf(id) == -1)
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    isDelete()
+    {
+        if(this.delete.length > 0)
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    deleteById(id){
+        this.deleteLoading = true;
+        this.sub = this.documentPositionService.delete(id)
+                .subscribe((ok)=>{
+                    this.getPositions();
+                    this.deleteLoading = false;
+                    this.delete = [];
+                });
+    }
+
+    deleteChecked()
+    {
+        for(let id in this.delete)
+        {
+            this.deleteById(this.delete[id]);
+        }
+        this.getPositions();
+    }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

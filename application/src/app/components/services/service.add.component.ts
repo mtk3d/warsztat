@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import {Http} from '@angular/http';
 import { Router } from '@angular/router';
 
-import { DocumentService } from '../../_services/document.service';
-import { Document } from '../../_models/document.model';
+import { ServiceService } from '../../_services/service.service';
+import { Service } from '../../_models/service.model';
 
 declare var $: any;
 
@@ -16,45 +16,81 @@ declare var $: any;
 export class ServiceAddComponent implements OnInit, OnDestroy, OnChanges{
  
     id: number;
-    document: any = {};
+    service: any = {};
+    lastVat: any;
     private sub: any;
     vehicle: any = [];
 
   constructor(
       private router: Router,
       private route: ActivatedRoute, 
-      private documentService: DocumentService
+      private serviceService: ServiceService
   ) {}
 
   ngOnInit() {
-      let today = new Date();
-      this.document['date'] = today.toISOString();
-      this.document['dateOfPayment'] = today.toISOString();
-      this.document['paid'] = false;
-    $('.ui.checkbox').checkbox();
-    $('.ui.dropdown')
-      .dropdown()
-    ;
+      this.service['vat'] = 23;
+      this.service['netto'] = 0;
+      this.service['brutto'] = 0;
+      this.service['vatSum'] = 0;
+      this.lastVat = 0;
   }
 
-  type(type) {
-      this.document['type'] = type;
+  isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
-  paymentMethod(type) {
-      this.document['paymentMethod'] = type;
+  doublePrecision(num) {
+      return Math.round(num * 100) / 100;
   }
+
+  nettoBlur(){
+      if(!this.isNumeric(this.service['netto']))
+      {
+          this.service['netto'] = 0;
+      }
+      this.service['netto'] = this.doublePrecision(this.service['netto']);
+      this.service['vatSum'] = this.doublePrecision((this.service['netto'] * this.service['vat']) / (100 - this.service['vat']));
+      this.service['brutto'] = this.doublePrecision((this.service['vatSum'] * 100) / this.service['vat']);
+  }
+
+  vatSumBlur(){
+      if(!this.isNumeric(this.service['vatSum']))
+      {
+          this.service['vatSum'] = 0;
+      }
+      this.service['vatSum'] = this.doublePrecision(this.service['vatSum']);
+      this.service['netto'] = this.doublePrecision((this.service['vatSum'] * (100 - this.service['vat'])) / this.service['vat']);
+      this.service['brutto'] = this.doublePrecision((this.service['vatSum'] * 100) / this.service['vat']);
+  }
+
+  vatBlur(){
+      if(!this.isNumeric(this.service['vat']) || this.service['vat']<0 || this.service['vat']>100)
+      {
+          this.service['vat'] = 0;
+      }
+      this.service['brutto'] = this.doublePrecision((this.service['netto'] * 100) / (100 - this.service['vat']));
+      this.service['vatSum'] = this.doublePrecision(this.service['brutto'] - this.service['netto']);
+      this.lastVat = this.doublePrecision(this.service['vat']);
+  }
+
+  bruttoBlur(){
+      if(!this.isNumeric(this.service['brutto']))
+      {
+          this.service['brutto'] = 0;
+      }
+      this.service['brutto'] = this.doublePrecision(this.service['brutto']);
+      this.service['netto'] = this.doublePrecision((this.service['brutto'] * (100 - this.service['vat'])) / 100);
+      this.service['vatSum'] = this.doublePrecision((this.service['brutto'] * this.service['vat']) / 100);
+  }
+
+
 
   add(){
-      this.sub = this.documentService.create(this.document)
+      this.sub = this.serviceService.create(this.service)
             .subscribe((ok)=>{
-                this.router.navigate(['/documents']);
+                this.router.navigate(['/services']);
                 this.sub.unsubscribe();
             });
-  }
-
-  setConsumerId(consumerId){
-      this.document['consumerId'] = consumerId;
   }
 
   ngOnChanges(){

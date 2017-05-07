@@ -47,7 +47,7 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindAllQuery(int $userId)
+    public function createFindAllQuery(int $userId, $searchStr, $orderBy, $sort)
     {
         if($orderBy!='')
         {
@@ -82,7 +82,7 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
             WHERE d.userId = :userId
             AND (d.firstName LIKE :searchStr
             OR d.lastName LIKE :searchStr
-            OR d.position LIKE :searchStr
+            OR d.position LIKE :searchStr)
             ".$sorting
         );
 

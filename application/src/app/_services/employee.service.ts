@@ -4,37 +4,47 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
  
 import { AuthenticationService } from '../_services/authentication.service';
-import { DocumentPosition } from '../_models/documentPosition.model';
+import { Employee } from '../_models/employee.model';
  
 @Injectable()
-export class DocumentPositionService {
+export class EmployeeService {
+    handleError: any;
     constructor(
         private http: Http,
         private authenticationService: AuthenticationService) {
     }
-
-    getDocumentPositions(id): Observable<DocumentPosition[]> {
+ 
+    get(searchStr: string = '', orderBy: string = '', sort: string = ''): Observable<Employee[]> {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/documentpositions/'+id+'/document', options)
+        return this.http.get('http://localhost:8000/api/employees?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
             .map((response: Response) => response.json());
     }
 
-    create(documentPosition: DocumentPosition) {
+    getSingle(id: number): Observable<Employee[]> {
+        // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('http://localhost:8000/api/documentpositions', documentPosition,  options);
+        // get users from api
+        return this.http.get('http://localhost:8000/api/employees/'+id, options)
+            .map((response: Response) => response.json());
+    }
+
+    create(employee: Employee) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+ 
+        return this.http.post('http://localhost:8000/api/employees', employee,  options);
     }
 
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/api/documentpositions/'+id, options);
+        return this.http.delete('http://localhost:8000/api/employees/'+id, options);
     }
-
 }

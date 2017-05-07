@@ -12,6 +12,7 @@ import { DocumentPositionService } from './_services/documentPosition.service';
 import { ConsumerService } from './_services/consumer.service';
 import { ServiceService } from './_services/service.service';
 import { StoreService } from './_services/store.service';
+import { EmployeeService } from './_services/employee.service';
 import { UserDataService } from './_services/userData.service';
 import { VehicleService } from './_services/vehicle.service';
 
@@ -37,6 +38,7 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
 import { ServiceAddComponent } from './components/services/service.add.component';
 import { StoresComponent } from './components/stores/stores.component';
+import { StoresAddComponent } from './components/stores/stores.add.component';
 import { TiresComponent } from './components/tires/tires.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
@@ -65,6 +67,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     ServicesComponent,
     ServiceAddComponent,
     StoresComponent,
+    StoresAddComponent,
     TiresComponent,
     OrdersComponent
   ],
@@ -90,6 +93,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       {path: 'services', component: ServicesComponent, canActivate: [AuthGuard]},
       {path: 'services/add', component: ServiceAddComponent, canActivate: [AuthGuard]},
       {path: 'stores', component: StoresComponent, canActivate: [AuthGuard]},
+      {path: 'stores/add', component: StoresAddComponent, canActivate: [AuthGuard]},
       {path: 'tires', component: TiresComponent, canActivate: [AuthGuard]},
       {path: 'about', component: AboutComponent},
       {path: 'login', component: LoginComponent},
@@ -105,6 +109,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       ConsumerService,
       ServiceService,
       StoreService,
+      EmployeeService,
       UserDataService,
       VehicleService
   ],

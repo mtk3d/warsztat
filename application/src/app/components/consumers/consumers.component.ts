@@ -16,6 +16,11 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     search: string = '';
     orderBy: string = 'name';
     sorting: string = 'ASC';
+    pages: number;
+    itemsPerPage: number;
+    actualPage: number = 1;
+    pagesButtons: Array<number> = [];
+    singlePageConsumers: Consumer[] = [];
     sub: any;
     deleteLoading: boolean = false;
  
@@ -30,6 +35,7 @@ export class ConsumersComponent implements OnInit, OnDestroy {
             .subscribe(consumers => {
                 this.consumers = consumers;
                 this.consumersReturn = true;
+                this.pagesInit();
             },
             (err)=>this.consumersReturn = false
         );
@@ -52,6 +58,59 @@ export class ConsumersComponent implements OnInit, OnDestroy {
             this.orderBy = by;
         }
         this.searchConsumers();
+    }
+
+    page(pageNumber)
+    {
+        if(pageNumber>=1 && pageNumber<=this.pages)
+        {
+            this.pagesButtons = [];
+            this.singlePageConsumers = [];
+            this.actualPage = pageNumber;
+            let startItem = (this.actualPage-1) * this.itemsPerPage;
+            let last = this.itemsPerPage;
+            if(this.actualPage == this.pages)
+            {
+                last = this.consumers.length-((this.pages-1)*this.itemsPerPage);
+            }
+            for(let i=0; i<last; i++)
+            {
+                if(this.consumers[startItem + i] != null)
+                {
+                    this.singlePageConsumers[i] = this.consumers[startItem + i];
+                }
+            }
+            this.delete = [];
+            let firstButton, lastButton;
+            if(this.pages<=6)
+            {
+                firstButton = 1;
+                lastButton = this.pages;
+            }else{
+                if(this.actualPage <= 3)
+                {
+                    firstButton = 1;
+                    lastButton = 5;
+                }else if(this.actualPage + 2 >= this.pages) {
+                    firstButton = this.pages - 4;
+                    lastButton = this.pages;
+                } else {
+                    firstButton = this.actualPage - 2;
+                    lastButton = this.actualPage + 2;
+                }
+            }
+
+            for (var i = firstButton; i <= lastButton; i++) {
+                this.pagesButtons.push(i);
+            }
+        }
+    }
+
+    pagesInit()
+    {
+        this.itemsPerPage = Math.floor((window.innerHeight-300)/43);
+        this.pages = Math.ceil(this.consumers.length/this.itemsPerPage);
+        this.page(1);
     }
 
     order(item)
