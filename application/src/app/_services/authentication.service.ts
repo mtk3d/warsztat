@@ -16,7 +16,7 @@ export class AuthenticationService {
     login(username: string, password: string): Observable<boolean> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post('http://localhost:8000/api/login_check', JSON.stringify({ _username: username, _password: password }), options)
+        return this.http.post('/api/login_check', JSON.stringify({ _username: username, _password: password }), options)
             .map(response => {
                 if(response.status < 200 || response.status >= 300) {
                     return false;

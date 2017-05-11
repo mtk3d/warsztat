@@ -20,7 +20,7 @@ export class VehicleService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/vehicles?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
+        return this.http.get('/api/vehicles?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
             .map((response: Response) => response.json());
     }
 
@@ -30,7 +30,7 @@ export class VehicleService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/vehicles/'+id, options)
+        return this.http.get('/api/vehicles/'+id, options)
             .map((response: Response) => response.json());
     }
 
@@ -38,13 +38,13 @@ export class VehicleService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('http://localhost:8000/api/vehicles', vehicle,  options);
+        return this.http.post('/api/vehicles', vehicle,  options);
     }
 
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/api/vehicles/'+id, options);
+        return this.http.delete('/api/vehicles/'+id, options);
     }
 }

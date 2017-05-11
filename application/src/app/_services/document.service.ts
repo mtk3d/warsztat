@@ -19,7 +19,7 @@ export class DocumentService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/api/documents?type='+type+'&from='+from+'&to='+to+'&search='+search+'&order_by='+orderBy+'&sorting='+sorting, options)
+        return this.http.get('/api/documents?type='+type+'&from='+from+'&to='+to+'&search='+search+'&order_by='+orderBy+'&sorting='+sorting, options)
             .map((response: Response) => response.json());
     }
 
@@ -29,7 +29,7 @@ export class DocumentService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/documents/'+id, options)
+        return this.http.get('/api/documents/'+id, options)
             .map((response: Response) => response.json());
     }
 
@@ -37,13 +37,13 @@ export class DocumentService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('http://localhost:8000/api/documents', document,  options);
+        return this.http.post('/api/documents', document,  options);
     }
 
     deleteDocument(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/api/documents/'+id, options);
+        return this.http.delete('/api/documents/'+id, options);
     }
 }

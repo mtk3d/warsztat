@@ -20,7 +20,7 @@ export class UserDataService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/api/user', options)
+        return this.http.get('/api/user', options)
             .map((response: Response) => response.json());
     }
 
