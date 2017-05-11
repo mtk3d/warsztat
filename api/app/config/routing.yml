@@ -1,8 +1,7 @@
 api_login_check:
-   path: /api/login_check
+   path: /login_check
    methods:  [POST]
 
 api:
     type: rest
-    prefix: /api
     resource: "routing_api.yml"
