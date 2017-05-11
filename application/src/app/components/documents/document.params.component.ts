@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+/*import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http} from '@angular/http';
 
@@ -39,4 +39,4 @@ export class DocumentComponent implements OnInit, OnDestroy{
     this.sub.unsubscribe();
   }
  
-}
+}*/
