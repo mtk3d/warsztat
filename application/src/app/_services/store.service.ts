@@ -20,7 +20,7 @@ export class StoreService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('/api/stores?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
+        return this.http.get('http://localhost:8000/stores?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
             .map((response: Response) => response.json());
     }
 
@@ -30,7 +30,7 @@ export class StoreService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('/api/stores/'+id, options)
+        return this.http.get('http://localhost:8000/stores/'+id, options)
             .map((response: Response) => response.json());
     }
 
@@ -38,13 +38,13 @@ export class StoreService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('/api/stores', store,  options);
+        return this.http.post('http://localhost:8000/stores', store,  options);
     }
 
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('/api/stores/'+id, options);
+        return this.http.delete('http://localhost:8000/stores/'+id, options);
     }
 }

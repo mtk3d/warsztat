@@ -19,7 +19,7 @@ export class DocumentPositionService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('/api/documentpositions/'+id+'/document', options)
+        return this.http.get('http://localhost:8000/documentpositions/'+id+'/document', options)
             .map((response: Response) => response.json());
     }
 
@@ -27,14 +27,21 @@ export class DocumentPositionService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('/api/documentpositions', documentPosition,  options);
+        return this.http.post('http://localhost:8000/documentpositions', documentPosition,  options);
+    }
+
+    update(documentPosition: DocumentPosition, id) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+ 
+        return this.http.put('http://localhost:8000/documentpositions/'+id, documentPosition,  options);
     }
 
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('/api/documentpositions/'+id, options);
+        return this.http.delete('http://localhost:8000/documentpositions/'+id, options);
     }
 
 }

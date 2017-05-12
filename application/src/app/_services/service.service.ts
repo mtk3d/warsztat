@@ -20,7 +20,7 @@ export class ServiceService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('/api/services?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
+        return this.http.get('http://localhost:8000/services?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
             .map((response: Response) => response.json());
     }
 
@@ -30,7 +30,7 @@ export class ServiceService {
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('/api/services/'+id, options)
+        return this.http.get('http://localhost:8000/services/'+id, options)
             .map((response: Response) => response.json());
     }
 
@@ -38,13 +38,13 @@ export class ServiceService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('/api/services', consumer,  options);
+        return this.http.post('http://localhost:8000/services', consumer,  options);
     }
 
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('/api/services/'+id, options);
+        return this.http.delete('http://localhost:8000/services/'+id, options);
     }
 }

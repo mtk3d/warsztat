@@ -23,19 +23,17 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     @Input('id') documentId: number; 
     documentSum: Array<number> = []; 
     documentPositions: DocumentPosition[] = [];
-    positionsReturn: boolean;
-    ordinal: Array<number>;
-    add: any;
-    addPosition: any = {};
+    positionsReturned: boolean;
+    showAdd: boolean = false;
+    inputPosition: any = {};
     notFound: boolean = true;
     selectItems: any = [];
     lastQuantity: number = 1;
     lastVat: number = 23;
-    positionType: boolean = false;
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
     deleteLoading: boolean = false;
-    editedPosition: any = {};
+    editedPosition: any = null;
     edit: boolean = false;
     unit: string = "";
     private sub: any;
@@ -50,6 +48,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   ngOnInit() {
     this.getPositions();
     this.storeSearch();
+    this.inputPosition['service'] = false;
   }
 
   getPositions() {
@@ -57,33 +56,51 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
         this.documentPositionService.getDocumentPositions(this.documentId)
             .subscribe(documentPositions => {
                 this.documentPositions = documentPositions;
-                this.positionsReturn = true;
+                this.positionsReturned = true;
                 this.notFound = false;
                 this.setDocumentSum();
             },
             (err)=>{
-                this.positionsReturn = false; this.notFound = true;
+                this.positionsReturned = false; this.notFound = true;
+                this.documentPositions = [];
             });
     });
   }
 
-  // editPosition(id){
-  //     this.getPositions();
+  editPosition(id, i){
+      this.inputPosition['id'] = id; 
+      this.inputPosition['documentId'] = this.documentId;
+      this.inputPosition['service'] = this.documentPositions[i]['service'];
+      this.inputPosition['quantity'] = this.documentPositions[i]['quantity'];
+      this.inputPosition['name'] = this.documentPositions[i]['name'];
+      this.inputPosition['vat'] = this.documentPositions[i]['vat'];
+      this.inputPosition['netto'] = this.documentPositions[i]['netto'];
+      this.inputPosition['vatSum'] = this.documentPositions[i]['vat_sum'];
+      this.inputPosition['brutto'] = this.documentPositions[i]['brutto'];
+      this.showAdd = true;
+      this.notFound = false;
+      this.editedPosition = null;
+      this.lastQuantity = this.documentPositions[i]['quantity'];
+      
+      if(this.inputPosition['service'])
+          this.serviceSearch();
+      else
+          this.storeSearch();
 
-  //     let index = this.documentPositions.map( (el) => el.id ).indexOf(id)
+      this.editedPosition = id;
+      this.showAdd = false;
+  }
 
-  //     this.editedPosition['name'] = this.documentPositions[index]['name'];
-  //     this.editedPosition['netto'] = this.documentPositions[index]['netto'];
-  //     this.editedPosition['vat'] = this.documentPositions[index]['vat'];
-  //     this.editedPosition['vatSum'] = this.documentPositions[index]['vatSum'];
-  //     this.editedPosition['brutto'] = this.documentPositions[index]['brutto'];
-  //     console.log(this.editedPosition);
-  //     this.documentPositions.splice(index, 1);
-  // }
+  isEditing(id) {
+      if(id == this.editedPosition)
+          return true;
+      else
+          return false;
+  }
 
-  // isEditing(id) {
-  //     return true;
-  // }
+  closeChange() {
+      this.editedPosition = null;
+  }
 
   setDocumentSum() {
       this.documentSum['netto'] = 0;
@@ -111,10 +128,6 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     });
   }
 
-  getAll(){
-
-  }
-
   storeSearch() {
       this.sub = this.route.params.subscribe(params => {
         this.storeService.get()
@@ -129,12 +142,14 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   ngOnChanges() {
+
   }
 
   addNewPosition(){
-      if(this.addPosition['name']!='')
+      this.inputPosition['service'] = this.inputPosition['service'] ? 1 : 0;
+      if(this.inputPosition['name']!='')
       {
-          this.sub = this.documentPositionService.create(this.addPosition)
+          this.sub = this.documentPositionService.create(this.inputPosition)
                 .subscribe((ok)=>{
                     this.sub.unsubscribe();
                     this.closeAdd();
@@ -144,37 +159,52 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   addView(){
-      this.addPosition['documentId'] = this.documentId;
-      this.addPosition['service'] = this.positionType.toString();
-      this.addPosition['quantity'] = 1;
-      this.addPosition['name'] = '';
-      this.addPosition['vat'] = 23;
-      this.addPosition['netto'] = 0;
-      this.addPosition['vatSum'] = 0;
-      this.addPosition['brutto'] = 0;
-      this.add = true;
+      this.inputPosition['documentId'] = this.documentId;
+      this.inputPosition['service'] = false;
+      this.inputPosition['quantity'] = 1;
+      this.inputPosition['name'] = '';
+      this.inputPosition['vat'] = 23;
+      this.inputPosition['netto'] = 0;
+      this.inputPosition['vatSum'] = 0;
+      this.inputPosition['brutto'] = 0;
+      this.showAdd = true;
       this.notFound = false;
-      this.positionType = false;
+      this.editedPosition = null;
+      this.lastQuantity = 1;
       this.storeSearch();
   }
 
   changePositionType() {
-      this.positionType = !this.positionType;
-      if(this.positionType) {
+      if(this.inputPosition['service']) {
           this.serviceSearch();
       }else{
           this.storeSearch();
       }
-      this.addPosition['name'] = '';
-      this.addPosition['netto'] = 0;
-      this.addPosition['brutto'] = 0;
-      this.addPosition['vatSum'] = 0;
+      this.inputPosition['name'] = '';
+      this.inputPosition['netto'] = 0;
+      this.inputPosition['brutto'] = 0;
+      this.inputPosition['vatSum'] = 0;
       this.unit = "";
-      this.addPosition['service'] = this.positionType.toString();
+      this.lastQuantity = 1;
+  }
+
+  updatePosition() {
+      this.editedPosition = null;
+      this.inputPosition['service'] = this.inputPosition['service'] ? 1 : 0;
+      if(this.inputPosition['name']!='')
+      {
+          this.sub = this.documentPositionService.update(this.inputPosition, this.inputPosition['id'])
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.closeChange();
+                    this.getPositions();
+                });
+      }
+      console.log(this.inputPosition);
   }
 
   typeOfPosition() {
-      if(this.positionType) {
+      if(this.inputPosition['service']) {
           return "Usługi";
       }else{
           return "Magazyn";
@@ -182,9 +212,9 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   closeAdd(){
-      this.add = false;
+      this.showAdd = false;
       this.getPositions();
-      this.addPosition = {};
+      this.inputPosition = {};
   }
 
   isNumeric(n) {
@@ -196,26 +226,26 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   nameSelect(value) {
-      this.addPosition['quantity'] = 1;
+      this.inputPosition['quantity'] = 1;
       if(value == '')
       {
-           this.addPosition['name'] = '';
-           this.addPosition['netto'] = 0;
-           this.addPosition['brutto'] = 0;
-           this.addPosition['vatSum'] = 0;
+           this.inputPosition['name'] = '';
+           this.inputPosition['netto'] = 0;
+           this.inputPosition['brutto'] = 0;
+           this.inputPosition['vatSum'] = 0;
            this.unit = "";
       }else{
-          if(this.positionType)
+          if(this.inputPosition['service'])
           {
               this.sub = this.route.params.subscribe(params => {
                 this.serviceService.getSingle(value)
                     .subscribe(position => {
-                       this.addPosition['name'] = position['name'];
-                       this.addPosition['netto'] = position['netto'];
-                       this.addPosition['brutto'] = position['brutto'];
-                       this.addPosition['vatSum'] = position['vat_sum'];
-                       this.addPosition['vat'] = position['vat'];
-                       this.addPosition['itemId'] = position['id'];
+                       this.inputPosition['name'] = position['name'];
+                       this.inputPosition['netto'] = position['netto'];
+                       this.inputPosition['brutto'] = position['brutto'];
+                       this.inputPosition['vatSum'] = position['vat_sum'];
+                       this.inputPosition['vat'] = position['vat'];
+                       this.inputPosition['itemId'] = position['id'];
                     },
                     (err)=>{
                         //error
@@ -225,12 +255,12 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
               this.sub = this.route.params.subscribe(params => {
                 this.storeService.getSingle(value)
                     .subscribe(position => {
-                       this.addPosition['name'] = position['name'];
-                       this.addPosition['netto'] = position['netto'];
-                       this.addPosition['brutto'] = position['brutto'];
-                       this.addPosition['vatSum'] = position['vat_sum'];
-                       this.addPosition['vat'] = position['vat'];
-                       this.addPosition['itemId'] = position['id'];
+                       this.inputPosition['name'] = position['name'];
+                       this.inputPosition['netto'] = position['netto'];
+                       this.inputPosition['brutto'] = position['brutto'];
+                       this.inputPosition['vatSum'] = position['vat_sum'];
+                       this.inputPosition['vat'] = position['vat'];
+                       this.inputPosition['itemId'] = position['id'];
                        this.unit = position['unit'];
                     },
                     (err)=>{
@@ -242,55 +272,55 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   nettoBlur(){
-      if(!this.isNumeric(this.addPosition['netto']))
+      if(!this.isNumeric(this.inputPosition['netto']))
       {
-          this.addPosition['netto'] = 0;
+          this.inputPosition['netto'] = 0;
       }
-      this.addPosition['netto'] = this.doublePrecision(this.addPosition['netto']);
-      this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['netto'] * this.addPosition['vat']) / (100 - this.addPosition['vat']));
-      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['vatSum'] * 100) / this.addPosition['vat']);
+      this.inputPosition['netto'] = this.doublePrecision(this.inputPosition['netto']);
+      this.inputPosition['vatSum'] = this.doublePrecision((this.inputPosition['netto'] * this.inputPosition['vat']) / (100 - this.inputPosition['vat']));
+      this.inputPosition['brutto'] = this.doublePrecision((this.inputPosition['vatSum'] * 100) / this.inputPosition['vat']);
   }
 
   vatSumBlur(){
-      if(!this.isNumeric(this.addPosition['vatSum']))
+      if(!this.isNumeric(this.inputPosition['vatSum']))
       {
-          this.addPosition['vatSum'] = 0;
+          this.inputPosition['vatSum'] = 0;
       }
-      this.addPosition['vatSum'] = this.doublePrecision(this.addPosition['vatSum']);
-      this.addPosition['netto'] = this.doublePrecision((this.addPosition['vatSum'] * (100 - this.addPosition['vat'])) / this.addPosition['vat']);
-      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['vatSum'] * 100) / this.addPosition['vat']);
+      this.inputPosition['vatSum'] = this.doublePrecision(this.inputPosition['vatSum']);
+      this.inputPosition['netto'] = this.doublePrecision((this.inputPosition['vatSum'] * (100 - this.inputPosition['vat'])) / this.inputPosition['vat']);
+      this.inputPosition['brutto'] = this.doublePrecision((this.inputPosition['vatSum'] * 100) / this.inputPosition['vat']);
   }
 
   quantityBlur(){
-      if(!this.isNumeric(this.addPosition['quantity']) || this.addPosition['quantity'] == 0)
+      if(!this.isNumeric(this.inputPosition['quantity']) || this.inputPosition['quantity'] == 0)
       {
-          this.addPosition['quantity'] = 1;
+          this.inputPosition['quantity'] = 1;
       }
-      this.addPosition['quantity'] = this.doublePrecision(this.addPosition['quantity']);
-      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['brutto'] / this.lastQuantity) * this.addPosition['quantity']);
-      this.addPosition['netto'] = this.doublePrecision((this.addPosition['netto'] / this.lastQuantity) * this.addPosition['quantity']);
-      this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['vatSum'] / this.lastQuantity) * this.addPosition['quantity']);
-      this.lastQuantity = this.addPosition['quantity'];
+      this.inputPosition['quantity'] = this.doublePrecision(this.inputPosition['quantity']);
+      this.inputPosition['brutto'] = this.doublePrecision((this.inputPosition['brutto'] / this.lastQuantity) * this.inputPosition['quantity']);
+      this.inputPosition['netto'] = this.doublePrecision((this.inputPosition['netto'] / this.lastQuantity) * this.inputPosition['quantity']);
+      this.inputPosition['vatSum'] = this.doublePrecision((this.inputPosition['vatSum'] / this.lastQuantity) * this.inputPosition['quantity']);
+      this.lastQuantity = this.inputPosition['quantity'];
   }
 
   vatBlur(){
-      if(!this.isNumeric(this.addPosition['vat']) || this.addPosition['vat']<0 || this.addPosition['vat']>100)
+      if(!this.isNumeric(this.inputPosition['vat']) || this.inputPosition['vat']<0 || this.inputPosition['vat']>100)
       {
-          this.addPosition['vat'] = 0;
+          this.inputPosition['vat'] = 0;
       }
-      this.addPosition['brutto'] = this.doublePrecision((this.addPosition['netto'] * 100) / (100 - this.addPosition['vat']));
-      this.addPosition['vatSum'] = this.doublePrecision(this.addPosition['brutto'] - this.addPosition['netto']);
-      this.lastVat = this.doublePrecision(this.addPosition['vat']);
+      this.inputPosition['brutto'] = this.doublePrecision((this.inputPosition['netto'] * 100) / (100 - this.inputPosition['vat']));
+      this.inputPosition['vatSum'] = this.doublePrecision(this.inputPosition['brutto'] - this.inputPosition['netto']);
+      this.lastVat = this.doublePrecision(this.inputPosition['vat']);
   }
 
   bruttoBlur(){
-      if(!this.isNumeric(this.addPosition['brutto']))
+      if(!this.isNumeric(this.inputPosition['brutto']))
       {
-          this.addPosition['brutto'] = 0;
+          this.inputPosition['brutto'] = 0;
       }
-      this.addPosition['brutto'] = this.doublePrecision(this.addPosition['brutto']);
-      this.addPosition['netto'] = this.doublePrecision((this.addPosition['brutto'] * (100 - this.addPosition['vat'])) / 100);
-      this.addPosition['vatSum'] = this.doublePrecision((this.addPosition['brutto'] * this.addPosition['vat']) / 100);
+      this.inputPosition['brutto'] = this.doublePrecision(this.inputPosition['brutto']);
+      this.inputPosition['netto'] = this.doublePrecision((this.inputPosition['brutto'] * (100 - this.inputPosition['vat'])) / 100);
+      this.inputPosition['vatSum'] = this.doublePrecision((this.inputPosition['brutto'] * this.inputPosition['vat']) / 100);
   }
 
   addDelete(id)

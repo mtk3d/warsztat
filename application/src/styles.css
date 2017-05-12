@@ -38,6 +38,12 @@
 
 .item-bottom a:hover {
     text-decoration: underline;
+    background-color: #1B1C1D;
+}
+
+.sidebar-content {
+    margin-bottom: 50px;
+    overflow-y: auto;
 }
 
 .login-container {
