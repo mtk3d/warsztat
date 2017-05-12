@@ -10,6 +10,7 @@ import { Service } from '../../_models/service.model';
 })
 export class ServicesComponent implements OnInit, OnDestroy {
     services: Service[] = [];
+    inputService: any = [];
     servicesReturn: boolean;
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
@@ -22,12 +23,19 @@ export class ServicesComponent implements OnInit, OnDestroy {
     pagesButtons: Array<number> = [];
     singlePageServices: Service[] = [];
     sub: any;
+    showAdd: boolean =false;
     deleteLoading: boolean = false;
+    lastVat: number = 23;
+    editedId: number;
  
     constructor(private serviceService: ServiceService) { }
  
     ngOnInit() {
         this.searchServices();
+        this.inputService['netto'] = 0;
+        this.inputService['brutto'] = 0;
+        this.inputService['vat'] = 23;
+        this.inputService['vatSum'] = 0;
     }
 
     searchServices() {
@@ -41,6 +49,36 @@ export class ServicesComponent implements OnInit, OnDestroy {
         );
         this.delete = [];
         this.allDeleteChecked = false;
+    }
+
+    edit(id, key){
+        this.editedId = id;
+        this.showAdd = false;
+
+        this.inputService['name'] = this.services[key]['name'];
+        this.inputService['netto'] = this.services[key]['netto'];
+        this.inputService['brutto'] = this.services[key]['brutto'];
+        this.inputService['vat'] = this.services[key]['vat'];
+        this.inputService['vatSum'] = this.services[key]['vat_sum'];
+    }
+
+    hideEdit(){
+        this.editedId = null;
+    }
+
+    isEdited(id){
+        return (id == this.editedId)
+    }
+
+    add() {
+        this.showAdd = true;
+        this.editedId = null;
+
+        this.inputService['name'] = '';
+        this.inputService['netto'] = 0;
+        this.inputService['brutto'] = 0;
+        this.inputService['vat'] = 23;
+        this.inputService['vatSum'] = 0;
     }
 
     sortingBy(by)
@@ -232,6 +270,54 @@ export class ServicesComponent implements OnInit, OnDestroy {
                 });
         }
     }
+
+    isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
+  doublePrecision(num) {
+      return Math.round(num * 100) / 100;
+  }
+
+    nettoBlur(){
+      if(!this.isNumeric(this.inputService['netto']))
+      {
+          this.inputService['netto'] = 0;
+      }
+      this.inputService['netto'] = this.doublePrecision(this.inputService['netto']);
+      this.inputService['vatSum'] = this.doublePrecision((this.inputService['netto'] * this.inputService['vat']) / (100 - this.inputService['vat']));
+      this.inputService['brutto'] = this.doublePrecision((this.inputService['vatSum'] * 100) / this.inputService['vat']);
+  }
+
+  vatSumBlur(){
+      if(!this.isNumeric(this.inputService['vatSum']))
+      {
+          this.inputService['vatSum'] = 0;
+      }
+      this.inputService['vatSum'] = this.doublePrecision(this.inputService['vatSum']);
+      this.inputService['netto'] = this.doublePrecision((this.inputService['vatSum'] * (100 - this.inputService['vat'])) / this.inputService['vat']);
+      this.inputService['brutto'] = this.doublePrecision((this.inputService['vatSum'] * 100) / this.inputService['vat']);
+  }
+
+  vatBlur(){
+      if(!this.isNumeric(this.inputService['vat']) || this.inputService['vat']<0 || this.inputService['vat']>100)
+      {
+          this.inputService['vat'] = 0;
+      }
+      this.inputService['brutto'] = this.doublePrecision((this.inputService['netto'] * 100) / (100 - this.inputService['vat']));
+      this.inputService['vatSum'] = this.doublePrecision(this.inputService['brutto'] - this.inputService['netto']);
+      this.lastVat = this.doublePrecision(this.inputService['vat']);
+  }
+
+  bruttoBlur(){
+      if(!this.isNumeric(this.inputService['brutto']))
+      {
+          this.inputService['brutto'] = 0;
+      }
+      this.inputService['brutto'] = this.doublePrecision(this.inputService['brutto']);
+      this.inputService['netto'] = this.doublePrecision((this.inputService['brutto'] * (100 - this.inputService['vat'])) / 100);
+      this.inputService['vatSum'] = this.doublePrecision((this.inputService['brutto'] * this.inputService['vat']) / 100);
+  }
 
     ngOnDestroy() {
         this.sub.unsubscribe();

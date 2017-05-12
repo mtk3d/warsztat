@@ -16,6 +16,7 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
  
     id: number;
     document: Document[] = [];
+    documentPatch: any = []; 
     userData: UserData[] = [];
     consumerId: number;
     userDataLoading: boolean = true;
@@ -55,7 +56,12 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   setConsumerId(id) {
-      console.log(id);
+      this.documentPatch['consumerId'] = id;
+      this.sub = this.documentService.patch(this.documentPatch, this.id)
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.documentPatch['consumerId'] = null;
+                });
   }
 
   ngOnDestroy() {
