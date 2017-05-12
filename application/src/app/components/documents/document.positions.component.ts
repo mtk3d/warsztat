@@ -200,7 +200,6 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
                     this.getPositions();
                 });
       }
-      console.log(this.inputPosition);
   }
 
   typeOfPosition() {

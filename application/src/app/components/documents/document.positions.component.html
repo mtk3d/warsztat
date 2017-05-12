@@ -35,7 +35,7 @@
             <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
             <td class="collapsing" style="text-align: center;">
                 <div class="ui  blue icon button mini" (click)="editPosition(documentPosition.id, i)"><i class="edit icon"></i></div>
-                <div class="ui  red icon button mini" (click)="deleteById(documentPosition.id)"><i class="remove icon"></i></div>
+                <div class="ui  red icon button mini" (click)="deleteById(documentPosition.id)"><i class="trash icon"></i></div>
             </td>
         </ng-container>
         <ng-container *ngIf="isEditing(documentPosition.id)">
@@ -60,9 +60,9 @@
                 <div class="ui input smaller-value" *ngIf="positionType">
                     <input type="text" name="quantity" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
                 </div>
-                <div class="ui right labeled input small-value" *ngIf="!positionType">
+                <div class="ui input small-value" [ngClass]="{'right labeled': !inputPosition.service}" *ngIf="!positionType">
                     <input type="text" name="quantity" style="width: 50px;" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
-                    <div class="ui basic label">
+                    <div class="ui basic label" *ngIf="!inputPosition.service">
                         {{ unit }}
                     </div>
                 </div>
@@ -118,9 +118,9 @@
                 <div class="ui input smaller-value" *ngIf="positionType">
                     <input type="text" name="quantity" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
                 </div>
-                <div class="ui right labeled input small-value" *ngIf="!positionType">
+                <div class="ui input small-value" [ngClass]="{'right labeled': !inputPosition.service}" *ngIf="!positionType">
                     <input type="text" name="quantity" style="width: 50px;" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
-                    <div class="ui basic label">
+                    <div class="ui basic label" *ngIf="!inputPosition.service">
                         {{ unit }}
                     </div>
                 </div>
