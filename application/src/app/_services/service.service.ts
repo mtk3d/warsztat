@@ -34,11 +34,18 @@ export class ServiceService {
             .map((response: Response) => response.json());
     }
 
-    create(consumer: Service) {
+    create(service: Service) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
- 
-        return this.http.post('http://localhost:8000/services', consumer,  options);
+        
+        return this.http.post('http://localhost:8000/services', service,  options);
+    }
+
+    update(id: number, service: Service) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+        
+        return this.http.put('http://localhost:8000/services/'+id, service,  options);
     }
 
     delete(id: number){

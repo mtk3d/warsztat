@@ -14,6 +14,32 @@ class DocumentPositionRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
+            SELECT d.id,
+                d.documentId,
+                d.service,
+                d.itemId,
+                d.name,
+                d.netto,
+                d.vat,
+                d.vatSum,
+                d.brutto,
+                d.quantity
+            FROM ApiBundle:DocumentPosition d
+            WHERE d.id = :id
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('id', $id);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createUpdateQuery(int $id, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
             SELECT d
             FROM ApiBundle:DocumentPosition d
             WHERE d.id = :id
@@ -31,7 +57,16 @@ class DocumentPositionRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d.id,
+                d.documentId,
+                d.service,
+                d.itemId,
+                d.name,
+                d.netto,
+                d.vat,
+                d.vatSum,
+                d.brutto,
+                d.quantity
             FROM ApiBundle:DocumentPosition d
             WHERE d.documentId = :documentId
             AND d.userId = :userId

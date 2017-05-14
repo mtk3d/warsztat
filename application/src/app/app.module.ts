@@ -15,6 +15,7 @@ import { StoreService } from './_services/store.service';
 import { EmployeeService } from './_services/employee.service';
 import { UserDataService } from './_services/userData.service';
 import { VehicleService } from './_services/vehicle.service';
+import { CalendarService } from './_services/calendar.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -36,7 +37,6 @@ import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { VehicleAddComponent } from './components/vehicles/vehicle.add.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
-import { ServiceAddComponent } from './components/services/service.add.component';
 import { StoresComponent } from './components/stores/stores.component';
 import { StoresAddComponent } from './components/stores/stores.add.component';
 import { TiresComponent } from './components/tires/tires.component';
@@ -65,7 +65,6 @@ import { OrdersComponent } from './components/orders/orders.component';
     VehicleAddComponent,
     EmployeesComponent,
     ServicesComponent,
-    ServiceAddComponent,
     StoresComponent,
     StoresAddComponent,
     TiresComponent,
@@ -91,7 +90,6 @@ import { OrdersComponent } from './components/orders/orders.component';
       {path: 'vehicles/add', component: VehicleAddComponent, canActivate: [AuthGuard]},
       {path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard]},
       {path: 'services', component: ServicesComponent, canActivate: [AuthGuard]},
-      {path: 'services/add', component: ServiceAddComponent, canActivate: [AuthGuard]},
       {path: 'stores', component: StoresComponent, canActivate: [AuthGuard]},
       {path: 'stores/add', component: StoresAddComponent, canActivate: [AuthGuard]},
       {path: 'tires', component: TiresComponent, canActivate: [AuthGuard]},
@@ -111,7 +109,8 @@ import { OrdersComponent } from './components/orders/orders.component';
       StoreService,
       EmployeeService,
       UserDataService,
-      VehicleService
+      VehicleService,
+      CalendarService
   ],
   bootstrap: [AppComponent]
 })

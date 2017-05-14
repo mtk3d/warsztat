@@ -34,10 +34,14 @@ class StoreController extends FOSRestController implements ClassResourceInterfac
         return $this->getUser()->getId();
     }
 
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
+        $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('orderby', '');
+        $sort = $request->query->get('sort', '');
+
         $stores = $this->getstoreRepository()
-            ->createFindAllQuery($this->getUserId())
+            ->createFindAllQuery($this->getUserId(), $search, $orderBy, $sort)
             ->getResult();
 
         if($stores == null) {
@@ -89,7 +93,7 @@ class StoreController extends FOSRestController implements ClassResourceInterfac
     public function putAction(Request $request, int $id)
     {
         $store = $this->getStoreRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($store == null) {
@@ -120,7 +124,7 @@ class StoreController extends FOSRestController implements ClassResourceInterfac
     public function patchAction(Request $request, int $id)
     {
         $store = $this->getStoreRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($store == null) {
@@ -151,7 +155,7 @@ class StoreController extends FOSRestController implements ClassResourceInterfac
     public function deleteAction(int $id)
     {
         $store = $this->getStoreRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($store == null) {

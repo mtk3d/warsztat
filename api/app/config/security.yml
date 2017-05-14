@@ -25,6 +25,10 @@ security:
 
     firewalls:
 
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
         login:
             pattern:  ^/login
             stateless: true
@@ -44,9 +48,10 @@ security:
 
         main:
             pattern: .*
-            anonymous:    true
+            anonymous: true
             switch_user:  true
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(_wdt|_profiler), roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

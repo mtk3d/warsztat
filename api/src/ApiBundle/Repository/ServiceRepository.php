@@ -10,7 +10,7 @@ namespace ApiBundle\Repository;
  */
 class ServiceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function createFindOneByIdQuery(int $id, int $userId)
+    public function createUpdateQuery(int $id, int $userId)
     {
         $query = $this->_em->createQuery(
             "
@@ -27,17 +27,79 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindAllQuery(int $userId)
+    public function createFindOneByIdQuery(int $id, int $userId)
     {
         $query = $this->_em->createQuery(
             "
-            SELECT d
+            SELECT d.id,
+                d.name,
+                d.netto,
+                d.brutto,
+                d.vat,
+                d.vatSum,
+                d.brutto
             FROM ApiBundle:Service d
-            WHERE d.userId = :userId
+            WHERE d.id = :id
+            AND d.userId = :userId
             "
         );
 
+        $query->setParameter('id', $id);
         $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
+    public function createFindAllQuery(int $userId, string $searchStr, string $orderBy, string $sort)
+    {
+        if($orderBy!='')
+        {
+            if($orderBy == 'name' || 
+                $orderBy == 'netto' || 
+                $orderBy == 'brutto' || 
+                $orderBy == 'vat' || 
+                $orderBy == 'vatSum' || 
+                $orderBy == 'brutto')
+            {
+                $orderBy = 'ORDER BY d.'.$orderBy;
+            }else{
+                $orderBy = '';
+            }
+        }
+        if($sort!='')
+        {
+            if(($sort == 'ASC' || $sort == 'DESC') && $orderBy != '')
+            {
+                $sort = $sort;
+            }else{
+                $sort = '';
+            }
+        }
+
+        $sorting = $orderBy.' '.$sort;
+
+        $query = $this->_em->createQuery(
+            "
+            SELECT d.id,
+                d.name,
+                d.netto,
+                d.brutto,
+                d.vat,
+                d.vatSum,
+                d.brutto
+            FROM ApiBundle:Service d
+            WHERE d.userId = :userId
+            AND (d.name LIKE :searchStr
+            OR d.netto LIKE :searchStr
+            OR d.brutto LIKE :searchStr
+            OR d.vat LIKE :searchStr
+            OR d.vatSum LIKE :searchStr
+            OR d.brutto LIKE :searchStr)
+            ".$sorting
+        );
+
+        $query->setParameter('userId', $userId);
+        $query->setParameter('searchStr', '%'.$searchStr.'%');
 
         return $query;
     }

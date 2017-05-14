@@ -2,7 +2,7 @@
     <div class="ui search" style="float: right">
         <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
         <div class="ui icon input">
-            <input class="prompt" [(ngModel)]="search" (keyup)="searchstores()" type="text" placeholder="Szukaj...">
+            <input class="prompt" [(ngModel)]="search" (keyup)="searchStores()" type="text" placeholder="Szukaj...">
             <i class="search icon" *ngIf="!isSearch()"></i>
         </div>
         <div class="results"></div>
@@ -20,18 +20,20 @@
             <th (click)="sortingBy('name')">Nazwa
                 <i class="sort icon" [ngClass]="{'descending': (order('name')=='DESC'), 'ascending': (order('name')=='ASC')}"></i>
             </th>
-            <th>Ilość</th>
-            <th (click)="sortingBy('firstName')">Netto
-                <i class="sort icon" [ngClass]="{'descending': (order('firstName')=='DESC'), 'ascending': (order('firstName')=='ASC')}"></i>
+            <th (click)="sortingBy('quantity')">Ilość
+                <i class="sort icon" [ngClass]="{'descending': (order('quantity')=='DESC'), 'ascending': (order('quantity')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('company')">VAT
-                <i class="sort icon" [ngClass]="{'descending': (order('company')=='DESC'), 'ascending': (order('company')=='ASC')}"></i>
+            <th (click)="sortingBy('netto')">Netto
+                <i class="sort icon" [ngClass]="{'descending': (order('netto')=='DESC'), 'ascending': (order('netto')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('phone')">Kwota VAT
-                <i class="sort icon" [ngClass]="{'descending': (order('phone')=='DESC'), 'ascending': (order('phone')=='ASC')}"></i>
+            <th (click)="sortingBy('vat')">VAT
+                <i class="sort icon" [ngClass]="{'descending': (order('vat')=='DESC'), 'ascending': (order('vat')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('email')">Brutto
-                <i class="sort icon" [ngClass]="{'descending': (order('email')=='DESC'), 'ascending': (order('email')=='ASC')}"></i>
+            <th (click)="sortingBy('vatSum')">Kwota VAT
+                <i class="sort icon" [ngClass]="{'descending': (order('vatSum')=='DESC'), 'ascending': (order('vatSum')=='ASC')}"></i>
+            </th>
+            <th (click)="sortingBy('brutto')">Brutto
+                <i class="sort icon" [ngClass]="{'descending': (order('brutto')=='DESC'), 'ascending': (order('brutto')=='ASC')}"></i>
             </th>
         </tr>
     </thead>
@@ -47,7 +49,7 @@
             <td>{{ store?.quantity }} {{ store?.unit }}</td>
             <td>{{ store?.netto | number : '1.2-2'}}</td>
             <td>{{ store?.vat | number : '1.2-2'}}</td>
-            <td>{{ store?.vat_sum | number : '1.2-2'}}</td>
+            <td>{{ store?.vatSum | number : '1.2-2'}}</td>
             <td>{{ store?.brutto | number : '1.2-2'}}</td>
         </tr>
     </tbody>

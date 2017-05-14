@@ -106,7 +106,7 @@ class DocumentPositionController extends FOSRestController implements ClassResou
     {
         $dateTime = new \DateTime('now');
         $documentPosition = $this->getDocumentPositionRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($documentPosition == null) {
@@ -136,11 +136,11 @@ class DocumentPositionController extends FOSRestController implements ClassResou
         return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
-    /*public function patchAction(Request $request, int $id)
+    public function patchAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
         $document = $this->getDocumentRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($document == null) {
@@ -168,12 +168,12 @@ class DocumentPositionController extends FOSRestController implements ClassResou
         ];
 
         return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_NO_CONTENT);
-    }*/
+    }
 
     public function deleteAction(int $id)
     {
         $documentPosition = $this->getDocumentPositionRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($documentPosition == null) {

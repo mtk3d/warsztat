@@ -16,10 +16,10 @@
         .timetable .week .item:hover {
             background-color: #fcfcfc;
         }
-        .timetable .last {
+        .timetable .inactive {
             color: #ccc;
         }
-        .timetable .last a{
+        .timetable .inactive a{
             color: #ccc;
         }
         .timetable .week .item {
@@ -30,7 +30,7 @@
         .timetable .week {
             border-top: 1px solid;
             border-color: rgba(34, 36, 38, 0.14902);
-            height: calc(calc(100% - 39px) / 5);
+            height: calc(calc(100% - 39px) / 6);
         }
         .timetable .week .item:last-child {
             border-right: 0;

@@ -2,7 +2,7 @@
     <div class="ui search" style="float: right">
         <i class="remove icon remove-search" *ngIf="isSearch()" (click)="clearSearch()"></i>
         <div class="ui icon input">
-            <input class="prompt" [(ngModel)]="search" (keyup)="searchservices()" type="text" placeholder="Szukaj...">
+            <input class="prompt" [(ngModel)]="search" (keyup)="searchServices()" type="text" placeholder="Szukaj...">
             <i class="search icon" *ngIf="!isSearch()"></i>
         </div>
         <div class="results"></div>
@@ -20,17 +20,17 @@
             <th (click)="sortingBy('name')">Nazwa
                 <i class="sort icon" [ngClass]="{'descending': (order('name')=='DESC'), 'ascending': (order('name')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('firstName')">Netto
-                <i class="sort icon" [ngClass]="{'descending': (order('firstName')=='DESC'), 'ascending': (order('firstName')=='ASC')}"></i>
+            <th (click)="sortingBy('netto')">Netto
+                <i class="sort icon" [ngClass]="{'descending': (order('netto')=='DESC'), 'ascending': (order('netto')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('company')">VAT
-                <i class="sort icon" [ngClass]="{'descending': (order('company')=='DESC'), 'ascending': (order('company')=='ASC')}"></i>
+            <th (click)="sortingBy('vat')">VAT
+                <i class="sort icon" [ngClass]="{'descending': (order('vat')=='DESC'), 'ascending': (order('vat')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('phone')">Kwota VAT
-                <i class="sort icon" [ngClass]="{'descending': (order('phone')=='DESC'), 'ascending': (order('phone')=='ASC')}"></i>
+            <th (click)="sortingBy('vatSum')">Kwota VAT
+                <i class="sort icon" [ngClass]="{'descending': (order('vatSum')=='DESC'), 'ascending': (order('vatSum')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('email')">Brutto
-                <i class="sort icon" [ngClass]="{'descending': (order('email')=='DESC'), 'ascending': (order('email')=='ASC')}"></i>
+            <th (click)="sortingBy('brutto')">Brutto
+                <i class="sort icon" [ngClass]="{'descending': (order('brutto')=='DESC'), 'ascending': (order('brutto')=='ASC')}"></i>
             </th>
             <th class="collapsing"></th>
         </tr>
@@ -47,11 +47,11 @@
                 <td>{{ service?.name }}</td>
                 <td>{{ service?.netto | number : '1.2-2'}}</td>
                 <td>{{ service?.vat | number : '1.2-2'}}</td>
-                <td>{{ service?.vat_sum | number : '1.2-2'}}</td>
+                <td>{{ service?.vatSum | number : '1.2-2'}}</td>
                 <td>{{ service?.brutto | number : '1.2-2'}}</td>
                 <td class="collapsing">
                     <div class="ui  blue icon button mini" (click)="edit(service.id, key)"><i class="edit icon"></i></div>
-                    <div class="ui  red icon button mini" (click)="showAdd = false"><i class="trash icon"></i></div>
+                    <div class="ui  red icon button mini" (click)="deleteById(service.id)"><i class="trash icon"></i></div>
                 </td>
             </ng-container>
             <ng-container *ngIf="isEdited(service.id)">
@@ -88,7 +88,7 @@
                     </div>
                 </td>
                 <td class="collapsing">
-                    <div class="ui  green icon button mini" (click)="addNewPosition()"><i class="checkmark icon"></i></div>
+                    <div class="ui  green icon button mini" (click)="update(service.id)"><i class="checkmark icon"></i></div>
                     <div class="ui  red icon button mini" (click)="hideEdit()"><i class="remove icon"></i></div>
                 </td>
             </ng-container>
@@ -127,7 +127,7 @@
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui  green icon button mini" (click)="addNewPosition()"><i class="checkmark icon"></i></div>
+                <div class="ui  green icon button mini" (click)="addNewService()"><i class="checkmark icon"></i></div>
                 <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
             </td>
         </tr>

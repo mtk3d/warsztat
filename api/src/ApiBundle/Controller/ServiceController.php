@@ -34,10 +34,14 @@ class ServiceController extends FOSRestController implements ClassResourceInterf
         return $this->getUser()->getId();
     }
 
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
+        $search = $request->query->get('search', '');
+        $orderBy = $request->query->get('orderby', '');
+        $sort = $request->query->get('sort', '');
+
         $services = $this->getServiceRepository()
-            ->createFindAllQuery($this->getUserId())
+            ->createFindAllQuery($this->getUserId(), $search, $orderBy, $sort)
             ->getResult();
 
         if($services == null) {
@@ -89,7 +93,7 @@ class ServiceController extends FOSRestController implements ClassResourceInterf
     public function putAction(Request $request, int $id)
     {
         $service = $this->getServiceRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($service == null) {
@@ -120,7 +124,7 @@ class ServiceController extends FOSRestController implements ClassResourceInterf
     public function patchAction(Request $request, int $id)
     {
         $service = $this->getServiceRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($service == null) {
@@ -151,7 +155,7 @@ class ServiceController extends FOSRestController implements ClassResourceInterf
     public function deleteAction(int $id)
     {
         $service = $this->getServiceRepository()
-            ->createFindOneByIdQuery($id, $this->getUserId())
+            ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
         if ($service == null) {

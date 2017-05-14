@@ -31,7 +31,7 @@
             <td>{{ documentPosition?.quantity }} {{ documentPosition?.unit}}</td>
             <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
             <td>{{ documentPosition?.vat }}%</td>
-            <td>{{ documentPosition?.vat_sum | number : '1.2-2'}}</td>
+            <td>{{ documentPosition?.vatSum | number : '1.2-2'}}</td>
             <td>{{ documentPosition?.brutto | number : '1.2-2'}}</td>
             <td class="collapsing" style="text-align: center;">
                 <div class="ui  blue icon button mini" (click)="editPosition(documentPosition.id, i)"><i class="edit icon"></i></div>

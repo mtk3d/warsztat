@@ -75,7 +75,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
       this.inputPosition['name'] = this.documentPositions[i]['name'];
       this.inputPosition['vat'] = this.documentPositions[i]['vat'];
       this.inputPosition['netto'] = this.documentPositions[i]['netto'];
-      this.inputPosition['vatSum'] = this.documentPositions[i]['vat_sum'];
+      this.inputPosition['vatSum'] = this.documentPositions[i]['vatSum'];
       this.inputPosition['brutto'] = this.documentPositions[i]['brutto'];
       this.showAdd = true;
       this.notFound = false;
@@ -111,7 +111,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
         {
             this.documentSum['netto'] += this.documentPositions[id]['netto'];
             this.documentSum['brutto'] += this.documentPositions[id]['brutto'];
-            this.documentSum['vatSum'] += this.documentPositions[id]['vat_sum'];
+            this.documentSum['vatSum'] += this.documentPositions[id]['vatSum'];
         }
   }
 
@@ -242,7 +242,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
                        this.inputPosition['name'] = position['name'];
                        this.inputPosition['netto'] = position['netto'];
                        this.inputPosition['brutto'] = position['brutto'];
-                       this.inputPosition['vatSum'] = position['vat_sum'];
+                       this.inputPosition['vatSum'] = position['vatSum'];
                        this.inputPosition['vat'] = position['vat'];
                        this.inputPosition['itemId'] = position['id'];
                     },
@@ -257,7 +257,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
                        this.inputPosition['name'] = position['name'];
                        this.inputPosition['netto'] = position['netto'];
                        this.inputPosition['brutto'] = position['brutto'];
-                       this.inputPosition['vatSum'] = position['vat_sum'];
+                       this.inputPosition['vatSum'] = position['vatSum'];
                        this.inputPosition['vat'] = position['vat'];
                        this.inputPosition['itemId'] = position['id'];
                        this.unit = position['unit'];

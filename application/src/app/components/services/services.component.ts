@@ -10,7 +10,7 @@ import { Service } from '../../_models/service.model';
 })
 export class ServicesComponent implements OnInit, OnDestroy {
     services: Service[] = [];
-    inputService: any = [];
+    inputService: any = {};
     servicesReturn: boolean;
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
@@ -59,7 +59,31 @@ export class ServicesComponent implements OnInit, OnDestroy {
         this.inputService['netto'] = this.services[key]['netto'];
         this.inputService['brutto'] = this.services[key]['brutto'];
         this.inputService['vat'] = this.services[key]['vat'];
-        this.inputService['vatSum'] = this.services[key]['vat_sum'];
+        this.inputService['vatSum'] = this.services[key]['vatSum'];
+    }
+
+    update(id) {
+        (this.inputService['name'] != '')
+        {
+            this.sub = this.serviceService.update(id, this.inputService)
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.editedId = null;
+                    this.searchServices();
+                });
+        }
+    }
+
+    addNewService() {
+        if(this.inputService['name'] != '')
+        {
+            this.sub = this.serviceService.create(this.inputService)
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.showAdd = false;
+                    this.searchServices();
+                });
+        }
     }
 
     hideEdit(){
@@ -258,16 +282,20 @@ export class ServicesComponent implements OnInit, OnDestroy {
         }
     }
 
+    deleteById(id) {
+        this.sub = this.serviceService.delete(id)
+                .subscribe((ok)=>{
+                    this.searchServices();
+                    this.deleteLoading = false;
+                });
+    }
+
     deleteChecked()
     {
         this.deleteLoading = true;
         for(let id in this.delete)
         {
-            this.sub = this.serviceService.delete(this.delete[id])
-                .subscribe((ok)=>{
-                    this.searchServices();
-                    this.deleteLoading = false;
-                });
+            this.deleteById(this.delete[id])
         }
     }
 
