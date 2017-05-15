@@ -1,13 +1,13 @@
 <div class="timetable-container">
     <div class="ui centered grid">
         <div class="ui icon large buttons">
-            <button class="ui button">
+            <button class="ui button" (click)="previousMonth()">
                 <i class="angle left icon"></i>
             </button>
             <button class="ui button">
-                kwiecień 2017
+                {{ monthName }} {{ year }}
             </button>
-            <button class="ui button">
+            <button class="ui button" (click)="nextMonth()">
                 <i class="angle right icon"></i>
             </button>
         </div>
@@ -38,198 +38,14 @@
                 <p>Niedziela</p>
             </div>
         </div>
-        <div class="week">
-            <div class="item inactive">
-                <p class="day">27</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">28</p>
+        <div class="days">
+            <div class="item" [ngClass]="{'inactive': day.inactive}" *ngFor="let day of calendar">
+                <p class="day" [ngClass]="{'today': day.date == today}">{{ day.number }}</p>
                 <ul>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
+                    <li *ngFor="let item of day.items"><a href="{{ item.uri }}">{{ item.name }}</a></li>
                 </ul>
-            </div>
-            <div class="item inactive">
-                <p class="day">29</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">30</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">31</p>
-            </div>
-            <div class="item">
-                <p class="day">1</p>
-            </div>
-            <div class="item">
-                <p class="day">2</p>
-            </div>
-        </div>
-        <div class="week">
-            <div class="item">
-                <p class="day">3</p>
-                <ul>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                </ul>
-            </div>
-            <div class="item">
-                <p class="day">4</p>
-            </div>
-            <div class="item">
-                <p class="day">5</p>
-            </div>
-            <div class="item">
-                <p class="day">6</p>
-            </div>
-            <div class="item">
-                <p class="day">7</p>
-            </div>
-            <div class="item">
-                <p class="day">8</p>
-            </div>
-            <div class="item">
-                <p class="day">9</p>
-            </div>
-        </div>
-        <div class="week">
-            <div class="item">
-                <p class="day">10</p>
-            </div>
-            <div class="item">
-                <p class="day">11</p>
-            </div>
-            <div class="item">
-                <p class="day">12</p>
-            </div>
-            <div class="item">
-                <p class="day">13</p>
-            </div>
-            <div class="item">
-                <p class="day">14</p>
-            </div>
-            <div class="item">
-                <p class="day">15</p>
-            </div>
-            <div class="item">
-                <p class="day">16</p>
-            </div>
-        </div>
-        <div class="week">
-            <div class="item">
-                <p class="day">17</p>
-            </div>
-            <div class="item">
-                <p class="day">18</p>
-            </div>
-            <div class="item">
-                <p class="day">19</p>
-                <ul>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                </ul>
-            </div>
-            <div class="item">
-                <p class="day">20</p>
-            </div>
-            <div class="item">
-                <p class="day">21</p>
-            </div>
-            <div class="item">
-                <p class="day">22</p>
-            </div>
-            <div class="item">
-                <p class="day">23</p>
-            </div>
-        </div>
-        <div class="week">
-            <div class="item">
-                <p class="day">24</p>
-                <ul>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                </ul>
-            </div>
-            <div class="item">
-                <p class="day">25</p>
-            </div>
-            <div class="item">
-                <p class="day">26</p>
-            </div>
-            <div class="item">
-                <p class="day">27</p>
-            </div>
-            <div class="item">
-                <p class="day">28</p>
-            </div>
-            <div class="item">
-                <p class="day">29</p>
-            </div>
-            <div class="item">
-                <p class="day">30</p>
-            </div>
-        </div>
-        <div class="week">
-            <div class="item">
-                <p class="day">31</p>
-                <ul>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                    <li><a href="#">Zlecenie 123</a></li>
-                </ul>
-            </div>
-            <div class="item inactive">
-                <p class="day">01</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">02</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">03</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">04</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">05</p>
-            </div>
-            <div class="item inactive">
-                <p class="day">06</p>
             </div>
         </div>
     </div>
 </div>
+<div (click)="addOrder()">dodaj</div>
