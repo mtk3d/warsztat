@@ -1,0 +1,61 @@
+<div class="ui active inverted dimmer" *ngIf="loading">
+    <div class="ui loader"></div>
+</div>
+<h2 class="ui horizontal divider header">{{ document.number }}</h2>
+<ng-container *ngIf="!edit">
+    <div class="ui right floated icon button mini" (click)="editMode(true)"><i class="write icon"></i></div>
+    <b>Wystawiono:</b> {{ document.date | date: 'dd/MM/yyyy' }}
+    <br>
+    <b>Data płatności:</b> {{ document.dateOfPayment | date: 'dd/MM/yyyy' }}
+    <br>
+    <b>Metoda płatności:</b> {{ document.paymentMethod }}
+    <br>
+    <b>Zapłacono:</b> {{ document.paid ? "Tak" : "Nie" }}
+    <br>
+    <b>Miejsce:</b> {{ document.place }}
+</ng-container>
+<ng-container *ngIf="edit">
+    <form class="ui form">
+        <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div>
+        <div class="field">
+            <label>Data wystawienia</label>
+            <input type="date" name="date" [(ngModel)]="documentEdit.date">
+        </div>
+        <div class="field">
+            <label>Data płatności</label>
+            <input type="date" name="dateOfPayment" [(ngModel)]="documentEdit.dateOfPayment">
+        </div>
+        <div class="field">
+            <label>Metoda płatności</label>
+            <div class="ui selection dropdown">
+                <input type="hidden" name="card[type]">
+                <div class="default text">Metoda płatności</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <div class="item" data-value="Gotówka" (click)="paymentMethod('Gotówka')">
+                        <i class="money icon"></i> Gotówka
+                    </div>
+                    <div class="item" data-value="Karta" (click)="paymentMethod('Karta')">
+                        <i class="credit card alternative icon"></i> Karta
+                    </div>
+                    <div class="item" data-value="Przelew" (click)="paymentMethod('Przelew')">
+                        <i class="payment icon"></i> Przelew
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="documentEdit.paid">
+                <label>Zapłacono</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>Miejsce</label>
+            <input type="text" name="place" placeholder="Miejsce" [(ngModel)]="documentEdit.place">
+        </div>
+        <div class="ui  green labeled icon button" (click)="save()">
+            <i class="save icon"></i> Zapisz
+        </div>
+    </form>
+</ng-container>

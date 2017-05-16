@@ -30,6 +30,7 @@ import { DocumentsComponent } from './components/documents/documents.component';
 import { DocumentComponent } from './components/documents/document.component';
 import { DocumentAddComponent } from './components/documents/document.add.component';
 import { DocumentPositionsComponent } from './components/documents/document.positions.component';
+import { DocumentParamsComponent } from './components/documents/document.params.component';
 import { ConsumersComponent } from './components/consumers/consumers.component';
 import { ConsumerAddComponent } from './components/consumers/consumer.add.component';
 import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
@@ -58,6 +59,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     DocumentComponent,
     DocumentAddComponent,
     DocumentPositionsComponent,
+    DocumentParamsComponent,
     ConsumersComponent,
     ConsumerAddComponent,
     ConsumerInputComponent,

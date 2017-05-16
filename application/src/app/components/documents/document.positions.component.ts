@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http} from '@angular/http';
 
@@ -18,7 +18,7 @@ declare var $: any;
   selector: 'document-positions',
   templateUrl: 'document.positions.component.html'
 })
-export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
+export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked{
 
     @Input('id') documentId: number; 
     documentSum: Array<number> = []; 
@@ -36,6 +36,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     editedPosition: any = null;
     edit: boolean = false;
     unit: string = "";
+    viewCheck: boolean = false;
     private sub: any;
 
   constructor(
@@ -49,6 +50,14 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     this.getPositions();
     this.storeSearch();
     this.inputPosition['service'] = false;
+  }
+
+   ngAfterViewChecked() {
+      if(this.viewCheck == false)
+      {
+          $('.ui.dropdown').dropdown();
+          this.viewCheck = true;
+      }
   }
 
   getPositions() {
@@ -68,7 +77,9 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   editPosition(id, i){
+      this.viewCheck = false;
       this.inputPosition['id'] = id; 
+      this.inputPosition['itemId'] = this.documentPositions[i]['itemId'];
       this.inputPosition['documentId'] = this.documentId;
       this.inputPosition['service'] = this.documentPositions[i]['service'];
       this.inputPosition['quantity'] = this.documentPositions[i]['quantity'];
@@ -89,6 +100,10 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
 
       this.editedPosition = id;
       this.showAdd = false;
+  }
+
+  isSelected(name) {
+      return name == this.inputPosition['name'];
   }
 
   isEditing(id) {
@@ -141,8 +156,8 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
     });
   }
 
-  ngOnChanges() {
-
+  ngOnChanges(inputPosition) {
+      console.log("change");
   }
 
   addNewPosition(){
@@ -159,6 +174,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   addView(){
+      this.viewCheck = false;
       this.inputPosition['documentId'] = this.documentId;
       this.inputPosition['service'] = false;
       this.inputPosition['quantity'] = 1;

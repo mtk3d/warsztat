@@ -31,9 +31,7 @@ export class DocumentAddComponent implements OnInit, OnDestroy, OnChanges{
       this.document['dateOfPayment'] = today.toISOString();
       this.document['paid'] = false;
     $('.ui.checkbox').checkbox();
-    $('.ui.dropdown')
-      .dropdown()
-    ;
+    $('.ui.dropdown').dropdown();
   }
 
   type(type) {

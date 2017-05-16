@@ -51,7 +51,7 @@
                     <div class="field">
                         <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
                             <option value="">Wybierz</option>
-                            <option *ngFor="let item of selectItems;" value="{{ item.id }}" [selected]="item.name==inputPosition.name">{{ item.name }}</option>
+                            <option *ngFor="let item of selectItems;" value="{{ item.id }}" [selected]="isSelected(item.name)">{{ item.name }}</option>
                         </select>
                     </div>
                 </div>
