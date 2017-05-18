@@ -25,11 +25,15 @@
             <label>Data płatności</label>
             <input type="date" name="dateOfPayment" [(ngModel)]="documentEdit.dateOfPayment">
         </div>
-        <div class="field">
+        <div class="field edit-position-dropdown">
             <label>Metoda płatności</label>
             <div class="ui selection dropdown">
                 <input type="hidden" name="card[type]">
-                <div class="default text">Metoda płatności</div>
+                <div class="default text">
+                <i class="money icon" *ngIf="documentEdit.paymentMethod == 'Gotówka'"></i>
+                <i class="credit card alternative icon" *ngIf="documentEdit.paymentMethod == 'Karta'"></i>
+                <i class="payment icon" *ngIf="documentEdit.paymentMethod == 'Przelew'"></i>
+                {{ documentEdit.paymentMethod }}</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     <div class="item" data-value="Gotówka" (click)="paymentMethod('Gotówka')">

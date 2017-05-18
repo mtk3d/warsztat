@@ -48,10 +48,10 @@
             </td>
             <td>
                 <div class="ui form">
-                    <div class="field">
+                    <div class="field edit-position-dropdown">
                         <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
-                            <option value="">Wybierz</option>
-                            <option *ngFor="let item of selectItems;" value="{{ item.id }}" [selected]="isSelected(item.name)">{{ item.name }}</option>
+                            <option value="">{{ inputPosition.name }}</option>
+                            <option *ngFor="let item of selectItems;" value="{{ item.id }}">{{ item.name }}</option>
                         </select>
                     </div>
                 </div>

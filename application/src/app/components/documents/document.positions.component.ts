@@ -102,10 +102,6 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
       this.showAdd = false;
   }
 
-  isSelected(name) {
-      return name == this.inputPosition['name'];
-  }
-
   isEditing(id) {
       if(id == this.editedPosition)
           return true;

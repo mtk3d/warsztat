@@ -97,6 +97,10 @@
     width: 55px;
 }
 
+ .edit-position-dropdown .ui.dropdown:not(.button)>.default.text {
+    color: #000;
+ }
+
 ::-webkit-scrollbar {
     width: 4px;
     /* for vertical scrollbars */
