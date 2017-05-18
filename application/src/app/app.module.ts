@@ -16,6 +16,7 @@ import { EmployeeService } from './_services/employee.service';
 import { UserDataService } from './_services/userData.service';
 import { VehicleService } from './_services/vehicle.service';
 import { CalendarService } from './_services/calendar.service';
+import { BreadcrumbsService } from './_services/breadcrumbs.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -112,7 +113,8 @@ import { OrdersComponent } from './components/orders/orders.component';
       EmployeeService,
       UserDataService,
       VehicleService,
-      CalendarService
+      CalendarService,
+      BreadcrumbsService
   ],
   bootstrap: [AppComponent]
 })

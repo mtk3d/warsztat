@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Http} from '@angular/http';
+import { Http } from '@angular/http';
 
 import { DocumentService } from '../../_services/document.service';
 import { UserDataService } from '../../_services/userData.service';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 import { Document } from '../../_models/document.model';
 import { UserData } from '../../_models/userData.model';
 
@@ -26,7 +27,8 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
   constructor(
       private route: ActivatedRoute, 
       private documentService: DocumentService,
-      private userDataService: UserDataService
+      private userDataService: UserDataService,
+      private breadcrumbsService: BreadcrumbsService
   ) {}
 
   ngOnInit() {
@@ -38,8 +40,8 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
                 this.document = document;
                 this.consumerId = document['consumerId'];
                 this.documentDataLoading = false;
+                this.breadcrumbsService.sendMessage(document['number']);
         });
-
     });
 
     this.sub = this.route.params.subscribe(params => {
