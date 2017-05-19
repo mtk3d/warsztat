@@ -12,6 +12,7 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 export class StoresComponent implements OnInit, OnDestroy {
     stores: Store[] = [];
     storesReturn: boolean;
+    inputStore: any = {};
     delete: Array<number> = [];
     allDeleteChecked: boolean = false;
     search: string = '';
@@ -24,6 +25,10 @@ export class StoresComponent implements OnInit, OnDestroy {
     singlePageStores: Store[] = [];
     sub: any;
     deleteLoading: boolean = false;
+    showAdd: boolean =false;
+    lastVat: number = 23;
+    editedId: number;
+    lastQuantity: any;
  
     constructor(
         private storeService: StoreService,
@@ -49,6 +54,64 @@ export class StoresComponent implements OnInit, OnDestroy {
         );
         this.delete = [];
         this.allDeleteChecked = false;
+    }
+
+    edit(id, key){
+        this.editedId = id;
+        this.showAdd = false;
+
+        this.inputStore['name'] = this.stores[key]['name'];
+        this.inputStore['quantity'] = this.stores[key]['quantity'];
+        this.inputStore['unit'] = this.stores[key]['unit'];
+        this.inputStore['netto'] = this.stores[key]['netto'];
+        this.inputStore['brutto'] = this.stores[key]['brutto'];
+        this.inputStore['vat'] = this.stores[key]['vat'];
+        this.inputStore['vatSum'] = this.stores[key]['vatSum'];
+    }
+
+    update(id) {
+        (this.inputStore['name'] != '')
+        {
+            this.sub = this.storeService.update(id, this.inputStore)
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.editedId = null;
+                    this.searchStores();
+                });
+        }
+    }
+
+    addNewStore() {
+        if(this.inputStore['name'] != '')
+        {
+            this.sub = this.storeService.create(this.inputStore)
+                .subscribe((ok)=>{
+                    this.sub.unsubscribe();
+                    this.showAdd = false;
+                    this.searchStores();
+                });
+        }
+    }
+
+    hideEdit(){
+        this.editedId = null;
+    }
+
+    isEdited(id){
+        return (id == this.editedId)
+    }
+
+    add() {
+        this.showAdd = true;
+        this.editedId = null;
+
+        this.inputStore['name'] = '';
+        this.inputStore['quantity'] = 1;
+        this.inputStore['unit'] = 'szt.';
+        this.inputStore['netto'] = 0;
+        this.inputStore['brutto'] = 0;
+        this.inputStore['vat'] = 23;
+        this.inputStore['vatSum'] = 0;
     }
 
     sortingBy(by)
@@ -240,6 +303,66 @@ export class StoresComponent implements OnInit, OnDestroy {
                 });
         }
     }
+
+    isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
+  doublePrecision(num) {
+      return Math.round(num * 100) / 100;
+  }
+
+    nettoBlur(){
+      if(!this.isNumeric(this.inputStore['netto']))
+      {
+          this.inputStore['netto'] = 0;
+      }
+      this.inputStore['netto'] = this.doublePrecision(this.inputStore['netto']);
+      this.inputStore['vatSum'] = this.doublePrecision((this.inputStore['netto'] * this.inputStore['vat']) / (100 - this.inputStore['vat']));
+      this.inputStore['brutto'] = this.doublePrecision((this.inputStore['vatSum'] * 100) / this.inputStore['vat']);
+  }
+
+  vatSumBlur(){
+      if(!this.isNumeric(this.inputStore['vatSum']))
+      {
+          this.inputStore['vatSum'] = 0;
+      }
+      this.inputStore['vatSum'] = this.doublePrecision(this.inputStore['vatSum']);
+      this.inputStore['netto'] = this.doublePrecision((this.inputStore['vatSum'] * (100 - this.inputStore['vat'])) / this.inputStore['vat']);
+      this.inputStore['brutto'] = this.doublePrecision((this.inputStore['vatSum'] * 100) / this.inputStore['vat']);
+  }
+
+  quantityBlur(){
+      if(!this.isNumeric(this.inputStore['quantity']) || this.inputStore['quantity'] == 0)
+      {
+          this.inputStore['quantity'] = 1;
+      }
+      this.inputStore['quantity'] = this.doublePrecision(this.inputStore['quantity']);
+      this.inputStore['brutto'] = this.doublePrecision((this.inputStore['brutto'] / this.lastQuantity) * this.inputStore['quantity']);
+      this.inputStore['netto'] = this.doublePrecision((this.inputStore['netto'] / this.lastQuantity) * this.inputStore['quantity']);
+      this.inputStore['vatSum'] = this.doublePrecision((this.inputStore['vatSum'] / this.lastQuantity) * this.inputStore['quantity']);
+      this.lastQuantity = this.inputStore['quantity'];
+  }
+
+  vatBlur(){
+      if(!this.isNumeric(this.inputStore['vat']) || this.inputStore['vat']<0 || this.inputStore['vat']>100)
+      {
+          this.inputStore['vat'] = 0;
+      }
+      this.inputStore['brutto'] = this.doublePrecision((this.inputStore['netto'] * 100) / (100 - this.inputStore['vat']));
+      this.inputStore['vatSum'] = this.doublePrecision(this.inputStore['brutto'] - this.inputStore['netto']);
+      this.lastVat = this.doublePrecision(this.inputStore['vat']);
+  }
+
+  bruttoBlur(){
+      if(!this.isNumeric(this.inputStore['brutto']))
+      {
+          this.inputStore['brutto'] = 0;
+      }
+      this.inputStore['brutto'] = this.doublePrecision(this.inputStore['brutto']);
+      this.inputStore['netto'] = this.doublePrecision((this.inputStore['brutto'] * (100 - this.inputStore['vat'])) / 100);
+      this.inputStore['vatSum'] = this.doublePrecision((this.inputStore['brutto'] * this.inputStore['vat']) / 100);
+  }
 
     ngOnDestroy() {
         this.sub.unsubscribe();

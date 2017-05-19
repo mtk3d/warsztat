@@ -41,6 +41,13 @@ export class StoreService {
         return this.http.post('http://localhost:8000/stores', store,  options);
     }
 
+    update(id: number, store: Store) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+        
+        return this.http.put('http://localhost:8000/stores/'+id, store,  options);
+    }
+
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
