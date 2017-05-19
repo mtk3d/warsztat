@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import { ConsumerService } from '../../_services/consumer.service';
 import { Consumer } from '../../_models/consumer.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
   moduleId: module.id,
@@ -24,10 +25,17 @@ export class ConsumersComponent implements OnInit, OnDestroy {
     sub: any;
     deleteLoading: boolean = false;
  
-    constructor(private consumerService: ConsumerService) { }
+    constructor(
+        private consumerService: ConsumerService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
  
     ngOnInit() {
         this.searchConsumers();
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Klienci', 'active': false}
+        ]);
     }
 
     searchConsumers() {

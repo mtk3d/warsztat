@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import { VehicleService } from '../../_services/vehicle.service';
 import { Vehicle } from '../../_models/vehicle.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
   moduleId: module.id,
@@ -18,9 +19,16 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     sorting: string = 'ASC';
     sub: any;
  
-    constructor(private vehicleService: VehicleService) { }
+    constructor(
+        private vehicleService: VehicleService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
  
     ngOnInit() {
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Pojazdy', 'active': false}
+        ]);
         this.searchVehicles();
     }
 

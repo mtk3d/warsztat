@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
  
 import { AuthenticationService } from '../../_services/authentication.service';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
  
 @Component({
     moduleId: module.id,
@@ -15,10 +16,15 @@ export class LoginComponent implements OnInit {
  
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService) { }
+        private authenticationService: AuthenticationService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
  
     ngOnInit() {
-        // reset login status
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Zaloguj', 'active': false}
+        ]);
         this.authenticationService.logout();
     }
  

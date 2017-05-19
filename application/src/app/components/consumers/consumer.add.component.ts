@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { ConsumerService } from '../../_services/consumer.service';
 import { Consumer } from '../../_models/consumer.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 declare var $: any;
 
@@ -24,10 +25,17 @@ export class ConsumerAddComponent implements OnInit, OnDestroy, OnChanges{
   constructor(
       private router: Router,
       private route: ActivatedRoute, 
-      private consumerService: ConsumerService
+      private consumerService: ConsumerService,
+      private breadcrumbsService: BreadcrumbsService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+      this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '/consumers', 'text': 'Klienci', 'active': true},
+            {'path': '', 'text': 'Dodaj', 'active': false}
+        ]);
+  }
 
   add(){
       this.addLoading = true; 

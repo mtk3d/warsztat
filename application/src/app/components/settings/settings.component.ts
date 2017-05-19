@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
+
 @Component({
   moduleId: module.id,
   selector: 'settings',
@@ -7,8 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() {}
+  constructor(
+      private breadcrumbsService: BreadcrumbsService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+      this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Ustawienia', 'active': false}
+        ]);
+  }
 
 }

@@ -6,15 +6,15 @@ import { Subject } from 'rxjs/Subject';
 export class BreadcrumbsService {
     private subject = new Subject<any>();
  
-    sendMessage(message: string) {
-        this.subject.next({ text: message });
+    sendBreadcrumbs(breadcrumbs: any) {
+        this.subject.next(breadcrumbs);
     }
  
-    clearMessage() {
+    clearBreadcrumbs() {
         this.subject.next();
     }
  
-    getMessage(): Observable<any> {
+    getBreadcrumbs(): Observable<any> {
         return this.subject.asObservable();
     }
 }

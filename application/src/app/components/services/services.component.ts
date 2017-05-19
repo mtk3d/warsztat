@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import { ServiceService } from '../../_services/service.service';
 import { Service } from '../../_models/service.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
   moduleId: module.id,
@@ -28,9 +29,16 @@ export class ServicesComponent implements OnInit, OnDestroy {
     lastVat: number = 23;
     editedId: number;
  
-    constructor(private serviceService: ServiceService) { }
+    constructor(
+        private serviceService: ServiceService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
  
     ngOnInit() {
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Usługi', 'active': false}
+        ]);
         this.searchServices();
         this.inputService['netto'] = 0;
         this.inputService['brutto'] = 0;

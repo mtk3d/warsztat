@@ -10,11 +10,11 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
 
-    breadcrumbs: any = "text";
+    breadcrumbs: any = [];
     subscription: Subscription;
 
     constructor(private breadcrumbsService: BreadcrumbsService) {
-        this.subscription = this.breadcrumbsService.getMessage().subscribe(breadcrumbs => { this.breadcrumbs = breadcrumbs; });
+        this.subscription = this.breadcrumbsService.getBreadcrumbs().subscribe(breadcrumbs => { this.breadcrumbs = breadcrumbs; });
     }
 
     ngOnInit() {

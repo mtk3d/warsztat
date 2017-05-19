@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { CalendarService } from '../../_services/calendar.service';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 
 @Component({
@@ -18,9 +19,16 @@ export class TimetableComponent implements OnInit {
     nameOfMonths: Array<string>;
     monthName: string;
 
-    constructor(private calendarService: CalendarService) { }
+    constructor(
+        private calendarService: CalendarService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
 
     ngOnInit() {
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Terminarz', 'active': false}
+        ]);
         this.nameOfMonths = [
             "Styczeń",
             "Luty",

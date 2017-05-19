@@ -40,7 +40,11 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges{
                 this.document = document;
                 this.consumerId = document['consumerId'];
                 this.documentDataLoading = false;
-                this.breadcrumbsService.sendMessage(document['number']);
+                this.breadcrumbsService.sendBreadcrumbs([
+                    {'path': '/', 'text': 'Warsztat', 'active': true},
+                    {'path': '/documents', 'text': 'Dokumenty', 'active': true},
+                    {'path': '', 'text': document['number'], 'active': false}
+                ]);
         });
     });
 

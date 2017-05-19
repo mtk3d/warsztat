@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import { EmployeeService } from '../../_services/employee.service';
 import { Employee } from '../../_models/employee.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +25,10 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     sub: any;
     deleteLoading: boolean = false;
  
-    constructor(private employeeService: EmployeeService) { }
+    constructor(
+        private employeeService: EmployeeService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
  
     ngOnInit() {
         this.searchemployees();
@@ -41,6 +45,10 @@ export class EmployeesComponent implements OnInit, OnDestroy {
         );
         this.delete = [];
         this.allDeleteChecked = false;
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Pracownicy', 'active': false}
+        ]);
     }
 
     sortingBy(by)

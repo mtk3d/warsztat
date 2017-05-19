@@ -1,9 +1,9 @@
 <div class="fluid container" style="margin-bottom: 20px">
     <div class="ui large breadcrumb">
-        <a class="section">Warsztat</a>
-        <i class="right chevron icon divider"></i>
-        <a class="section">Dokumenty</a>
-        <i class="right chevron icon divider"></i>
-        <div class="active section">{{ breadcrumbs.text }}</div>
+        <ng-container *ngFor="let item of breadcrumbs">
+            <a class="section" *ngIf="item.active" [routerLink]="[item.path]">{{ item.text }}</a>
+            <i class="right chevron icon divider" *ngIf="item.active"></i>
+            <div class="active section" *ngIf="!item.active">{{ item.text }}</div>
+        </ng-container>
     </div>
 </div>

@@ -2,6 +2,7 @@ import {Component, OnInit, OnChanges, OnDestroy} from '@angular/core';
 
 import { DocumentService } from '../../_services/document.service';
 import { Document } from '../../_models/document.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
   moduleId: module.id,
@@ -26,9 +27,16 @@ export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
     singlePageDocuments: Document[] = [];
     sub: any;
  
-    constructor(private documentService: DocumentService) { }
+    constructor(
+        private documentService: DocumentService,
+        private breadcrumbsService: BreadcrumbsService
+    ) { }
  
     ngOnInit() {
+        this.breadcrumbsService.sendBreadcrumbs([
+            {'path': '/', 'text': 'Warsztat', 'active': true},
+            {'path': '', 'text': 'Dokumenty', 'active': false}
+        ]);
         this.searchDocuments();
     }
 
