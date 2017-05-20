@@ -1,40 +1,50 @@
 <ng-container *ngIf="!editMode">
-<div class="ui right floated icon button mini" (click)="edit()"><i class="write icon"></i></div>
-<div class="avatar-container item" style="color: #000;">
-    <div class="first-letter-circle">{{ firstLetter }}</div>
-    <h2>{{ consumer.name }}</h2>
-</div>
-<p style="text-align: center;">
-    {{ consumer.name }}
-    <br> {{ consumer.street }} {{ consumer.buildNumber }}
-    <span *ngIf="consumer.apartmentNumber">/{{ consumer.apartmentNumber }}</span>
-    <br> {{ consumer.postalCode }} {{ consumer.place }}
-    <br> NIP: {{ consumer.nip }}
-    <br>
-</p>
-<p>
-    <ng-container *ngIf="consumer.company"><b>Firma:</b> {{ consumer.company }}
-    <br></ng-container>
-    <ng-container *ngIf="consumer.firstName"><b>Imie:</b> {{ consumer.firstName }}
-    <br></ng-container>
-    <ng-container *ngIf="consumer.lastName"><b>Nazwisko:</b> {{ consumer.lastName }}
-    <br></ng-container>
-    <ng-container *ngIf="consumer.phone"><b>Telefon:</b> {{ consumer.phone }}
-    <br></ng-container>
-    <ng-container *ngIf="consumer.email"><b>Email:</b> <a target="_blank" href="mailto: {{ consumer.email }}">{{ consumer.email }} <i class="mail icon"></i></a>
-    <br></ng-container>
-    <ng-container *ngIf="consumer.www"><b>WWW:</b> <a target="_blank" href="{{ consumer.www }}">{{ consumer.www }} <i class="external icon"></i></a>
-    <br></ng-container>
-    <ng-container *ngIf="consumer.bank"><b>Bank:</b> {{ consumer.bank }}
-    <br></ng-container>
-    <ng-container *ngIf="consumer.bankAccount"><b>Numer konta:</b> {{ accountNumber }} 
-    <i class="icon hide-icon" [ngClass]="{'hide': !hide, 'unhide': hide}" (click)="accountNumberToggle()"></i>
-    <br></ng-container>
-    <ng-container *ngIf="consumer.post"><b>Poczta:</b> {{ consumer.post }}
-    <br></ng-container>
-    <ng-container *ngIf="consumer.notes"><b>Notatki:</b> Lorem ipsum dolor sit amet...
-    <br></ng-container>
-</p>
+    <div class="ui right floated icon button mini" (click)="edit()"><i class="write icon"></i></div>
+    <div class="avatar-container item" style="color: #000;">
+        <div class="first-letter-circle">{{ firstLetter }}</div>
+        <h2>{{ consumer.name }}</h2>
+    </div>
+    <p style="text-align: center;">
+        {{ consumer.name }}
+        <br> {{ consumer.street }} {{ consumer.buildNumber }}
+        <span *ngIf="consumer.apartmentNumber">/{{ consumer.apartmentNumber }}</span>
+        <br> {{ consumer.postalCode }} {{ consumer.place }}
+        <br> NIP: {{ consumer.nip }}
+        <br>
+    </p>
+    <p>
+        <ng-container *ngIf="consumer.company"><b>Firma:</b> {{ consumer.company }}
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.firstName"><b>Imie:</b> {{ consumer.firstName }}
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.lastName"><b>Nazwisko:</b> {{ consumer.lastName }}
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.phone"><b>Telefon:</b> {{ consumer.phone }}
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.email"><b>Email:</b> <a target="_blank" href="mailto: {{ consumer.email }}">{{ consumer.email }} <i class="mail icon"></i></a>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.www"><b>WWW:</b> <a target="_blank" href="{{ consumer.www }}">{{ consumer.www }} <i class="external icon"></i></a>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.bank"><b>Bank:</b> {{ consumer.bank }}
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.bankAccount"><b>Numer konta:</b> {{ accountNumber }}
+            <i class="icon hide-icon" [ngClass]="{'hide': !hide, 'unhide': hide}" (click)="accountNumberToggle()"></i>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.post"><b>Poczta:</b> {{ consumer.post }}
+            <br>
+        </ng-container>
+        <ng-container *ngIf="consumer.notes"><b>Notatki:</b> Lorem ipsum dolor sit amet...
+            <br>
+        </ng-container>
+    </p>
 </ng-container>
 <ng-container *ngIf="editMode">
     <b style="font-size:1.07142857rem;">Edycja klienta</b>

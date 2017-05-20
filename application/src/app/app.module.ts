@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { Http, RequestOptions } from '@angular/http';
-import { RouterModule }   from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
@@ -48,78 +48,78 @@ import { OrdersComponent } from './components/orders/orders.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    AboutComponent,
-    TimetableComponent,
-    SettingsComponent,
-    PageNotFoundComponent,
-    SidebarComponent,
-    BreadcrumbComponent,
-    DocumentsComponent,
-    DocumentComponent,
-    DocumentAddComponent,
-    DocumentPositionsComponent,
-    DocumentParamsComponent,
-    ConsumersComponent,
-    ConsumerComponent,
-    ConsumerAddComponent,
-    ConsumerInputComponent,
-    ConsumerDataComponent,
-    VehiclesComponent,
-    VehicleAddComponent,
-    EmployeesComponent,
-    ServicesComponent,
-    StoresComponent,
-    TiresComponent,
-    OrdersComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    JsonpModule,
-    RouterModule.forRoot([
-      {path: '', redirectTo: 'documents', pathMatch: 'full'},
-      {path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard]},
-      {path: 'documents/add', component: DocumentAddComponent, canActivate: [AuthGuard]},
-      {path: 'documents/:id', component: DocumentComponent, canActivate: [AuthGuard]},
-      {path: 'consumers', component: ConsumersComponent, canActivate: [AuthGuard]},
-      {path: 'consumers/add', component: ConsumerAddComponent, canActivate: [AuthGuard]},
-      {path: 'consumers/:id', component: ConsumerComponent, canActivate: [AuthGuard]},
-      {path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard]},
-      {path: 'orders', component: OrdersComponent, canActivate: [AuthGuard]},
-      {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
-      {path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard]},
-      {path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard]},
-      {path: 'vehicles/add', component: VehicleAddComponent, canActivate: [AuthGuard]},
-      {path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard]},
-      {path: 'services', component: ServicesComponent, canActivate: [AuthGuard]},
-      {path: 'stores', component: StoresComponent, canActivate: [AuthGuard]},
-      {path: 'tires', component: TiresComponent, canActivate: [AuthGuard]},
-      {path: 'about', component: AboutComponent},
-      {path: 'login', component: LoginComponent},
-      {path: 'register', component: RegisterComponent, canActivate: [!AuthGuard]},
-      {path: '**', component: PageNotFoundComponent}
-    ])
-  ],
-  providers: [
-      AuthGuard,
-      AuthenticationService,
-      DocumentService,
-      DocumentPositionService,
-      OrderService,
-      ConsumerService,
-      ServiceService,
-      StoreService,
-      EmployeeService,
-      UserDataService,
-      VehicleService,
-      CalendarService,
-      BreadcrumbsService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        AboutComponent,
+        TimetableComponent,
+        SettingsComponent,
+        PageNotFoundComponent,
+        SidebarComponent,
+        BreadcrumbComponent,
+        DocumentsComponent,
+        DocumentComponent,
+        DocumentAddComponent,
+        DocumentPositionsComponent,
+        DocumentParamsComponent,
+        ConsumersComponent,
+        ConsumerComponent,
+        ConsumerAddComponent,
+        ConsumerInputComponent,
+        ConsumerDataComponent,
+        VehiclesComponent,
+        VehicleAddComponent,
+        EmployeesComponent,
+        ServicesComponent,
+        StoresComponent,
+        TiresComponent,
+        OrdersComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        JsonpModule,
+        RouterModule.forRoot([
+            { path: '', redirectTo: 'documents', pathMatch: 'full' },
+            { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
+            { path: 'documents/add', component: DocumentAddComponent, canActivate: [AuthGuard] },
+            { path: 'documents/:id', component: DocumentComponent, canActivate: [AuthGuard] },
+            { path: 'consumers', component: ConsumersComponent, canActivate: [AuthGuard] },
+            { path: 'consumers/add', component: ConsumerAddComponent, canActivate: [AuthGuard] },
+            { path: 'consumers/:id', component: ConsumerComponent, canActivate: [AuthGuard] },
+            { path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard] },
+            { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+            { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+            { path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard] },
+            { path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard] },
+            { path: 'vehicles/add', component: VehicleAddComponent, canActivate: [AuthGuard] },
+            { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard] },
+            { path: 'services', component: ServicesComponent, canActivate: [AuthGuard] },
+            { path: 'stores', component: StoresComponent, canActivate: [AuthGuard] },
+            { path: 'tires', component: TiresComponent, canActivate: [AuthGuard] },
+            { path: 'about', component: AboutComponent },
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent, canActivate: [!AuthGuard] },
+            { path: '**', component: PageNotFoundComponent }
+        ])
+    ],
+    providers: [
+        AuthGuard,
+        AuthenticationService,
+        DocumentService,
+        DocumentPositionService,
+        OrderService,
+        ConsumerService,
+        ServiceService,
+        StoreService,
+        EmployeeService,
+        UserDataService,
+        VehicleService,
+        CalendarService,
+        BreadcrumbsService
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

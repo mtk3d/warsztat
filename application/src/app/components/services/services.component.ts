@@ -71,7 +71,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     }
 
     update(id) {
-        if(this.inputService['name'] != '') {
+        if (this.inputService['name'] != '') {
             this.sub = this.serviceService.update(id, this.inputService)
                 .subscribe((ok) => {
                     this.sub.unsubscribe();

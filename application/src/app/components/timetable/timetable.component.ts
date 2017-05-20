@@ -5,29 +5,29 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 
 @Component({
-  moduleId: module.id,
-  selector: "timetable",
-  templateUrl: "timetable.component.html",
-  styleUrls: ["timetable.component.css"]
+    moduleId: module.id,
+    selector: "timetable",
+    templateUrl: "timetable.component.html",
+    styleUrls: ["timetable.component.css"]
 })
-export class TimetableComponent implements OnInit { 
+export class TimetableComponent implements OnInit {
 
     calendar: any = [];
     today: any;
     month: number;
     year: number;
-    nameOfMonths: Array<string>;
+    nameOfMonths: Array < string > ;
     monthName: string;
 
     constructor(
         private calendarService: CalendarService,
         private breadcrumbsService: BreadcrumbsService
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.breadcrumbsService.sendBreadcrumbs([
-            {'path': '/', 'text': 'Warsztat', 'active': true},
-            {'path': '', 'text': 'Terminarz', 'active': false}
+            { 'path': '/', 'text': 'Warsztat', 'active': true },
+            { 'path': '', 'text': 'Terminarz', 'active': false }
         ]);
         this.nameOfMonths = [
             "Styczeń",
@@ -51,20 +51,18 @@ export class TimetableComponent implements OnInit {
         this.reload();
     }
 
-    nextMonth(){
+    nextMonth() {
         this.month = this.month + 1;
-        if(this.month == 12)
-        {
+        if (this.month == 12) {
             this.month = 0;
             this.year = this.year + 1;
         }
         this.reload();
     }
 
-    previousMonth(){
+    previousMonth() {
         this.month = this.month - 1;
-        if(this.month == -1)
-        {
+        if (this.month == -1) {
             this.month = 11;
             this.year = this.year - 1;
         }
@@ -78,8 +76,8 @@ export class TimetableComponent implements OnInit {
 
     addOrder() {
         this.calendar[25]['items'].push({
-              "name": "Zlecenie 1",
-              "uri": "orders/1"
+            "name": "Zlecenie 1",
+            "uri": "orders/1"
         });
     }
 

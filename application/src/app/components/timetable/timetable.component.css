@@ -1,72 +1,88 @@
-        .timetable-container{
-            height: calc(100vh - 55px)!important;
-        }
-        .timetable {
-            width: 100%;
-            border: 1px solid;
-            border-color: rgba(34, 36, 38, 0.14902);
-            border-radius: 3px;
-            overflow: hidden;
-            height: calc(100% - 80px);
-        }
-        .timetable .item {
-            width: 14.28%;
-            float: left;
-        }
-        .timetable .days {
-            height: 100%;
-        }
-        .timetable .days .item {
-            height: calc(calc(100% - 40px) / 6);
-            border-right: 1px solid;
-            border-bottom: 1px solid;
-            border-color: rgba(34, 36, 38, 0.14902);
-        }
-        .timetable .days .item:nth-child(7n+7) {
-            border-right: none;
-        }
-        .timetable .days .item:nth-child(n+36) {
-            border-bottom: none;
-        }
-        .timetable .days .item:hover {
-            background-color: #fcfcfc;
-        }
-        .timetable .inactive {
-            color: #ccc;
-        }
-        .timetable .inactive a{
-            color: #ccc;
-        }
-        .timetable .header {
-            text-align: center;
-            background-color: rgb(249, 250, 251);
-            overflow: hidden;
-            border-bottom: 1px solid #ccc;
-        }
-         .timetable .item p {
-            padding: 10px;
-        }
-        .timetable .day {
-            margin: 5px;
-            padding: 5px!important;
-            width: 29px;
-            text-align: center;
-            float: right;
-        }
-        .timetable .today {
-            background-color: #31578c;
-            color: #ddd;
-            border-radius: 100%;
-        }
-        .timetable .week {
-            overflow: hidden;
-        }
-        .timetable ul {
-            list-style: none;
-            padding-left: 20px;
-            height: 85%;
-            overflow-y:auto;
-        }
-        .timetable a:hover {
-            text-decoration: underline;
-        }
+.timetable-container {
+    height: calc(100vh - 55px)!important;
+}
+
+.timetable {
+    width: 100%;
+    border: 1px solid;
+    border-color: rgba(34, 36, 38, 0.14902);
+    border-radius: 3px;
+    overflow: hidden;
+    height: calc(100% - 80px);
+}
+
+.timetable .item {
+    width: 14.28%;
+    float: left;
+}
+
+.timetable .days {
+    height: 100%;
+}
+
+.timetable .days .item {
+    height: calc(calc(100% - 40px) / 6);
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-color: rgba(34, 36, 38, 0.14902);
+}
+
+.timetable .days .item:nth-child(7n+7) {
+    border-right: none;
+}
+
+.timetable .days .item:nth-child(n+36) {
+    border-bottom: none;
+}
+
+.timetable .days .item:hover {
+    background-color: #fcfcfc;
+}
+
+.timetable .inactive {
+    color: #ccc;
+}
+
+.timetable .inactive a {
+    color: #ccc;
+}
+
+.timetable .header {
+    text-align: center;
+    background-color: rgb(249, 250, 251);
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
+
+.timetable .item p {
+    padding: 10px;
+}
+
+.timetable .day {
+    margin: 5px;
+    padding: 5px!important;
+    width: 29px;
+    text-align: center;
+    float: right;
+}
+
+.timetable .today {
+    background-color: #31578c;
+    color: #ddd;
+    border-radius: 100%;
+}
+
+.timetable .week {
+    overflow: hidden;
+}
+
+.timetable ul {
+    list-style: none;
+    padding-left: 20px;
+    height: 85%;
+    overflow-y: auto;
+}
+
+.timetable a:hover {
+    text-decoration: underline;
+}

@@ -30,10 +30,9 @@
             <div class="ui selection dropdown">
                 <input type="hidden" name="card[type]">
                 <div class="default text">
-                <i class="money icon" *ngIf="documentEdit.paymentMethod == 'Gotówka'"></i>
-                <i class="credit card alternative icon" *ngIf="documentEdit.paymentMethod == 'Karta'"></i>
-                <i class="payment icon" *ngIf="documentEdit.paymentMethod == 'Przelew'"></i>
-                {{ documentEdit.paymentMethod }}</div>
+                    <i class="money icon" *ngIf="documentEdit.paymentMethod == 'Gotówka'"></i>
+                    <i class="credit card alternative icon" *ngIf="documentEdit.paymentMethod == 'Karta'"></i>
+                    <i class="payment icon" *ngIf="documentEdit.paymentMethod == 'Przelew'"></i> {{ documentEdit.paymentMethod }}</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     <div class="item" data-value="Gotówka" (click)="paymentMethod('Gotówka')">

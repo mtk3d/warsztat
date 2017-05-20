@@ -4,9 +4,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
-  moduleId: module.id,
-  selector: "breadcrumb",
-  templateUrl: "breadcrumb.component.html"
+    moduleId: module.id,
+    selector: "breadcrumb",
+    templateUrl: "breadcrumb.component.html"
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
 
@@ -15,8 +15,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
     constructor(private breadcrumbsService: BreadcrumbsService) {
         this.subscription = this.breadcrumbsService.getBreadcrumbs()
-            .subscribe(breadcrumbs => { 
-                this.breadcrumbs = breadcrumbs; 
+            .subscribe(breadcrumbs => {
+                this.breadcrumbs = breadcrumbs;
             });
     }
 

@@ -1,33 +1,33 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { VehicleService } from '../../_services/vehicle.service';
 import { Vehicle } from '../../_models/vehicle.model';
 import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 @Component({
-  moduleId: module.id,
-  selector: 'vehicles',
-  templateUrl: 'vehicles.component.html'
+    moduleId: module.id,
+    selector: 'vehicles',
+    templateUrl: 'vehicles.component.html'
 })
 export class VehiclesComponent implements OnInit, OnDestroy {
     vehicles: Vehicle[] = [];
     vehiclesReturn: boolean;
-    delete: Array<number> = [];
+    delete: Array < number > = [];
     allDeleteChecked: boolean = false;
     search: string = '';
     orderBy: string = 'registerNumber';
     sorting: string = 'ASC';
     sub: any;
- 
+
     constructor(
         private vehicleService: VehicleService,
         private breadcrumbsService: BreadcrumbsService
-    ) { }
- 
+    ) {}
+
     ngOnInit() {
         this.breadcrumbsService.sendBreadcrumbs([
-            {'path': '/', 'text': 'Warsztat', 'active': true},
-            {'path': '', 'text': 'Pojazdy', 'active': false}
+            { 'path': '/', 'text': 'Warsztat', 'active': true },
+            { 'path': '', 'text': 'Pojazdy', 'active': false }
         ]);
         this.searchVehicles();
     }
@@ -35,150 +35,123 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     searchVehicles() {
         this.sub = this.vehicleService.getAll(this.search, this.orderBy, this.sorting)
             .subscribe(vehicles => {
-                this.vehicles = vehicles;
-                this.vehiclesReturn = true;
-            },
-            (err)=>this.vehiclesReturn = false
-        );
+                    this.vehicles = vehicles;
+                    this.vehiclesReturn = true;
+                },
+                (err) => this.vehiclesReturn = false
+            );
         this.delete = [];
         this.allDeleteChecked = false;
     }
 
-    sortingBy(by)
-    {
-        if(this.orderBy == by)
-        {
-            if(this.sorting == 'DESC')
-            {
+    sortingBy(by) {
+        if (this.orderBy == by) {
+            if (this.sorting == 'DESC') {
                 this.sorting = 'ASC';
-            }else{
+            } else {
                 this.sorting = 'DESC';
             }
-        }else{
+        } else {
             this.sorting = 'ASC';
             this.orderBy = by;
         }
         this.searchVehicles();
     }
 
-    order(item)
-    {
+    order(item) {
         let ret = '';
-        if(this.orderBy == item)
-        {
+        if (this.orderBy == item) {
             ret = this.sorting;
         }
         return ret;
     }
 
-    clearSearch()
-    {
+    clearSearch() {
         this.search = '';
         this.searchVehicles();
     }
 
-    isSearch()
-    {
-        if(this.search == '')
-        {
+    isSearch() {
+        if (this.search == '') {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    isReturn()
-    {
-        if(!this.vehiclesReturn)
-        {
+    isReturn() {
+        if (!this.vehiclesReturn) {
             this.vehicles = [];
         }
         return this.vehiclesReturn;
     }
 
-    addDelete(id)
-    {
-        if(this.delete.indexOf(id) == -1)
-        {
+    addDelete(id) {
+        if (this.delete.indexOf(id) == -1) {
             this.delete.push(id);
-        }else{
+        } else {
             this.delete.splice(this.delete.indexOf(id), 1);
         }
     }
 
-    allDelete()
-    {
-        if(!this.allDeleteChecked)
-        {
+    allDelete() {
+        if (!this.allDeleteChecked) {
             this.allDeleteChecked = true;
-            for(let item in this.vehicles)
-            {
+            for (let item in this.vehicles) {
                 let id = this.vehicles[item].id;
-                if(this.delete.indexOf(id) == -1)
-                {
+                if (this.delete.indexOf(id) == -1) {
                     this.delete.push(id);
                 }
             }
-        }else{
+        } else {
             this.allDeleteChecked = false;
             this.delete = [];
         }
     }
 
-    isAllChecked()
-    {
+    isAllChecked() {
         let is = true;
-        for(let item in this.vehicles)
-        {
+        for (let item in this.vehicles) {
             let id = this.vehicles[item].id;
-            if(this.delete.indexOf(id) == -1)
-            {
+            if (this.delete.indexOf(id) == -1) {
                 is = false;
                 this.allDeleteChecked = false;
             }
         }
-        if(this.delete.length<=0)
-        {
+        if (this.delete.length <= 0) {
             is = false;
         }
-        if(is)
-        {
+        if (is) {
             this.allDeleteChecked = true;
         }
         return is;
     }
 
-    isCheck(id)
-    {
-        if(this.delete.indexOf(id) == -1)
-        {
+    isCheck(id) {
+        if (this.delete.indexOf(id) == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    isDelete()
-    {
-        if(this.delete.length > 0)
-        {
+    isDelete() {
+        if (this.delete.length > 0) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    deleteChecked()
-    {
-        for(let id in this.delete)
-        {
+    deleteChecked() {
+        for (let id in this.delete) {
             this.sub = this.vehicleService.delete(this.delete[id])
-                .subscribe((ok)=>{this.searchVehicles();});
+                .subscribe((ok) => { this.searchVehicles(); });
         }
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
- 
+
 }
