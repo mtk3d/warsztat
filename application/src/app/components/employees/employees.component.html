@@ -17,28 +17,93 @@
                     <label></label>
                 </div>
             </th>
-            <th (click)="sortingBy('name')">Imię
-                <i class="sort icon" [ngClass]="{'descending': (order('name')=='DESC'), 'ascending': (order('name')=='ASC')}"></i>
-            </th>
-            <th (click)="sortingBy('firstName')">Nazwisko
+            <th (click)="sortingBy('firstName')">Imię
                 <i class="sort icon" [ngClass]="{'descending': (order('firstName')=='DESC'), 'ascending': (order('firstName')=='ASC')}"></i>
             </th>
-            <th (click)="sortingBy('company')">Stanowisko
-                <i class="sort icon" [ngClass]="{'descending': (order('company')=='DESC'), 'ascending': (order('company')=='ASC')}"></i>
+            <th (click)="sortingBy('lastName')">Nazwisko
+                <i class="sort icon" [ngClass]="{'descending': (order('lastName')=='DESC'), 'ascending': (order('lastName')=='ASC')}"></i>
             </th>
+            <th (click)="sortingBy('position')">Stanowisko
+                <i class="sort icon" [ngClass]="{'descending': (order('position')=='DESC'), 'ascending': (order('position')=='ASC')}"></i>
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
-        <tr *ngFor="let employee of employees">
-            <td class="collapsing">
-                <div class="ui fitted checkbox">
-                    <input type="checkbox" (change)="addDelete(employee.id)" [checked]="isCheck(employee.id)">
-                    <label></label>
+        <tr *ngFor="let employee of employees; let key = index">
+            <ng-container *ngIf="!isEdited(employee.id)">
+                <td class="collapsing">
+                    <div class="ui fitted checkbox">
+                        <input type="checkbox" (change)="addDelete(employee.id)" [checked]="isCheck(employee.id)">
+                        <label></label>
+                    </div>
+                </td>
+                <td>{{ employee?.firstName }}</td>
+                <td>{{ employee?.lastName }}</td>
+                <td>{{ employee?.position }}</td>
+                <td class="collapsing">
+                    <div class="ui  blue icon button mini" (click)="edit(employee.id, key)"><i class="edit icon"></i></div>
+                    <div class="ui  red icon button mini" (click)="deleteById(employee.id)"><i class="trash icon"></i></div>
+                </td>
+            </ng-container>
+            <ng-container *ngIf="isEdited(employee.id)">
+                <td style="text-align: center;">
+                </td>
+                <td>
+                    <div class="ui form">
+                        <div class="field">
+                            <input type="text" name="firstName" placeholder="Imię" [(ngModel)]="inputEmployee.firstName">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui form">
+                        <div class="field">
+                            <input type="text" name="lastName" placeholder="Nazwisko" [(ngModel)]="inputEmployee.lastName">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui form">
+                        <div class="field">
+                            <input type="text" name="position" placeholder="Stanowisko" [(ngModel)]="inputEmployee.position">
+                        </div>
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui  green icon button mini" (click)="update(employee.id)"><i class="checkmark icon"></i></div>
+                    <div class="ui  red icon button mini" (click)="hideEdit()"><i class="remove icon"></i></div>
+                </td>
+            </ng-container>
+        </tr>
+        <tr *ngIf="showAdd">
+            <td style="text-align: center;">
+            </td>
+            <td>
+                <div class="ui form">
+                    <div class="field">
+                        <input type="text" name="firstName" placeholder="Imię" [(ngModel)]="inputEmployee.firstName">
+                    </div>
                 </div>
             </td>
-            <td><a [routerLink]="['/employees', employee.id]">{{ employee?.firstName }}</a></td>
-            <td>{{ employee?.lastName }}</td>
-            <td>{{ employee?.position }}</td>
+            <td>
+                <div class="ui form">
+                    <div class="field">
+                        <input type="text" name="lastName" placeholder="Nazwisko" [(ngModel)]="inputEmployee.lastName">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="ui form">
+                    <div class="field">
+                        <input type="text" name="position" placeholder="Stanowisko" [(ngModel)]="inputEmployee.position">
+                    </div>
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui  green icon button mini" (click)="addNewStore()"><i class="checkmark icon"></i></div>
+                <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
+            </td>
         </tr>
     </tbody>
     <tbody *ngIf="!isReturn()">
@@ -75,6 +140,6 @@
         </tr>
     </tfoot>
 </table>
-<div class="ui green labeled icon button" [routerLink]="['/employees/add']">
+<div class="ui green labeled icon button" (click)="add()">
     <i class="add icon"></i> Nowa pozycja
 </div>

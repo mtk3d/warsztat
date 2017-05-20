@@ -97,9 +97,18 @@
     width: 55px;
 }
 
- .edit-position-dropdown .ui.dropdown:not(.button)>.default.text {
+.edit-position-dropdown .ui.dropdown:not(.button)>.default.text {
     color: #000;
- }
+}
+
+.hide-icon {
+    cursor: pointer;
+    color: #4f4f4f;
+}
+
+.hide-icon:hover {
+    color: #000;
+}
 
 ::-webkit-scrollbar {
     width: 4px;

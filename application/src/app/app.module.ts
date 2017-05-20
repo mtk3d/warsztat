@@ -9,6 +9,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { DocumentService } from './_services/document.service';
 import { DocumentPositionService } from './_services/documentPosition.service';
+import { OrderService } from './_services/order.service';
 import { ConsumerService } from './_services/consumer.service';
 import { ServiceService } from './_services/service.service';
 import { StoreService } from './_services/store.service';
@@ -35,6 +36,7 @@ import { DocumentParamsComponent } from './components/documents/document.params.
 import { ConsumersComponent } from './components/consumers/consumers.component';
 import { ConsumerComponent } from './components/consumers/consumer.component';
 import { ConsumerAddComponent } from './components/consumers/consumer.add.component';
+import { ConsumerDataComponent } from './components/consumers/consumer.data.component';
 import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { VehicleAddComponent } from './components/vehicles/vehicle.add.component';
@@ -65,6 +67,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     ConsumerComponent,
     ConsumerAddComponent,
     ConsumerInputComponent,
+    ConsumerDataComponent,
     VehiclesComponent,
     VehicleAddComponent,
     EmployeesComponent,
@@ -107,6 +110,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       AuthenticationService,
       DocumentService,
       DocumentPositionService,
+      OrderService,
       ConsumerService,
       ServiceService,
       StoreService,

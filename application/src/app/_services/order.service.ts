@@ -4,54 +4,60 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
  
 import { AuthenticationService } from '../_services/authentication.service';
-import { Consumer } from '../_models/consumer.model';
+import { Order } from '../_models/order.model';
  
 @Injectable()
-export class ConsumerService {
-    handleError: any;
+export class OrderService {
     constructor(
         private http: Http,
         private authenticationService: AuthenticationService) {
     }
  
-    getConsumers(searchStr: string = '', orderBy: string = '', sort: string = ''): Observable<Consumer[]> {
+    getDocuments(from: string = '', to: string = '', search: string = '', orderBy: string = '', sorting: string = ''): Observable<Order[]> {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        // get users from api
+        return this.http.get('http://localhost:8000/serviceorders?from='+from+'&to='+to+'&search='+search+'&order_by='+orderBy+'&sorting='+sorting, options)
+            .map((response: Response) => response.json());
+    }
+
+    getDocument(id: number): Observable<Order[]> {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
         // get users from api
-        return this.http.get('http://localhost:8000/consumers?search='+searchStr+'&orderby='+orderBy+'&sort='+sort, options)
+        return this.http.get('http://localhost:8000/serviceorders/'+id, options)
             .map((response: Response) => response.json());
     }
 
-    getConsumer(id: number): Observable<Consumer[]> {
-        // add authorization header with jwt token
+    update(document, id) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        // get users from api
-        return this.http.get('http://localhost:8000/consumers/'+id, options)
-            .map((response: Response) => response.json());
+        return this.http.put('http://localhost:8000/serviceorders/'+id, document,  options);
     }
 
-    create(consumer: Consumer) {
+    patch(document, id) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.post('http://localhost:8000/consumers', consumer,  options);
+        return this.http.patch('http://localhost:8000/serviceorders/'+id, document,  options);
     }
 
-    update(id: number, consumer: Consumer) {
+    create(document: Document) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
  
-        return this.http.put('http://localhost:8000/consumers/'+id, consumer,  options);
+        return this.http.post('http://localhost:8000/documents', document,  options);
     }
 
     delete(id: number){
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/consumers/'+id, options);
+        return this.http.delete('http://localhost:8000/serviceorders/'+id, options);
     }
 }

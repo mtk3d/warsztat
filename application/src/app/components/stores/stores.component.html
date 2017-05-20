@@ -102,48 +102,48 @@
                 </td>
             </ng-container>
         </tr>
-        <tr  *ngIf="showAdd">
+        <tr *ngIf="showAdd">
             <td style="text-align: center;">
-                </td>
-                <td>
-                    <div class="ui form">
-                        <div class="field">
-                            <input type="text" name="name" [(ngModel)]="inputStore.name">
-                        </div>
+            </td>
+            <td>
+                <div class="ui form">
+                    <div class="field">
+                        <input type="text" name="name" [(ngModel)]="inputStore.name">
                     </div>
-                </td>
-                <td class="collapsing">
-                    <div class="ui input">
-                        <input type="text" name="quantity" [(ngModel)]="inputStore.quantity" (blur)="quantityBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input">
+                    <input type="text" name="quantity" [(ngModel)]="inputStore.quantity" (blur)="quantityBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input">
+                    <input type="text" name="netto" [(ngModel)]="inputStore.netto" (blur)="nettoBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui right labeled input">
+                    <input type="text" name="vat" style="width: 50px;" [(ngModel)]="inputStore.vat" (blur)="vatBlur()">
+                    <div class="ui basic label">
+                        %
                     </div>
-                </td>
-                <td class="collapsing">
-                    <div class="ui input">
-                        <input type="text" name="netto" [(ngModel)]="inputStore.netto" (blur)="nettoBlur()">
-                    </div>
-                </td>
-                <td class="collapsing">
-                    <div class="ui right labeled input">
-                        <input type="text" name="vat" style="width: 50px;" [(ngModel)]="inputStore.vat" (blur)="vatBlur()">
-                        <div class="ui basic label">
-                            %
-                        </div>
-                    </div>
-                </td>
-                <td class="collapsing">
-                    <div class="ui input">
-                        <input type="text" name="vatSum" [(ngModel)]="inputStore.vatSum" (blur)="vatSumBlur()">
-                    </div>
-                </td>
-                <td class="collapsing">
-                    <div class="ui input">
-                        <input type="text" name="brutto" [(ngModel)]="inputStore.brutto" (blur)="bruttoBlur()">
-                    </div>
-                </td>
-                <td class="collapsing">
-                    <div class="ui  green icon button mini" (click)="addNewStore()"><i class="checkmark icon"></i></div>
-                    <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
-                </td>
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input">
+                    <input type="text" name="vatSum" [(ngModel)]="inputStore.vatSum" (blur)="vatSumBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input">
+                    <input type="text" name="brutto" [(ngModel)]="inputStore.brutto" (blur)="bruttoBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui  green icon button mini" (click)="addNewStore()"><i class="checkmark icon"></i></div>
+                <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
+            </td>
         </tr>
     </tbody>
     <tbody *ngIf="!isReturn()">
