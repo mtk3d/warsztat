@@ -33,6 +33,7 @@ import { DocumentAddComponent } from './components/documents/document.add.compon
 import { DocumentPositionsComponent } from './components/documents/document.positions.component';
 import { DocumentParamsComponent } from './components/documents/document.params.component';
 import { ConsumersComponent } from './components/consumers/consumers.component';
+import { ConsumerComponent } from './components/consumers/consumer.component';
 import { ConsumerAddComponent } from './components/consumers/consumer.add.component';
 import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
@@ -40,7 +41,6 @@ import { VehicleAddComponent } from './components/vehicles/vehicle.add.component
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
 import { StoresComponent } from './components/stores/stores.component';
-import { StoresAddComponent } from './components/stores/stores.add.component';
 import { TiresComponent } from './components/tires/tires.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
@@ -62,6 +62,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     DocumentPositionsComponent,
     DocumentParamsComponent,
     ConsumersComponent,
+    ConsumerComponent,
     ConsumerAddComponent,
     ConsumerInputComponent,
     VehiclesComponent,
@@ -69,7 +70,6 @@ import { OrdersComponent } from './components/orders/orders.component';
     EmployeesComponent,
     ServicesComponent,
     StoresComponent,
-    StoresAddComponent,
     TiresComponent,
     OrdersComponent
   ],
@@ -85,6 +85,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       {path: 'documents/:id', component: DocumentComponent, canActivate: [AuthGuard]},
       {path: 'consumers', component: ConsumersComponent, canActivate: [AuthGuard]},
       {path: 'consumers/add', component: ConsumerAddComponent, canActivate: [AuthGuard]},
+      {path: 'consumers/:id', component: ConsumerComponent, canActivate: [AuthGuard]},
       {path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard]},
       {path: 'orders', component: OrdersComponent, canActivate: [AuthGuard]},
       {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
@@ -94,7 +95,6 @@ import { OrdersComponent } from './components/orders/orders.component';
       {path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard]},
       {path: 'services', component: ServicesComponent, canActivate: [AuthGuard]},
       {path: 'stores', component: StoresComponent, canActivate: [AuthGuard]},
-      {path: 'stores/add', component: StoresAddComponent, canActivate: [AuthGuard]},
       {path: 'tires', component: TiresComponent, canActivate: [AuthGuard]},
       {path: 'about', component: AboutComponent},
       {path: 'login', component: LoginComponent},

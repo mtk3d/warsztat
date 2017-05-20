@@ -1,0 +1,59 @@
+<div class="ui grid">
+    <div class="four wide column">
+        <div class="ui segment">
+            <div class="avatar-container item" style="color: #000;">
+                <div class="first-letter-circle">A</div>
+                <h2>Acme - John Doe</h2>
+            </div>
+            <p style="text-align: center;">
+                Acme - John Doe
+                <br> Długa 1/1
+                <br> 00-000 Warszawa
+                <br> NIP: 000-000-00-00
+                <br>
+            </p>
+            <p>
+                <b>Firma:</b> Acme
+                <br>
+                <b>Imie:</b> John
+                <br>
+                <b>Nazwisko:</b> Doe
+                <br>
+                <b>Telefon:</b> 000 000 000
+                <br>
+                <b>Email:</b> <a target="_blank" href="mailto: john.doe@example.com">john.doe@example.com</a>
+                <br>
+                <b>WWW:</b> <a target="_blank" href="http://example.com">http://example.com</a>
+                <br>
+                <b>Bank:</b> ING
+                <br>
+                <b>Numer konta:</b> PL 00...0000 <i class="unhide icon" style="cursor: pointer;"></i>
+                <br>
+                <b>Poczta:</b> Warszawa
+                <br>
+                <b>Notatki:</b> Lorem ipsum dolor sit amet...
+                <br>
+            </p>
+        </div>
+    </div>
+    <div class="twelve wide column">
+        <div class="ui top attached tabular menu">
+            <a class="item" [ngClass]="{'active': tab == 'documents'}" (click)="tab = 'documents'">Dokumenty</a>
+            <a class="item" [ngClass]="{'active': tab == 'orders'}" (click)="tab = 'orders'">Zlecenia</a>
+            <a class="item" [ngClass]="{'active': tab == 'vehicles'}" (click)="tab = 'vehicles'">Pojazdy</a>
+            <a class="item" [ngClass]="{'active': tab == 'tires'}" (click)="tab = 'tires'">Opony</a>
+        </div>
+        <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'documents'}">
+            Dokumenty
+        </div>
+        <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'orders'}">
+            Zlecenia
+        </div>
+        <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'vehicles'}">
+            Pojazdy
+        </div>
+        <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'tires'}">
+            Opony
+        </div>
+    </div>
+</div>
