@@ -18,6 +18,7 @@ import { UserDataService } from './_services/userData.service';
 import { VehicleService } from './_services/vehicle.service';
 import { CalendarService } from './_services/calendar.service';
 import { BreadcrumbsService } from './_services/breadcrumbs.service';
+import { pdfGeneratorService } from './_services/pdfGenerator.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -118,7 +119,8 @@ import { OrdersComponent } from './components/orders/orders.component';
         UserDataService,
         VehicleService,
         CalendarService,
-        BreadcrumbsService
+        BreadcrumbsService,
+        pdfGeneratorService
     ],
     bootstrap: [AppComponent]
 })

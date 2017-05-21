@@ -11,6 +11,8 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 })
 export class TiresComponent implements OnInit, OnDestroy {
 
+    PDFDocument: any;
+
     constructor(
         private route: ActivatedRoute,
         private breadcrumbsService: BreadcrumbsService

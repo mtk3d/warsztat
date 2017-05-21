@@ -23,11 +23,18 @@
         </div>
         <div class="ui segment">
             <h3 class="ui horizontal divider header">Nabywca</h3>
-            <!-- <document-consumer [consumerId]=consumerId></document-consumer> -->
             <consumer-input [consumerId]=consumerId (consumerOutput)="setConsumerId($event)"></consumer-input>
         </div>
-        <div class="ui blue labeled icon button">
-            <i class="print icon"></i> Drukuj
+        <div class="document-buttons">
+            <div class="ui blue labeled icon button tiny" (click)="getDoc('print')">
+                <i class="print icon"></i> Drukuj
+            </div>
+            <div class="ui green labeled icon button tiny" (click)="getDoc('download')">
+                <i class="download icon"></i> Pobierz
+            </div>
+            <div class="ui yellow labeled icon button tiny" (click)="getDoc('preview')">
+                <i class="file pdf outline icon"></i> Podgląd
+            </div>
         </div>
     </div>
     <div class="twelve wide column">

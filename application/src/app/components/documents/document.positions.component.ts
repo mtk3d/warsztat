@@ -151,9 +151,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
         });
     }
 
-    ngOnChanges(inputPosition) {
-        console.log("change");
-    }
+    ngOnChanges() {}
 
     addNewPosition() {
         this.inputPosition['service'] = this.inputPosition['service'] ? 1 : 0;

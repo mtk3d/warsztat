@@ -25,10 +25,10 @@
     "core-js": "^2.4.1",
     "ng-semantic": "^1.1.13",
     "ng2-breadcrumb": "^0.5.8",
+    "pdfmake": "^0.1.28",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2",
-    "angular-calendar": "^0.15.0"
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",

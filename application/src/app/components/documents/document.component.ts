@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { DocumentService } from '../../_services/document.service';
 import { UserDataService } from '../../_services/userData.service';
 import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
+import { pdfGeneratorService } from '../../_services/pdfGenerator.service';
 import { Document } from '../../_models/document.model';
 import { UserData } from '../../_models/userData.model';
 
@@ -28,7 +29,8 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges {
         private route: ActivatedRoute,
         private documentService: DocumentService,
         private userDataService: UserDataService,
-        private breadcrumbsService: BreadcrumbsService
+        private breadcrumbsService: BreadcrumbsService,
+        private pdfGeneratorService: pdfGeneratorService
     ) {}
 
     ngOnInit() {
@@ -68,6 +70,10 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges {
                 this.sub.unsubscribe();
                 this.documentPatch['consumerId'] = null;
             });
+    }
+
+    getDoc(method) {
+        this.pdfGeneratorService.getPDF(this.id, method);
     }
 
     ngOnDestroy() {

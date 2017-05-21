@@ -69,7 +69,8 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->_em->createQuery(
             "
             SELECT d.id, 
-                d.number, 
+                d.number,
+                d.type,
                 d.date, 
                 d.dateOfPayment, 
                 d.paymentMethod, 
