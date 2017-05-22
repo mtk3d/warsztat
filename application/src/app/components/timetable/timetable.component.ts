@@ -54,7 +54,6 @@ export class TimetableComponent implements OnInit {
         let day = this.today.getDate();
         this.today = new Date(this.year, this.month, day).toString();
         this.reload();
-        this.getOrders();
     }
 
     nextMonth() {
@@ -78,12 +77,14 @@ export class TimetableComponent implements OnInit {
     reload() {
         this.calendar = this.calendarService.getArray(this.year, this.month);
         this.monthName = this.nameOfMonths[this.month];
+        this.getOrders();
     }
 
     getOrders() {
         this.sub = this.orderService.getDocuments()
             .subscribe(orders => {
                 this.orders = orders;
+                this.addOrders();
             });
     }
 
@@ -108,7 +109,7 @@ export class TimetableComponent implements OnInit {
         return dateReturn;
     }
 
-    addOrder() {
+    addOrders() {
         let days = this.calendar.length;
         let orders;
         let ordersQuantity;
@@ -118,8 +119,9 @@ export class TimetableComponent implements OnInit {
             for(let i = 0; i < ordersQuantity; i++)
             {
                 this.calendar[n]['items'].push({
-                    "name": 'Zlecenie: ',
-                    "uri": "orders/"
+                    "name": "Termin: Zlecenie "+orders[i]['id']+" - "+orders[i]['mark']+" "+orders[i]['model']+" "+orders[i]['registrationNumber'],
+                    "id": orders[i]['id'],
+                    "completed": orders[i]['completed']
                 });
             }
         }

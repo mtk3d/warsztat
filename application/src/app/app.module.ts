@@ -40,6 +40,7 @@ import { ConsumerAddComponent } from './components/consumers/consumer.add.compon
 import { ConsumerDataComponent } from './components/consumers/consumer.data.component';
 import { ConsumerInputComponent } from './components/consumers/consumer.input.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
+import { VehicleComponent } from './components/vehicles/vehicle.component';
 import { VehicleAddComponent } from './components/vehicles/vehicle.add.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
@@ -70,6 +71,7 @@ import { OrdersComponent } from './components/orders/orders.component';
         ConsumerInputComponent,
         ConsumerDataComponent,
         VehiclesComponent,
+        VehicleComponent,
         VehicleAddComponent,
         EmployeesComponent,
         ServicesComponent,
@@ -96,6 +98,7 @@ import { OrdersComponent } from './components/orders/orders.component';
             { path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard] },
             { path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard] },
             { path: 'vehicles/add', component: VehicleAddComponent, canActivate: [AuthGuard] },
+            { path: 'vehicles/:id', component: VehicleComponent, canActivate: [AuthGuard] },
             { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard] },
             { path: 'services', component: ServicesComponent, canActivate: [AuthGuard] },
             { path: 'stores', component: StoresComponent, canActivate: [AuthGuard] },

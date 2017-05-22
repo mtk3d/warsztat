@@ -45,10 +45,13 @@
             <div class="item" [ngClass]="{'inactive': day.inactive}" *ngFor="let day of calendar">
                 <p class="day" [ngClass]="{'today': day.date == today}">{{ day.number }}</p>
                 <ul>
-                    <li *ngFor="let item of day.items"><a href="{{ item.uri }}">{{ item.name }}</a></li>
+                    <li *ngFor="let item of day.items" class="day-item">
+                        <a [routerLink]="['/orders', item.id]" [ngClass]="{'completed-item': item.completed}">
+                        <i *ngIf="item.completed" class="check circle icon"></i>{{ item.name }}
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<div (click)="addOrder()">dodaj</div>

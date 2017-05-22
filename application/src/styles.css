@@ -30,20 +30,20 @@
 }
 
 .item-bottom {
-    position: absolute!important;
-    bottom: 0!important;
+    margin-top: -45px;
     width: 100%;
     text-align: center;
+    background-color: #1B1C1D!important;
 }
 
 .item-bottom a:hover {
     text-decoration: underline;
-    background-color: #1B1C1D;
 }
 
 .sidebar-content {
-    margin-bottom: 50px;
     overflow-y: auto;
+    height: 100vh;
+    padding-bottom: 45px;
 }
 
 .login-container {

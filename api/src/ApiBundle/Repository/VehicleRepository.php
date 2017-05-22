@@ -15,7 +15,7 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->_em->createQuery(
             "
             SELECT d.id,
-                d.condumerId,
+                d.consumerId,
                 d.registrationNumber,
                 d.model,
                 d.mark,

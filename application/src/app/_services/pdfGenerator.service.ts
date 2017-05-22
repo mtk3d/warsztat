@@ -231,7 +231,7 @@ export class pdfGeneratorService {
 
         this.docDef['content'][2]['table']['body'].push([{ colSpan: 3, text: 'Razem', alignment: 'right', border: [0, 0, 0, 0] }, '', '', { text: this.amount(nettoSum), bold: true }, '', { text: this.amount(vatSumSum), bold: true }, { text: this.amount(bruttoSum), bold: true }]);
 
-        let fraction = Math.ceil(((bruttoSum < 1.0) ? bruttoSum : (bruttoSum % Math.floor(bruttoSum))) * 100) - 1;
+        let fraction = parseInt(((bruttoSum%1)*100).toString())
 
         this.docDef['content'][3]['stack'][0]['text'][1]['text'] = bruttoSum+' PLN';
         this.docDef['content'][3]['stack'][1]['text'][1]['text'] = this.slowa(bruttoSum)+' PLN '+fraction+'/100';

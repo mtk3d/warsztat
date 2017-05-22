@@ -86,3 +86,18 @@
 .timetable a:hover {
     text-decoration: underline;
 }
+
+.day-item {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.day-item:last-child {
+    border: none;
+    padding-bottom: none;
+}
+
+.completed-item{
+    color: #ccc;
+}

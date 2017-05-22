@@ -18,6 +18,11 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     orderBy: string = 'registerNumber';
     sorting: string = 'ASC';
     sub: any;
+    pages: number;
+    itemsPerPage: number;
+    actualPage: number = 1;
+    pagesButtons: Array < number > = [];
+    singlePageVehicles: Vehicle[] = [];
 
     constructor(
         private vehicleService: VehicleService,
@@ -37,6 +42,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
             .subscribe(vehicles => {
                     this.vehicles = vehicles;
                     this.vehiclesReturn = true;
+                    this.pagesInit();
                 },
                 (err) => this.vehiclesReturn = false
             );
@@ -69,6 +75,51 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     clearSearch() {
         this.search = '';
         this.searchVehicles();
+    }
+
+    page(pageNumber) {
+        if (pageNumber >= 1 && pageNumber <= this.pages) {
+            this.pagesButtons = [];
+            this.singlePageVehicles = [];
+            this.actualPage = pageNumber;
+            let startItem = (this.actualPage - 1) * this.itemsPerPage;
+            let last = this.itemsPerPage;
+            if (this.actualPage == this.pages) {
+                last = this.vehicles.length - ((this.pages - 1) * this.itemsPerPage);
+            }
+            for (let i = 0; i < last; i++) {
+                if (this.vehicles[startItem + i] != null) {
+                    this.singlePageVehicles[i] = this.vehicles[startItem + i];
+                }
+            }
+            this.delete = [];
+            let firstButton, lastButton;
+            if (this.pages <= 6) {
+                firstButton = 1;
+                lastButton = this.pages;
+            } else {
+                if (this.actualPage <= 3) {
+                    firstButton = 1;
+                    lastButton = 5;
+                } else if (this.actualPage + 2 >= this.pages) {
+                    firstButton = this.pages - 4;
+                    lastButton = this.pages;
+                } else {
+                    firstButton = this.actualPage - 2;
+                    lastButton = this.actualPage + 2;
+                }
+            }
+
+            for (var i = firstButton; i <= lastButton; i++) {
+                this.pagesButtons.push(i);
+            }
+        }
+    }
+
+    pagesInit() {
+        this.itemsPerPage = Math.floor((window.innerHeight - 300) / 43);
+        this.pages = Math.ceil(this.vehicles.length / this.itemsPerPage);
+        this.page(1);
     }
 
     isSearch() {

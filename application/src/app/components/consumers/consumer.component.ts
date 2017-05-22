@@ -28,6 +28,9 @@ export class ConsumerComponent implements OnInit, OnDestroy, AfterViewInit {
     vehicles: Vehicle[] = [];
     tab: string = 'documents';
     private sub: any;
+    returnDocuments: boolean = false;
+    returnOrders: boolean = false;
+    returnVehicles: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -62,6 +65,7 @@ export class ConsumerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sub = this.documentService.getDocumentsForConsumer(this.id)
             .subscribe(documents => {
                     this.documents = documents;
+                    this.returnDocuments = true;
             });
     }
 
@@ -69,6 +73,7 @@ export class ConsumerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sub = this.orderService.getOrdersForConsumer(this.id)
             .subscribe(orders => {
                     this.orders = orders;
+                    this.returnOrders = true;
             });
     }
 
@@ -76,6 +81,7 @@ export class ConsumerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sub = this.vehicleService.getForConsumer(this.id)
             .subscribe(vehicles => {
                     this.vehicles = vehicles;
+                    this.returnVehicles = true;
             });
     }
 
