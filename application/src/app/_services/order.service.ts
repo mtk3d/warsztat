@@ -22,13 +22,23 @@ export class OrderService {
             .map((response: Response) => response.json());
     }
 
-    getDocument(id: number): Observable < Order[] > {
+    getOrder(id: number): Observable < Order[] > {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
         return this.http.get('http://localhost:8000/serviceorders/' + id, options)
+            .map((response: Response) => response.json());
+    }
+
+    getOrdersForConsumer(id: number): Observable < Order[] > {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        // get users from api
+        return this.http.get('http://localhost:8000/serviceorders/' + id + '/consumer', options)
             .map((response: Response) => response.json());
     }
 

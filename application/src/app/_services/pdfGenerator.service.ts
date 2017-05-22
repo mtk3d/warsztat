@@ -128,12 +128,12 @@ export class pdfGeneratorService {
                 stack: [{
                     text: [
                         { text: 'Do zapłaty: ' },
-                        { text: '300 zł', bold: true },
+                        { text: '', bold: true },
                     ]
                 }, {
                     text: [
                         { text: 'Słownie: ' },
-                        { text: 'trzysta złotych', bold: true },
+                        { text: '', bold: true },
                     ]
                 }],
                 margin: [0, 50, 0, 0]
@@ -200,13 +200,13 @@ export class pdfGeneratorService {
         this.docDef['content'][1]['columns'][1]['stack'][3]['text'] = this.consumer['postalCode'] + ' ' + this.consumer['place'];
         this.docDef['content'][1]['columns'][1]['stack'][4]['text'] = 'NIP ' + this.isset(this.consumer['nip']);
 
-        let paid = this.consumer['paid'] ? "TAK" : "NIE";
+        let paid = this.document['paid'] ? "TAK" : "NIE";
         this.docDef['content'][1]['columns'][3]['stack'][0]['text'] = this.document['number'];
         this.docDef['content'][1]['columns'][3]['stack'][1]['text'] = this.dateFormat(this.document['date']);
         this.docDef['content'][1]['columns'][3]['stack'][2]['text'] = this.dateFormat(this.document['dateOfPayment']);
         this.docDef['content'][1]['columns'][3]['stack'][3]['text'] = this.document['paymentMethod'];
         this.docDef['content'][1]['columns'][3]['stack'][4]['text'] = paid;
-        this.docDef['content'][1]['columns'][3]['stack'][5]['text'] = this.consumer['place'];
+        this.docDef['content'][1]['columns'][3]['stack'][5]['text'] = this.isset(this.document['place']);
 
         let nettoSum = 0;
         let vatSumSum = 0;
@@ -231,8 +231,10 @@ export class pdfGeneratorService {
 
         this.docDef['content'][2]['table']['body'].push([{ colSpan: 3, text: 'Razem', alignment: 'right', border: [0, 0, 0, 0] }, '', '', { text: this.amount(nettoSum), bold: true }, '', { text: this.amount(vatSumSum), bold: true }, { text: this.amount(bruttoSum), bold: true }]);
 
-        this.docDef['content'][3]['stack'][0]['text'][1]['text'] = bruttoSum+' zł';
-        this.docDef['content'][3]['stack'][1]['text'][1]['text'] = this.slowa(bruttoSum);
+        let fraction = Math.ceil(((bruttoSum < 1.0) ? bruttoSum : (bruttoSum % Math.floor(bruttoSum))) * 100) - 1;
+
+        this.docDef['content'][3]['stack'][0]['text'][1]['text'] = bruttoSum+' PLN';
+        this.docDef['content'][3]['stack'][1]['text'][1]['text'] = this.slowa(bruttoSum)+' PLN '+fraction+'/100';
 
         let pdf = pdfMake.createPdf(this.docDef);
         switch(method) {
@@ -240,7 +242,7 @@ export class pdfGeneratorService {
                 pdf.print();
             break;
             case 'download':
-                pdf.download();
+                pdf.download(this.document['number']+'.pdf');
             break;
             case 'preview':
                 pdf.open();

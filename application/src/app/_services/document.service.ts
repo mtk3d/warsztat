@@ -32,6 +32,16 @@ export class DocumentService {
             .map((response: Response) => response.json());
     }
 
+    getDocumentsForConsumer(id: number): Observable < Document[] > {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        // get users from api
+        return this.http.get('http://localhost:8000/documents/'+id+'/consumer', options)
+            .map((response: Response) => response.json());
+    }
+
     update(document, id) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });

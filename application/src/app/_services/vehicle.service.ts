@@ -33,6 +33,16 @@ export class VehicleService {
             .map((response: Response) => response.json());
     }
 
+    getForConsumer(id: number): Observable < Vehicle[] > {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        // get users from api
+        return this.http.get('http://localhost:8000/vehicles/' + id + '/consumer', options)
+            .map((response: Response) => response.json());
+    }
+
     create(vehicle: Vehicle) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });

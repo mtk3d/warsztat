@@ -10,6 +10,7 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
     templateUrl: 'documents.component.html'
 })
 export class DocumentsComponent implements OnInit, OnChanges, OnDestroy {
+    
     documents: Document[] = [];
     documentsReturn: boolean = true;
     delete: Array < number > = [];

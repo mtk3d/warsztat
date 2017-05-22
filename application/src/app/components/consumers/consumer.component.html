@@ -9,19 +9,72 @@
             <a class="item" [ngClass]="{'active': tab == 'documents'}" (click)="tab = 'documents'">Dokumenty</a>
             <a class="item" [ngClass]="{'active': tab == 'orders'}" (click)="tab = 'orders'">Zlecenia</a>
             <a class="item" [ngClass]="{'active': tab == 'vehicles'}" (click)="tab = 'vehicles'">Pojazdy</a>
-            <a class="item" [ngClass]="{'active': tab == 'tires'}" (click)="tab = 'tires'">Opony</a>
         </div>
         <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'documents'}">
-            Dokumenty
+            <table class="ui celled table selectable">
+                <thead>
+                    <tr>
+                        <th>Numer</th>
+                        <th>Typ</th>
+                        <th>Data wystawienia</th>
+                        <th>Data płatności</th>
+                        <th>Metoda płatności</th>
+                        <th>Zapłacono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let document of documents">
+                        <td><a [routerLink]="['/documents', document.id]">{{ document.number }}</a></td>
+                        <td>{{ document.type }}</td>
+                        <td>{{ document.date | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ document.dateOfPayment | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ document.paymentMethod }}</td>
+                        <td>{{document.paid ? "Tak" : "Nie"}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'orders'}">
-            Zlecenia
+            <table class="ui celled table selectable">
+                <thead>
+                    <tr>
+                        <th>Numer</th>
+                        <th>Pojazd</th>
+                        <th>Data</th>
+                        <th>Termin</th>
+                        <th>Ukończone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td><a [routerLink]="['/orders', order.id]">#ID - {{ order.id }}</a></td>
+                        <td><a [routerLink]="['/vehicles', order.vehicleId]">{{ order.registrationNumber }}</a></td>
+                        <td>{{ order.date | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ order.term | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{order.completed ? "Tak" : "Nie"}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'vehicles'}">
-            Pojazdy
-        </div>
-        <div class="ui bottom attached tab segment" [ngClass]="{'active': tab == 'tires'}">
-            Opony
+            <table class="ui celled table selectable">
+                <thead>
+                    <tr>
+                        <th>Numer rejestracyjny</th>
+                        <th>Marka</th>
+                        <th>Model</th>
+                        <th>Silnik</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vehicle of vehicles">
+                        <td><a [routerLink]="['/vehicles', vehicle.id]">{{ vehicle?.registrationNumber }}</a></td>
+                        <td>{{ vehicle?.mark }}</td>
+                        <td>{{ vehicle?.model }}</td>
+                        <td>{{ vehicle?.engine }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

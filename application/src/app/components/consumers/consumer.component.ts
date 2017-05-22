@@ -4,6 +4,12 @@ import { Http } from '@angular/http';
 
 import { ConsumerService } from '../../_services/consumer.service';
 import { Consumer } from '../../_models/consumer.model';
+import { DocumentService } from '../../_services/document.service';
+import { Order } from '../../_models/order.model';
+import { OrderService } from '../../_services/order.service';
+import { Vehicle } from '../../_models/vehicle.model';
+import { VehicleService } from '../../_services/vehicle.service';
+import { Document } from '../../_models/document.model';
 import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 declare var $: any;
@@ -17,12 +23,18 @@ export class ConsumerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     id: number;
     consumer: Consumer[] = [];
+    documents: Document[] = [];
+    orders: Order[] = [];
+    vehicles: Vehicle[] = [];
     tab: string = 'documents';
     private sub: any;
 
     constructor(
         private route: ActivatedRoute,
         private consumerService: ConsumerService,
+        private documentService: DocumentService,
+        private orderService: OrderService,
+        private vehicleService: VehicleService,
         private breadcrumbsService: BreadcrumbsService
     ) {}
 
@@ -41,10 +53,36 @@ export class ConsumerComponent implements OnInit, OnDestroy, AfterViewInit {
                     ]);
                 });
         });
+        this.getDocuments();
+        this.getOrders();
+        this.getVehicles();
+    }
+
+    getDocuments() {
+        this.sub = this.documentService.getDocumentsForConsumer(this.id)
+            .subscribe(documents => {
+                    this.documents = documents;
+            });
+    }
+
+    getOrders() {
+        this.sub = this.orderService.getOrdersForConsumer(this.id)
+            .subscribe(orders => {
+                    this.orders = orders;
+            });
+    }
+
+    getVehicles() {
+        this.sub = this.vehicleService.getForConsumer(this.id)
+            .subscribe(vehicles => {
+                    this.vehicles = vehicles;
+            });
     }
 
     ngAfterViewInit() {}
 
-    ngOnDestroy() {}
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
 
 }

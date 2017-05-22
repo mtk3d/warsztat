@@ -137,6 +137,7 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
             LEFT JOIN ApiBundle\Entity\Vehicle v
             WITH d.vehicleId = v.id
             WHERE d.userId = :userId
+            AND c.id = :consumerId
             ".$filters
         );
 
