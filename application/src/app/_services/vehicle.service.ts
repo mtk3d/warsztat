@@ -50,6 +50,20 @@ export class VehicleService {
         return this.http.post('http://localhost:8000/vehicles', vehicle, options);
     }
 
+    update(id: number, vehicle) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put('http://localhost:8000/vehicles/'+id, vehicle, options);
+    }
+
+    patch(id: number, vehicle) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.patch('http://localhost:8000/vehicles/'+id, vehicle, options);
+    }
+
     delete(id: number) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });

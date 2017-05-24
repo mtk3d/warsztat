@@ -57,6 +57,13 @@ class DocumentPosition
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="unit", type="string", length=255, nullable=true)
+     */
+    private $unit;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="netto", type="float")
@@ -234,6 +241,30 @@ class DocumentPosition
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param string $unit
+     *
+     * @return DocumentPosition
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
     }
 
     /**

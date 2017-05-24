@@ -14,6 +14,9 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 export class VehicleComponent implements OnInit, OnDestroy {
     id: number;
     vehicle: Vehicle[] = [];
+    vehicleInput: any = [];
+    consumerId: number;
+    editMode: boolean = false;
     private sub: any;
 
     constructor(
@@ -23,19 +26,44 @@ export class VehicleComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+        this.getVehicle();
+    }
+
+    getVehicle() {
         this.sub = this.route.params.subscribe(params => {
             this.id = +params['id'];
 
             this.vehicleService.get(this.id)
                 .subscribe(vehicle => {
                     this.vehicle = vehicle;
+                    this.vehicleInput = vehicle;
                     this.breadcrumbsService.sendBreadcrumbs([
                         { 'path': '/', 'text': 'Warsztat', 'active': true },
                         { 'path': '/vehicles', 'text': 'Pojazdy', 'active': true },
                         { 'path': '', 'text': vehicle['registrationNumber'], 'active': false }
                     ]);
+                    this.consumerId = vehicle['consumerId'];
                 });
         });
+    }
+
+    setConsumerId(id) {
+        this.vehicleInput = [];
+        this.vehicleInput['consumerId'] = id;
+        this.sub = this.vehicleService.patch(this.id, this.vehicleInput)
+            .subscribe((ok) => {
+                    this.sub.unsubscribe();
+                    this.getVehicle();
+                });
+    }
+
+    save() {
+        this.sub = this.vehicleService.update(this.id, this.vehicleInput)
+            .subscribe((ok) => {
+                    this.sub.unsubscribe();
+                    this.editMode = false;
+                    this.getVehicle();
+                });
     }
 
     ngOnDestroy() {

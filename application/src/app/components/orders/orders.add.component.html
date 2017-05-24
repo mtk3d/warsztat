@@ -1,0 +1,76 @@
+<div class="ui segment" style="max-height: 100%;">
+    <form class="ui form">
+        <div class="ui relaxed grid">
+            <div class="three column row">
+                <div class="column">
+                    <h4 class="ui dividing header">Dane zlecenia</h4>
+                    <div class="field">
+                        <label>Data rozpoczęcia *</label>
+                        <input type="date" name="date" [ngModel]="orderInput.date | date:'y-MM-dd'">
+                    </div>
+                    <div class="field">
+                        <label>Termin zlecenia *</label>
+                        <div class="field">
+                            <input type="date" name="term" [ngModel]="orderInput.term | date:'y-MM-dd'">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Zakończono *</label>
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="orderInput.completed">
+                            <label>{{orderInput.completed ? "Tak" : "Nie"}}</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Notatki</label>
+                        <textarea [(ngModel)]="orderInput.notes" name="notes" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="column">
+                    <h4 class="ui dividing header">Klient *</h4>
+                    <div class="ui segment">
+                        <consumer-input (consumerOutput)="setConsumerId($event)"></consumer-input>
+                    </div>
+                </div>
+                <div class="column">
+                    <h4 class="ui dividing header">Pojazd *</h4>
+                    <div class="ui segment">
+                        <ng-container *ngIf="!idIsSet">
+                            <p style="font-size: 20px; color: #ccc;">W pierwszej kolejności należy wybrać klienta</p>
+                        </ng-container>
+                        <ng-container *ngIf="idIsSet">
+                            <b style="font-size:1.07142857rem;">Wybierz</b>
+                            <div class="ui right floated icon button mini" (click)="editView()"><i class="write icon"></i></div>
+                            <div class="ui divider"></div>
+                            <div class="consumers-list" *ngIf="consumerHasVehicles">
+                                <div *ngFor="let vehicle of vehicles">
+                                    <p class="consumers-list-item" (click)="applyVehicle(vehicle.id)">
+                                        <b>Numer rejestracyjny: </b>{{vehicle.registrationNumber}}
+                                        <br>
+                                        <b>Marka: </b>{{vehicle.mark}}
+                                        <br>
+                                        <b>Model: </b>{{vehicle.model}}
+                                        <br>
+                                        <b>Silnik: </b>{{vehicle.engine}}
+                                    </p>
+                                    <div class="ui divider"></div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="!consumerHasVehicles">
+                                <p style="font-size: 20px; color: #ccc;">Klient nie posiada pojazdów</p>
+                            </ng-container>
+                            <div class="ui divider"></div>
+                            <div class="ui green labeled icon button tiny" (click)="addVehicle()">
+                                <i class="plus icon"></i> Nowy pojazd
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="ui green labeled icon button" (click)="consumerId = 1">
+        <i class="plus icon"></i> Dodaj
+    </div>
+</div>

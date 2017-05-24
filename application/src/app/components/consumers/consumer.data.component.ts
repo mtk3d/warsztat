@@ -84,7 +84,7 @@ export class ConsumerDataComponent implements OnDestroy, OnInit, OnChanges {
                 .subscribe((ok) => {
                     this.sub.unsubscribe();
                     this.editMode = false;
-                    this.getConsumer()
+                    this.getConsumer();
                 });
         } else {
             // this.dataAlert = true;

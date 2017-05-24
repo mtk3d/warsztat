@@ -23,6 +23,7 @@ class DocumentPositionType extends AbstractType
             ->add('service', TextType::class)
             ->add('itemId', TextType::class)
             ->add('name', TextType::class)
+            ->add('unit', TextType::class)
             ->add('netto', TextType::class)
             ->add('brutto', TextType::class)
             ->add('vat', TextType::class)

@@ -139,17 +139,17 @@ class DocumentPositionController extends FOSRestController implements ClassResou
     public function patchAction(Request $request, int $id)
     {
         $dateTime = new \DateTime('now');
-        $document = $this->getDocumentRepository()
+        $documentPosition = $this->getDocumentPositionRepository()
             ->createUpdateQuery($id, $this->getUserId())
             ->getOneOrNullResult();
 
-        if ($document == null) {
+        if ($documentPosition == null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $document->setUpdatedAt($dateTime);
+        $documentPosition->setUpdatedAt($dateTime);
 
-        $form = $this->createForm(DocumentType::class, $document, [
+        $form = $this->createForm(DocumentPositionType::class, $documentPosition, [
             'csrf_protection' => false,
             'allow_extra_fields' => true
         ]);
@@ -164,7 +164,7 @@ class DocumentPositionController extends FOSRestController implements ClassResou
         $em->flush();
 
         $routeOptions = [
-            'id' => $document->getId(),
+            'id' => $documentPosition->getId(),
         ];
 
         return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_NO_CONTENT);

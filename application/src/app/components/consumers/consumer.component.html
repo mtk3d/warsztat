@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let order of orders">
-                        <td><a [routerLink]="['/orders', order.id]">#ID - {{ order.id }}</a></td>
+                        <td><a [routerLink]="['/orders', order.id]">Zlecenie {{ order.id }} - {{ order.mark }} {{ order.model }}</a></td>
                         <td><a [routerLink]="['/vehicles', order.vehicleId]">{{ order.registrationNumber }}</a></td>
                         <td>{{ order.date | date: 'dd/MM/yyyy' }}</td>
                         <td>{{ order.term | date: 'dd/MM/yyyy' }}</td>

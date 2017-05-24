@@ -93,9 +93,10 @@
                         </div>
                     </div>
                     <div class="field">
+                        <label>Zapłacono *</label>
                         <div class="ui toggle checkbox">
                             <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="document.paid">
-                            <label>Zapłacono *</label>
+                            <label>{{document.paid ? "Tak" : "Nie"}}</label>
                         </div>
                     </div>
                 </div>

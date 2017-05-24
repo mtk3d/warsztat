@@ -1,15 +1,68 @@
 <div class="ui three column centered grid">
     <div class="column">
         <div class="ui segment">
-            <h2 class="ui horizontal divider header">{{ vehicle.registrationNumber }}</h2>
-            <p>
+            <h2 class="ui horizontal divider header">Dane</h2>
+            <ng-container *ngIf="!editMode">
+                <div class="ui right floated icon button mini" (click)="editMode = true"><i class="write icon"></i></div>
                 <b>Marka:</b> {{ vehicle.mark }}
                 <br>
                 <b>Model:</b> {{ vehicle.model }}
                 <br>
                 <b>Silnik:</b> {{ vehicle.engine }}
-            </p>
+                <br>
+                <b>Numer rejestracyjny:</b> {{ vehicle.registrationNumber }}
+                <br>
+                <b>Notatki:</b> {{ vehicle.notes }}
+            </ng-container>
+            <ng-container *ngIf="editMode">
+                <b style="font-size:1.07142857rem;">Edycja pojazdu</b>
+                <div class="ui right floated icon button mini" (click)="editMode = false"><i class="remove icon"></i></div>
+                <form class="ui form">
+                    <div class="field">
+                        <label>Marka</label>
+                        <div class="field">
+                            <input type="text" name="mark" placeholder="Marka" [(ngModel)]="vehicleInput.mark">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Model</label>
+                        <div class="field">
+                            <input type="text" name="model" placeholder="Model" [(ngModel)]="vehicleInput.model">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Silnik</label>
+                        <div class="field">
+                            <input type="text" name="engine" placeholder="Tym, pojemność" [(ngModel)]="vehicleInput.engine">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Numer rejestracyjny</label>
+                        <div class="field">
+                            <input type="text" name="registrationNumber" placeholder="Numer rejestracyjny" [(ngModel)]="vehicleInput.registrationNumber">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Notatki</label>
+                        <div class="field">
+                            <textarea name="notes" placeholder="Notatki" rows="2" [(ngModel)]="vehicleInput.notes"></textarea>
+                        </div>
+                    </div>
+                    <div class="ui  green labeled icon button tiny" (click)="save()">
+                        <i class="save icon"></i> Zapisz
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+        <div class="ui segment">
+            <h2 class="ui horizontal divider header">Właściciel</h2>
+            <consumer-input [consumerId]=consumerId (consumerOutput)="setConsumerId($event)"></consumer-input>
         </div>
     </div>
-    <div class="column"></div>
+    <div class="column">
+        <div class="ui segment center aligned">
+            <h2 class="ui horizontal divider header">{{ vehicle.registrationNumber }}</h2>
+            <img src="./assets/img/no-named-car.png" style="max-width: 100%; padding: 20px" alt="no-named-car">
+        </div>
+    </div>
 </div>

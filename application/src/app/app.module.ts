@@ -47,6 +47,7 @@ import { ServicesComponent } from './components/services/services.component';
 import { StoresComponent } from './components/stores/stores.component';
 import { TiresComponent } from './components/tires/tires.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { OrdersAddComponent } from './components/orders/orders.add.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { OrdersComponent } from './components/orders/orders.component';
         ServicesComponent,
         StoresComponent,
         TiresComponent,
-        OrdersComponent
+        OrdersComponent,
+        OrdersAddComponent
     ],
     imports: [
         BrowserModule,
@@ -94,6 +96,7 @@ import { OrdersComponent } from './components/orders/orders.component';
             { path: 'consumers/:id', component: ConsumerComponent, canActivate: [AuthGuard] },
             { path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard] },
             { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+            { path: 'orders/add', component: OrdersAddComponent, canActivate: [AuthGuard] },
             { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
             { path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard] },
             { path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard] },

@@ -133,27 +133,6 @@ class Document
     private $vat;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="netto", type="float")
-     */
-    private $netto;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="brutto", type="float")
-     */
-    private $brutto;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="vat_sum", type="float")
-     */
-    private $vatSum;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="notes", type="text", nullable=true)
@@ -473,78 +452,6 @@ class Document
     public function getVat()
     {
         return $this->vat;
-    }
-
-    /**
-     * Set netto
-     *
-     * @param float $netto
-     *
-     * @return Document
-     */
-    public function setNetto($netto)
-    {
-        $this->netto = $netto;
-
-        return $this;
-    }
-
-    /**
-     * Get netto
-     *
-     * @return float
-     */
-    public function getNetto()
-    {
-        return $this->netto;
-    }
-
-    /**
-     * Set brutto
-     *
-     * @param float $brutto
-     *
-     * @return Document
-     */
-    public function setBrutto($brutto)
-    {
-        $this->brutto = $brutto;
-
-        return $this;
-    }
-
-    /**
-     * Get brutto
-     *
-     * @return float
-     */
-    public function getBrutto()
-    {
-        return $this->brutto;
-    }
-
-    /**
-     * Set varSum
-     *
-     * @param string $varSum
-     *
-     * @return Document
-     */
-    public function setVatSum($vatSum)
-    {
-        $this->vatSum = $vatSum;
-
-        return $this;
-    }
-
-    /**
-     * Get varSum
-     *
-     * @return string
-     */
-    public function getVatSum()
-    {
-        return $this->vatSum;
     }
 
     /**

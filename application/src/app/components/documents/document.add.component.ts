@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { DocumentService } from '../../_services/document.service';
 import { Document } from '../../_models/document.model';
+import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
 declare var $: any;
 
@@ -22,10 +23,16 @@ export class DocumentAddComponent implements OnInit, OnDestroy, OnChanges {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private documentService: DocumentService
+        private documentService: DocumentService,
+        private breadcrumbsService: BreadcrumbsService
     ) {}
 
     ngOnInit() {
+        this.breadcrumbsService.sendBreadcrumbs([
+            { 'path': '/', 'text': 'Warsztat', 'active': true },
+            { 'path': '/documents', 'text': 'Dokumenty', 'active': true },
+            { 'path': '', 'text': 'Nowy', 'active': false },
+        ]);
         let today = new Date();
         this.document['date'] = today.toISOString();
         this.document['dateOfPayment'] = today.toISOString();

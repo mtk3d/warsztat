@@ -5,7 +5,7 @@
 <div *ngIf="isConsumerView()">
     <div class="ui right floated icon button mini" (click)="searchView()"><i class="write icon"></i></div>
     <p>
-        {{consumer.name}}
+        <a [routerLink]="['/consumers', consumer.id]">{{consumer.name}}</a>
         <br>
         <span *ngIf="consumer.street">{{consumer.street}}<span *ngIf="consumer.buildNumber">, {{consumer.buildNumber}}</span><span *ngIf="consumer.apartmentNumber">/{{consumer.apartmentNumber}}</span>
         </span>

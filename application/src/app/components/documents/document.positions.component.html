@@ -9,7 +9,8 @@
             </th>
             <th class="collapsing">L.p.</th>
             <th>Nazwa</th>
-            <th>Ilość</th>
+            <th class="collapsing">Ilość</th>
+            <th class="collapsing">Jednostka</th>
             <th>Netto</th>
             <th>VAT</th>
             <th>Kwota VAT</th>
@@ -28,7 +29,8 @@
                 </td>
                 <td class="collapsing" style="text-align: center;">{{ i + 1 }}</td>
                 <td>{{ documentPosition?.name }}</td>
-                <td>{{ documentPosition?.quantity }} {{ documentPosition?.unit}}</td>
+                <td>{{ documentPosition?.quantity }}</td>
+                <td>{{ documentPosition?.unit }}</td>
                 <td>{{ documentPosition?.netto | number : '1.2-2'}}</td>
                 <td>{{ documentPosition?.vat }}%</td>
                 <td>{{ documentPosition?.vatSum | number : '1.2-2'}}</td>
@@ -57,14 +59,13 @@
                     </div>
                 </td>
                 <td class="collapsing">
-                    <div class="ui input smaller-value" *ngIf="positionType">
+                    <div class="ui input smaller-value">
                         <input type="text" name="quantity" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
                     </div>
-                    <div class="ui input small-value" [ngClass]="{'right labeled': !inputPosition.service}" *ngIf="!positionType">
-                        <input type="text" name="quantity" style="width: 50px;" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
-                        <div class="ui basic label" *ngIf="!inputPosition.service">
-                            {{ unit }}
-                        </div>
+                </td>
+                <td class="collapsking">
+                    <div class="ui input smaller-value" *ngIf="!inputPosition.service">
+                        <input type="text" name="unit" [(ngModel)]="inputPosition.unit">
                     </div>
                 </td>
                 <td class="collapsing">
@@ -115,14 +116,13 @@
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui input smaller-value" *ngIf="positionType">
+                <div class="ui input smaller-value">
                     <input type="text" name="quantity" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
                 </div>
-                <div class="ui input small-value" [ngClass]="{'right labeled': !inputPosition.service}" *ngIf="!positionType">
-                    <input type="text" name="quantity" style="width: 50px;" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
-                    <div class="ui basic label" *ngIf="!inputPosition.service">
-                        {{ unit }}
-                    </div>
+            </td>
+            <td class="collapsking">
+                <div class="ui input smaller-value" *ngIf="!inputPosition.service">
+                    <input type="text" name="unit" [(ngModel)]="inputPosition.unit">
                 </div>
             </td>
             <td class="collapsing">
@@ -154,7 +154,7 @@
             </td>
         </tr>
         <tr *ngIf="positionsReturned">
-            <td colspan="4">Razem:</td>
+            <td colspan="5">Razem:</td>
             <td>{{ documentSum?.netto | number : '1.2-2'}}</td>
             <td></td>
             <td>{{ documentSum?.vatSum | number : '1.2-2'}}</td>
@@ -164,14 +164,14 @@
     </tbody>
     <tbody *ngIf="notFound">
         <tr>
-            <td colspan="9" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+            <td colspan="10" class="ui center aligned" style="font-size: 20px; color: #ccc;">
                 Brak pozycji
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="9">
+            <th colspan="10">
                 <button class="ui  red labeled icon button" [disabled]="isDelete() || deleteLoading" [ngClass]="{'loading': deleteLoading}" (click)="deleteChecked()">
                     <i class="trash icon"></i> Usuń
                 </button>

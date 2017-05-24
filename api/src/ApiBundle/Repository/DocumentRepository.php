@@ -75,10 +75,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 d.dateOfPayment, 
                 d.paymentMethod, 
                 d.paid,
-                d.netto,
-                d.brutto,
                 d.vat,
-                d.vatSum,
                 d.place,
                 c.id as consumerId
             FROM ApiBundle:Document d

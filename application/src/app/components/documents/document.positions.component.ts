@@ -35,7 +35,6 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
     deleteLoading: boolean = false;
     editedPosition: any = null;
     edit: boolean = false;
-    unit: string = "";
     viewCheck: boolean = false;
     private sub: any;
 
@@ -83,6 +82,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
         this.inputPosition['documentId'] = this.documentId;
         this.inputPosition['service'] = this.documentPositions[i]['service'];
         this.inputPosition['quantity'] = this.documentPositions[i]['quantity'];
+        this.inputPosition['unit'] = this.documentPositions[i]['unit'];
         this.inputPosition['name'] = this.documentPositions[i]['name'];
         this.inputPosition['vat'] = this.documentPositions[i]['vat'];
         this.inputPosition['netto'] = this.documentPositions[i]['netto'];
@@ -170,6 +170,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
         this.inputPosition['documentId'] = this.documentId;
         this.inputPosition['service'] = false;
         this.inputPosition['quantity'] = 1;
+        this.inputPosition['unit'] = "szt.";
         this.inputPosition['name'] = '';
         this.inputPosition['vat'] = 23;
         this.inputPosition['netto'] = 0;
@@ -192,7 +193,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
         this.inputPosition['netto'] = 0;
         this.inputPosition['brutto'] = 0;
         this.inputPosition['vatSum'] = 0;
-        this.unit = "";
+        this.inputPosition['unit'] = "szt.";
         this.lastQuantity = 1;
     }
 
@@ -238,7 +239,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
             this.inputPosition['netto'] = 0;
             this.inputPosition['brutto'] = 0;
             this.inputPosition['vatSum'] = 0;
-            this.unit = "";
+            this.inputPosition['unit'] = "szt.";
         } else {
             if (this.inputPosition['service']) {
                 this.sub = this.route.params.subscribe(params => {
@@ -265,7 +266,7 @@ export class DocumentPositionsComponent implements OnInit, OnDestroy, OnChanges,
                                 this.inputPosition['vatSum'] = position['vatSum'];
                                 this.inputPosition['vat'] = position['vat'];
                                 this.inputPosition['itemId'] = position['id'];
-                                this.unit = position['unit'];
+                                this.inputPosition['unit'] = position['unit'];
                             },
                             (err) => {
                                 //error
