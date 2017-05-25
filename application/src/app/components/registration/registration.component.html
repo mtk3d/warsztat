@@ -2,7 +2,29 @@
     <div class="ui two column centered grid">
         <div class="column">
             <div class="ui segment">
-                <h4 class="ui dividing header">Dane użytkownika</h4>
+                <div class="field" [ngClass]="{'error': !available}">
+                    <label>Nazwa użytkownika *</label>
+                    <div class="ui icon input" [ngClass]="{'loading': availableLoading}">
+                        <input type="text" name="_username" placeholder="Nazwa użytkownika" (keyup)="checkUsername()" [(ngModel)]="user._username">
+                        <i class="circle icon" [ngClass]="{'check': available, 'remove': !available}"></i>
+                    </div>
+                    <small [hidden]="available">Ta nazwa użytkownika jest juz zajęta</small>
+                </div>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Hasło *</label>
+                            <input type="password" name="_password" placeholder="Hasło"  (keyup)="matchPassword()" [(ngModel)]="user._password">
+                        </div>
+                        <div class="field" [ngClass]="{'error': !match}">
+                            <label>Powtórz hasło *</label>
+                            <div class="ui icon input">
+                                <input type="password" name="confirmPassword" placeholder="Powtórz hasło" (keyup)="matchPassword()" [(ngModel)]="user.confirmPassword">
+                                <i class="circle icon" [ngClass]="{'check': match, 'remove': !match}"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="field">
                     <label>Email *</label>
                     <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="user.email">
@@ -59,15 +81,9 @@
                         <input type="text" name="place" placeholder="Miejscowość" required [(ngModel)]="user.place">
                     </div>
                 </div>
-                <button class="ui button" [ngClass]="{'loading': loading}" (click)="save()">
-                    Zapisz
+                <button class="ui button" (click)="register()">
+                    Zarejestruj
                 </button>
-                <div class="ui positive message" *ngIf="message=='ok'">
-                    <p>Zmiany zostały zapisane pomyślnie.</p>
-                </div>
-                <div class="ui negative message" *ngIf="message=='err'">
-                    <p>Wystąpił niespodziewany błąd podczas zapisu.</p>
-                </div>
             </div>
         </div>
     </div>

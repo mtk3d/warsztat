@@ -3,7 +3,8 @@
 namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\User;
-use ApiBundle\Form\Type\UserType;
+use ApiBundle\Form\Type\UserEditType;
+use ApiBundle\Form\Type\RegisterType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\View\RouteRedirectView;
@@ -45,12 +46,64 @@ class UserController extends FOSRestController implements ClassResourceInterface
         }
         return $user;
     }
+
+    public function postCheckUsernameAction(Request $request)
+    {
+        $username = $request->request->get('username', '');
+
+        $user = $this->getUserRepository()
+            ->createFindByUsernameQuery($username)
+            ->getResult();
+
+        $available = ['available' => false];
+
+        if($user == null) {
+            $available = ['available' => true];
+        }
+
+        return $available;
+    }
+
+    public function postAction(Request $request)
+    {
+        $dateTime = new \DateTime('now');
+        $user = new User();
+
+        $form = $this->createForm(registerType::class, $user, [
+            'csrf_protection' => false,
+            'allow_extra_fields' => true
+        ]);
+
+        $form->submit($request->request->all());
+
+        if (!$form->isValid()) {
+            return $form;
+        }
+
+        $plainPassword = $user->getPassword();
+        $encoder = $this->container->get('security.password_encoder');
+        $encoded = $encoder->encodePassword($user, $plainPassword);
+
+        $user->setPassword($encoded);
+        $user->setCreatedAt($dateTime);
+        $user->setUpdatedAt($dateTime);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $routeOptions = [
+            'id' => $user->getId(),
+        ];
+
+        return $this->routeRedirectView('get_user', $routeOptions, Response::HTTP_CREATED);
+    }
     
     public function putAction(Request $request)
     {
         $dateTime = new \DateTime('now');
         $user = $this->getUserRepository()
-            ->createFindOneByIdQuery($this->getUserId())
+            ->createUpdateQuery($this->getUserId())
             ->getOneOrNullResult();
 
         if ($user == null) {
@@ -84,7 +137,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
     {
         $dateTime = new \DateTime('now');
         $user = $this->getUserRepository()
-            ->createFindOneByIdQuery($this->getUserId())
+            ->createUpdateQuery($this->getUserId())
             ->getOneOrNullResult();
 
         if ($user == null) {
@@ -117,7 +170,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
    /* public function deleteAction(Request $request)
     {
         $user = $this->getUserRepository()
-            ->createFindOneByIdQuery($this->getUserId())
+            ->createUpdateQuery($this->getUserId())
             ->getOneOrNullResult();
 
         if ($user == null) {

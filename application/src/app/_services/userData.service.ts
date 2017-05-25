@@ -23,4 +23,28 @@ export class UserDataService {
             .map((response: Response) => response.json());
     }
 
+    patch(user) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.patch('http://localhost:8000/user', user, options);
+    }
+
+    available(username: string) {
+        let data = {"username": username};
+        return this.http.post('http://localhost:8000/username_check', data)
+            .map((response: Response) => response.json());
+    }
+
+    update(user: UserData) {
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put('http://localhost:8000/user', user, options);
+    }
+
+    register(user: UserData) {
+        return this.http.post('http://localhost:8000/registration', user);
+    }
+
 }

@@ -3,14 +3,14 @@
         <div class="ui segment login-container">
             <form class="ui form" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
                 <div class="field" [ngClass]="{ 'error': f.submitted && !username.valid }">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" placeholder="Username" [(ngModel)]="model.username" #username="ngModel" required>
+                    <label for="username">Nazwa użytkownika</label>
+                    <input type="text" name="username" placeholder="Nazwa użytkownika" [(ngModel)]="model.username" #username="ngModel" required>
                 </div>
                 <div class="field" [ngClass]="{ 'error': f.submitted && !password.valid }">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required>
+                    <label for="password">Hasło</label>
+                    <input type="password" name="password" placeholder="Hasło" [(ngModel)]="model.password" #password="ngModel" required>
                 </div>
-                <button class="ui button" [disabled]="loading" [ngClass]="{'loading': loading}">Login</button>
+                <button class="ui button" [disabled]="loading" [ngClass]="{'loading': loading}">Zaloguj</button>
             </form>
             <div class="ui red message" *ngIf="error">
                 <div class="content">

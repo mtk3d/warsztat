@@ -1,4 +1,18 @@
 <div class="timetable-container">
+    <!-- <div style="float: left; margin-top: 10px; position: absolute;">
+        <div class="ui form" style="float: left; margin-right: 10px">
+            <div class="inline field">
+                <label>Rok</label>
+                <input type="number" name="year" [(ngModel)]="year+1" (change)="reload()" min="1" max="9999">
+            </div>
+        </div>
+        <div class="ui form" style="float: left;">
+            <div class="inline field">
+                <label>Miesiąc</label>
+                <input type="number" name="month" [(ngModel)]="month+1" (change)="reload()" min="1" max="12">
+            </div>
+        </div>
+    </div> -->
     <div class="ui centered grid">
         <div class="ui icon large buttons">
             <button class="ui button" (click)="previousMonth()">
@@ -47,7 +61,7 @@
                 <ul>
                     <li *ngFor="let item of day.items" class="day-item">
                         <a [routerLink]="['/orders', item.id]" [ngClass]="{'completed-item': item.completed}">
-                        <i *ngIf="item.completed" class="check circle icon"></i>{{ item.name }}
+                            <i *ngIf="item.completed" class="check circle icon"></i>{{ item.name }}
                         </a>
                     </li>
                 </ul>

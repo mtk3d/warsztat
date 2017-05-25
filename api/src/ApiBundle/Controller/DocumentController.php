@@ -113,9 +113,6 @@ class DocumentController extends FOSRestController implements ClassResourceInter
 
         $document->setUserId($this->getUserId());
         $document->setNumber($this->generateDocumentNumber($document->getType(), $document->getDate()->modify('+1 day')));
-        $document->setNetto('0');
-        $document->setBrutto('0');
-        $document->setVatSum('0');
         $document->setCreatedAt($dateTime);
         $document->setUpdatedAt($dateTime);
 

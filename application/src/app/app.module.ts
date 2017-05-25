@@ -22,7 +22,6 @@ import { pdfGeneratorService } from './_services/pdfGenerator.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { AboutComponent } from './components/about/about.component';
 import { TimetableComponent } from './components/timetable/timetable.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -48,13 +47,13 @@ import { StoresComponent } from './components/stores/stores.component';
 import { TiresComponent } from './components/tires/tires.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrdersAddComponent } from './components/orders/orders.add.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        RegisterComponent,
         AboutComponent,
         TimetableComponent,
         SettingsComponent,
@@ -79,7 +78,8 @@ import { OrdersAddComponent } from './components/orders/orders.add.component';
         StoresComponent,
         TiresComponent,
         OrdersComponent,
-        OrdersAddComponent
+        OrdersAddComponent,
+        RegistrationComponent
     ],
     imports: [
         BrowserModule,
@@ -108,7 +108,7 @@ import { OrdersAddComponent } from './components/orders/orders.add.component';
             { path: 'tires', component: TiresComponent, canActivate: [AuthGuard] },
             { path: 'about', component: AboutComponent },
             { path: 'login', component: LoginComponent },
-            { path: 'register', component: RegisterComponent, canActivate: [!AuthGuard] },
+            { path: 'registration', component: RegistrationComponent },
             { path: '**', component: PageNotFoundComponent }
         ])
     ],

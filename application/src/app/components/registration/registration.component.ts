@@ -6,16 +6,19 @@ import { Http } from '@angular/http';
 import { UserDataService } from '../../_services/userData.service';
 import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 
+declare var $: any;
+
 @Component({
     moduleId: module.id,
-    selector: 'settings',
-    templateUrl: 'settings.component.html'
+    selector: 'registration',
+    templateUrl: 'registration.component.html'
 })
-export class SettingsComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    user: any = [];
-    loading: boolean = false;
-    message: string;
+    user: any = {};
+    available: boolean = true;
+    availableLoading: boolean = false;
+    match: boolean = true;
     private sub: any;
 
     constructor(
@@ -28,33 +31,40 @@ export class SettingsComponent implements OnInit {
     ngOnInit() {
         this.breadcrumbsService.sendBreadcrumbs([
             { 'path': '/', 'text': 'Warsztat', 'active': true },
-            { 'path': '', 'text': 'Ustawienia', 'active': false }
+            { 'path': '', 'text': 'Zarejestruj', 'active': false }
         ]);
     }
 
     ngAfterViewInit() {
-        this.sub = this.route.params.subscribe(params => {
-            this.userService.get()
-                .subscribe(user => {
-                    this.user = user;
-                });
-        });
     }
 
-    save() {
-        this.loading = true;
+    register() {
         this.user['name'] = this.user['company']+' '+this.user['firstName']+' '+this.user['lastName'];
-        this.sub = this.userService.update(this.user)
+        this.sub = this.userService.register(this.user)
             .subscribe((ok)=>{
                 this.sub.unsubscribe();
-                this.loading = false;
-                this.message = 'ok';
+                this.router.navigate(['/login']);
             },
             (err)=>{
                 this.sub.unsubscribe();
-                this.loading = false;
-                this.message = 'err';
             });
+    }
+
+    checkUsername() {
+        this.availableLoading = true;
+        this.sub = this.userService.available(this.user['_username'])
+            .subscribe(resp => {
+                this.available = resp['available'];
+                this.availableLoading = false;
+            });
+    }
+
+    matchPassword() {
+        this.match = false;
+        if(this.user['_password'] == this.user['confirmPassword'])
+        {
+            this.match = true;
+        }
     }
 
     ngOnDestroy() {

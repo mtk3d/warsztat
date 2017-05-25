@@ -23,6 +23,9 @@
             <th (click)="sortingBy('quantity')">Ilość
                 <i class="sort icon" [ngClass]="{'descending': (order('quantity')=='DESC'), 'ascending': (order('quantity')=='ASC')}"></i>
             </th>
+            <th (click)="sortingBy('unit')">Jednostka
+                <i class="sort icon" [ngClass]="{'descending': (order('unit')=='DESC'), 'ascending': (order('unit')=='ASC')}"></i>
+            </th>
             <th (click)="sortingBy('netto')">Netto
                 <i class="sort icon" [ngClass]="{'descending': (order('netto')=='DESC'), 'ascending': (order('netto')=='ASC')}"></i>
             </th>
@@ -48,7 +51,8 @@
                     </div>
                 </td>
                 <td>{{ store?.name }}</td>
-                <td>{{ store?.quantity }} {{ store?.unit }}</td>
+                <td>{{ store?.quantity }}</td>
+                <td>{{ store?.unit }}</td>
                 <td>{{ store?.netto | number : '1.2-2'}}</td>
                 <td>{{ store?.vat | number : '1.2-2'}}%</td>
                 <td>{{ store?.vatSum | number : '1.2-2'}}</td>
@@ -68,17 +72,22 @@
                         </div>
                     </div>
                 </td>
-                <td class="collapsing">
-                    <div class="ui input">
+                <td>
+                    <div class="ui input smaller-value">
                         <input type="text" name="quantity" [(ngModel)]="inputStore.quantity" (blur)="quantityBlur()">
                     </div>
                 </td>
-                <td class="collapsing">
+                <td>
+                    <div class="ui input smaller-value">
+                        <input type="text" name="unit" [(ngModel)]="inputStore.unit">
+                    </div>
+                </td>
+                <td>
                     <div class="ui input">
                         <input type="text" name="netto" [(ngModel)]="inputStore.netto" (blur)="nettoBlur()">
                     </div>
                 </td>
-                <td class="collapsing">
+                <td>
                     <div class="ui right labeled input">
                         <input type="text" name="vat" style="width: 50px;" [(ngModel)]="inputStore.vat" (blur)="vatBlur()">
                         <div class="ui basic label">
@@ -86,17 +95,17 @@
                         </div>
                     </div>
                 </td>
-                <td class="collapsing">
+                <td>
                     <div class="ui input">
                         <input type="text" name="vatSum" [(ngModel)]="inputStore.vatSum" (blur)="vatSumBlur()">
                     </div>
                 </td>
-                <td class="collapsing">
+                <td>
                     <div class="ui input">
                         <input type="text" name="brutto" [(ngModel)]="inputStore.brutto" (blur)="bruttoBlur()">
                     </div>
                 </td>
-                <td class="collapsing">
+                <td>
                     <div class="ui  green icon button mini" (click)="update(store.id)"><i class="checkmark icon"></i></div>
                     <div class="ui  red icon button mini" (click)="hideEdit()"><i class="remove icon"></i></div>
                 </td>
@@ -112,17 +121,22 @@
                     </div>
                 </div>
             </td>
-            <td class="collapsing">
-                <div class="ui input">
+            <td>
+                <div class="ui input smaller-value">
                     <input type="text" name="quantity" [(ngModel)]="inputStore.quantity" (blur)="quantityBlur()">
                 </div>
             </td>
-            <td class="collapsing">
+            <td>
+                <div class="ui input smaller-value">
+                    <input type="text" name="unit" [(ngModel)]="inputStore.unit">
+                </div>
+            </td>
+            <td>
                 <div class="ui input">
                     <input type="text" name="netto" [(ngModel)]="inputStore.netto" (blur)="nettoBlur()">
                 </div>
             </td>
-            <td class="collapsing">
+            <td>
                 <div class="ui right labeled input">
                     <input type="text" name="vat" style="width: 50px;" [(ngModel)]="inputStore.vat" (blur)="vatBlur()">
                     <div class="ui basic label">
@@ -130,17 +144,17 @@
                     </div>
                 </div>
             </td>
-            <td class="collapsing">
+            <td>
                 <div class="ui input">
                     <input type="text" name="vatSum" [(ngModel)]="inputStore.vatSum" (blur)="vatSumBlur()">
                 </div>
             </td>
-            <td class="collapsing">
+            <td>
                 <div class="ui input">
                     <input type="text" name="brutto" [(ngModel)]="inputStore.brutto" (blur)="bruttoBlur()">
                 </div>
             </td>
-            <td class="collapsing">
+            <td>
                 <div class="ui  green icon button mini" (click)="addNewStore()"><i class="checkmark icon"></i></div>
                 <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
             </td>
@@ -148,14 +162,14 @@
     </tbody>
     <tbody *ngIf="!isReturn()">
         <tr>
-            <td colspan="9" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+            <td colspan="10" class="ui center aligned" style="font-size: 20px; color: #ccc;">
                 Nie znaleziono
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="9">
+            <th colspan="10">
                 <button class="ui  red labeled icon button" [disabled]="isDelete() || deleteLoading" [ngClass]="{'loading': deleteLoading}" (click)="deleteChecked()">
                     <i class="trash icon"></i> Usuń
                 </button>

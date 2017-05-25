@@ -38,5 +38,37 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $query;
     }
+
+    public function createUpdateQuery(int $id)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT
+                u
+            FROM ApiBundle:User u
+            WHERE u.id = :id
+            "
+        );
+
+        $query->setParameter('id', $id);
+
+        return $query;
+    }
+
+    public function createFindByUsernameQuery(string $username)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT
+                u
+            FROM ApiBundle:User u
+            WHERE u.username = :username
+            "
+        );
+
+        $query->setParameter('username', $username);
+
+        return $query;
+    }
     
 }

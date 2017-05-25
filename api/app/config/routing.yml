@@ -2,6 +2,16 @@ api_login_check:
    path: /login_check
    methods:  [POST]
 
+api_registration:
+    path: /registration
+    methods: [POST]
+    defaults: { _controller: ApiBundle:User:post }
+
+api_username_check:
+    path: /username_check
+    methods: [POST]
+    defaults: { _controller: ApiBundle:User:postCheckUsername }
+
 api:
     type: rest
     prefix: /
