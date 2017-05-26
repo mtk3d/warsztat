@@ -22,7 +22,7 @@ export class OrdersComponent implements OnInit, OnDestroy, AfterViewInit {
     from: string;
     to: string;
     search: string = '';
-    orderBy: string = 'date';
+    orderBy: string = 'id';
     sorting: string = 'DESC';
     pages: number;
     itemsPerPage: number;

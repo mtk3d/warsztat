@@ -19,11 +19,11 @@
         <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div>
         <div class="field">
             <label>Data wystawienia</label>
-            <input type="date" name="date" [(ngModel)]="documentEdit.date">
+            <input type="date" name="date" [(ngModel)]="documentEdit.date" (ngModelChange)="documentEdit.date  = $event">
         </div>
         <div class="field">
             <label>Data płatności</label>
-            <input type="date" name="dateOfPayment" [(ngModel)]="documentEdit.dateOfPayment">
+            <input type="date" name="dateOfPayment" [(ngModel)]="documentEdit.dateOfPayment" (ngModelChange)="documentEdit.dateOfPayment  = $event">
         </div>
         <div class="field edit-position-dropdown">
             <label>Metoda płatności</label>

@@ -6,12 +6,12 @@
                     <h4 class="ui dividing header">Dane zlecenia</h4>
                     <div class="field">
                         <label>Data rozpoczęcia *</label>
-                        <input type="date" name="date" [ngModel]="orderInput.date | date:'y-MM-dd'">
+                        <input type="date" name="date" [ngModel]="orderInput.date | date:'y-MM-dd'" (ngModelChange)="orderInput.date = $event">
                     </div>
                     <div class="field">
                         <label>Termin zlecenia *</label>
                         <div class="field">
-                            <input type="date" name="term" [ngModel]="orderInput.term | date:'y-MM-dd'">
+                            <input type="date" name="term" [ngModel]="orderInput.term | date:'y-MM-dd'"  (ngModelChange)="orderInput.term = $event">
                         </div>
                     </div>
                     <div class="field">
@@ -35,16 +35,16 @@
                 <div class="column">
                     <h4 class="ui dividing header">Pojazd *</h4>
                     <div class="ui segment">
-                        <ng-container *ngIf="!idIsSet">
+                        <ng-container *ngIf="!idIsSet && !addMode">
                             <p style="font-size: 20px; color: #ccc;">W pierwszej kolejności należy wybrać klienta</p>
                         </ng-container>
-                        <ng-container *ngIf="idIsSet">
+                        <ng-container *ngIf="idIsSet && !vehicleId && !addMode">
                             <b style="font-size:1.07142857rem;">Wybierz</b>
-                            <div class="ui right floated icon button mini" (click)="editView()"><i class="write icon"></i></div>
+                            <div class="ui right floated icon button mini" *ngIf="vehicleId" (click)="vehicleId = null"><i class="write icon"></i></div>
                             <div class="ui divider"></div>
                             <div class="consumers-list" *ngIf="consumerHasVehicles">
-                                <div *ngFor="let vehicle of vehicles">
-                                    <p class="consumers-list-item" (click)="applyVehicle(vehicle.id)">
+                                <div *ngFor="let vehicle of vehicles; let i = index">
+                                    <p class="consumers-list-item" (click)="setVehicle(i)">
                                         <b>Numer rejestracyjny: </b>{{vehicle.registrationNumber}}
                                         <br>
                                         <b>Marka: </b>{{vehicle.mark}}
@@ -60,8 +60,57 @@
                                 <p style="font-size: 20px; color: #ccc;">Klient nie posiada pojazdów</p>
                             </ng-container>
                             <div class="ui divider"></div>
-                            <div class="ui green labeled icon button tiny" (click)="addVehicle()">
+                            <div class="ui green labeled icon button tiny" (click)="addMode = true">
                                 <i class="plus icon"></i> Nowy pojazd
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="vehicleId">
+                            <div class="ui right floated icon button mini" *ngIf="vehicleId" (click)="vehicleId = null"><i class="write icon"></i></div>
+                            <p>
+                                <b>Numer rejestracyjny: </b>{{selectedVehicle.registrationNumber}}
+                                <br>
+                                <b>Marka: </b>{{selectedVehicle.mark}}
+                                <br>
+                                <b>Model: </b>{{selectedVehicle.model}}
+                                <br>
+                                <b>Silnik: </b>{{selectedVehicle.engine}}
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="addMode">
+                            <b style="font-size:1.07142857rem;">Dodaj</b>
+                            <div class="ui right floated icon button mini" (click)="addMode = false"><i class="remove icon"></i></div>
+                            <div class="field">
+                                <label>Marka</label>
+                                <div class="field">
+                                    <input type="text" name="mark" placeholder="Marka" [(ngModel)]="inputVehicle.mark">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Model</label>
+                                <div class="field">
+                                    <input type="text" name="model" placeholder="Model" [(ngModel)]="inputVehicle.model">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Silnik</label>
+                                <div class="field">
+                                    <input type="text" name="engine" placeholder="Typ, pojemność" [(ngModel)]="inputVehicle.engine">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Numer rejestracyjny</label>
+                                <div class="field">
+                                    <input type="text" name="registrationNumber" placeholder="Numer rejestracyjny" [(ngModel)]="inputVehicle.registrationNumber">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Notatki</label>
+                                <div class="field">
+                                    <textarea type="text" name="notes" placeholder="Notatki" [(ngModel)]="inputVehicle.notes" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="ui green labeled icon button" (click)="addVehicle()">
+                                <i class="plus icon"></i> Dodaj
                             </div>
                         </ng-container>
                     </div>
@@ -70,7 +119,7 @@
         </div>
     </form>
     <br>
-    <div class="ui green labeled icon button" (click)="consumerId = 1">
+    <div class="ui green labeled icon button" (click)="add()">
         <i class="plus icon"></i> Dodaj
     </div>
 </div>
