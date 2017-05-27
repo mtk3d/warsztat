@@ -81,4 +81,21 @@ class DocumentPositionRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
+    public function createEditByDocumentIdQuery(int $documentId, int $userId)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT d
+            FROM ApiBundle:DocumentPosition d
+            WHERE d.documentId = :documentId
+            AND d.userId = :userId
+            "
+        );
+
+        $query->setParameter('documentId', $documentId);
+        $query->setParameter('userId', $userId);
+
+        return $query;
+    }
+
 }

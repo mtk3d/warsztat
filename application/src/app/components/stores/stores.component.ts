@@ -28,7 +28,7 @@ export class StoresComponent implements OnInit, OnDestroy {
     showAdd: boolean = false;
     lastVat: number = 23;
     editedId: number;
-    lastQuantity: any;
+    lastQuantity: any = 1;
 
     constructor(
         private storeService: StoreService,

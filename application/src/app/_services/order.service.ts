@@ -60,7 +60,8 @@ export class OrderService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/serviceorders', document, options);
+        return this.http.post('http://localhost:8000/serviceorders', document, options)
+            .map((response: Response) => response.json());
     }
 
     delete(id: number) {

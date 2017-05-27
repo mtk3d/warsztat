@@ -1,15 +1,15 @@
 export class DocumentPosition {
     id: number;
-    user_id: number;
-    document_id: number;
+    userId: number;
+    documentId: number;
     service: boolean;
-    item_id: number;
+    itemId: number;
     name: string;
     netto: number;
     brutto: number;
     vat: number;
-    vat_sum: number;
+    vatSum: number;
     quantity: number;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
 }

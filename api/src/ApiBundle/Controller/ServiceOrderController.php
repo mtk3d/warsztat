@@ -111,7 +111,8 @@ class ServiceOrderController extends FOSRestController implements ClassResourceI
             'id' => $serviceOrder->getId(),
         ];
 
-        return $this->routeRedirectView('get_serviceorder', $routeOptions, Response::HTTP_CREATED);
+        //return $this->routeRedirectView('get_serviceorder', $routeOptions, Response::HTTP_CREATED);
+        return new View($routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)

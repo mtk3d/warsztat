@@ -60,7 +60,8 @@ export class DocumentService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/documents', document, options);
+        return this.http.post('http://localhost:8000/documents', document, options)
+            .map((response: Response) => response.json());
     }
 
     deleteDocument(id: number) {

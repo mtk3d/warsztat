@@ -111,6 +111,15 @@
                 </td>
             </ng-container>
         </tr>
+    </tbody>
+    <tbody *ngIf="!isReturn() && !showAdd">
+        <tr>
+            <td colspan="10" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+                Nie znaleziono
+            </td>
+        </tr>
+    </tbody>
+    <tbody>
         <tr *ngIf="showAdd">
             <td style="text-align: center;">
             </td>
@@ -157,13 +166,6 @@
             <td>
                 <div class="ui  green icon button mini" (click)="addNewStore()"><i class="checkmark icon"></i></div>
                 <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
-            </td>
-        </tr>
-    </tbody>
-    <tbody *ngIf="!isReturn()">
-        <tr>
-            <td colspan="10" class="ui center aligned" style="font-size: 20px; color: #ccc;">
-                Nie znaleziono
             </td>
         </tr>
     </tbody>

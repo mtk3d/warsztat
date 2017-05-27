@@ -57,8 +57,8 @@ export class ConsumerAddComponent implements OnInit, OnDestroy, OnChanges {
                 typeof this.consumer['lastName'] !== 'undefined')
         ) {
             this.sub = this.consumerService.create(this.consumer)
-                .subscribe((ok) => {
-                    this.router.navigate(['/consumers']);
+                .subscribe(resp => {
+                    this.router.navigate(['/consumers/'+resp['id']]);
                     this.sub.unsubscribe();
                 });
         } else {

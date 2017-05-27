@@ -27,7 +27,7 @@ class ServiceOrderPositionRepository extends \Doctrine\ORM\EntityRepository
                 e.firstName,
                 e.lastName
             FROM ApiBundle:ServiceOrderPosition d
-            JOIN ApiBundle\Entity\Employee e
+            LEFT JOIN ApiBundle\Entity\Employee e
             WITH d.employeeId = e.id
             WHERE d.id = :id
             AND d.userId = :userId
@@ -57,7 +57,7 @@ class ServiceOrderPositionRepository extends \Doctrine\ORM\EntityRepository
                 e.firstName,
                 e.lastName
             FROM ApiBundle:ServiceOrderPosition d
-            JOIN ApiBundle\Entity\Employee e
+            LEFT JOIN ApiBundle\Entity\Employee e
             WITH d.employeeId = e.id
             WHERE d.orderId = :orderId
             AND d.userId = :userId

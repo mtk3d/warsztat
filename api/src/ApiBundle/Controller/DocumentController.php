@@ -124,7 +124,8 @@ class DocumentController extends FOSRestController implements ClassResourceInter
             'id' => $document->getId(),
         ];
 
-        return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_CREATED);
+        //return $this->routeRedirectView('get_document', $routeOptions, Response::HTTP_CREATED);
+        return new View($routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
@@ -204,7 +205,7 @@ class DocumentController extends FOSRestController implements ClassResourceInter
         $documentId = $document->getId();
 
         $documentPosition = $this->getDocumentPositionRepository()
-            ->createFindByDocumentIdQuery($documentId, $this->getUserId())
+            ->createEditByDocumentIdQuery($documentId, $this->getUserId())
             ->getResult();
 
         if ($document == null) {

@@ -51,8 +51,8 @@ export class DocumentAddComponent implements OnInit, OnDestroy, OnChanges {
 
     add() {
         this.sub = this.documentService.create(this.document)
-            .subscribe((ok) => {
-                this.router.navigate(['/documents']);
+            .subscribe(resp => {
+                this.router.navigate(['/documents/'+resp['id']]);
                 this.sub.unsubscribe();
             });
     }

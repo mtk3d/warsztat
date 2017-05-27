@@ -37,7 +37,8 @@ export class ConsumerService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/consumers', consumer, options);
+        return this.http.post('http://localhost:8000/consumers', consumer, options)
+            .map((response: Response) => response.json());
     }
 
     update(id: number, consumer: Consumer) {

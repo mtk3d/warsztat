@@ -90,7 +90,8 @@ class ConsumerController extends FOSRestController implements ClassResourceInter
             'id' => $consumer->getId(),
         ];
 
-        return $this->routeRedirectView('get_consumer', $routeOptions, Response::HTTP_CREATED);
+        //return $this->routeRedirectView('get_consumer', $routeOptions, Response::HTTP_CREATED);
+        return new View($routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)

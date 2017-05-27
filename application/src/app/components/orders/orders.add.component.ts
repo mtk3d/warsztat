@@ -66,6 +66,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy, AfterViewInit {
 
     setVehicle(i) {
         this.vehicleId = this.vehicles[i]['id'];
+        this.orderInput['vehicleId'] = this.vehicles[i]['id'];
         this.selectedVehicle = this.vehicles[i];
     }
 
@@ -96,11 +97,11 @@ export class OrdersAddComponent implements OnInit, OnDestroy, AfterViewInit {
         this.orderInput['consumerId'] = this.consumerId;
         this.sub = this.orderService.create(this.orderInput)
             .subscribe(
-                (ok)=>{
+                resp => {
                     this.sub.unsubscribe()
-                    this.router.navigate(['/orders']);
+                    this.router.navigate(['/orders/'+resp['id']]);
                 },
-                (err)=>{
+                (err) => {
                     this.sub.unsubscribe()
                 }
             );

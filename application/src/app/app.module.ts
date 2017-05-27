@@ -51,6 +51,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { OrdersAddComponent } from './components/orders/orders.add.component';
 import { OrderParamsComponent } from './components/orders/order.params.component';
 import { OrderPositionsComponent } from './components/orders/order.positions.component';
+import { OrderDocumentComponent } from './components/orders/order.document.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 
 
@@ -86,6 +87,7 @@ import { RegistrationComponent } from './components/registration/registration.co
         OrdersAddComponent,
         OrderParamsComponent,
         OrderPositionsComponent,
+        OrderDocumentComponent,
         RegistrationComponent
     ],
     imports: [
@@ -113,7 +115,7 @@ import { RegistrationComponent } from './components/registration/registration.co
             { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard] },
             { path: 'services', component: ServicesComponent, canActivate: [AuthGuard] },
             { path: 'stores', component: StoresComponent, canActivate: [AuthGuard] },
-            { path: 'tires', component: TiresComponent, canActivate: [AuthGuard] },
+            { path: 'ordertodocument/:id', component: OrderDocumentComponent, canActivate: [AuthGuard] },
             { path: 'about', component: AboutComponent },
             { path: 'login', component: LoginComponent },
             { path: 'registration', component: RegistrationComponent },

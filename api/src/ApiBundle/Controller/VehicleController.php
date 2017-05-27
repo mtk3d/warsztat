@@ -102,7 +102,8 @@ class VehicleController extends FOSRestController implements ClassResourceInterf
             'id' => $vehicle->getId(),
         ];
 
-        return $this->routeRedirectView('get_vehicle', $routeOptions, Response::HTTP_CREATED);
+        //return $this->routeRedirectView('get_vehicle', $routeOptions, Response::HTTP_CREATED);
+        return new View($routeOptions, Response::HTTP_CREATED);
     }
 
     public function putAction(Request $request, int $id)
