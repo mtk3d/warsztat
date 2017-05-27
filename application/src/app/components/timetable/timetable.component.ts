@@ -119,11 +119,20 @@ export class TimetableComponent implements OnInit {
             for(let i = 0; i < ordersQuantity; i++)
             {
                 this.calendar[n]['items'].push({
-                    "name": "Termin: Zlecenie "+orders[i]['id']+" - "+orders[i]['mark']+" "+orders[i]['model']+" "+orders[i]['registrationNumber'],
+                    "name": "Termin: Zlecenie "+orders[i]['id']+" - "+this.undefinedCheck(orders[i]['mark'])+" "+this.undefinedCheck(orders[i]['model'])+" "+this.undefinedCheck(orders[i]['registrationNumber']),
                     "id": orders[i]['id'],
                     "completed": orders[i]['completed']
                 });
             }
+        }
+    }
+
+    undefinedCheck(param) {
+        if(typeof param == "undefined")
+        {
+            return "";
+        }else{
+            return param;
         }
     }
 
