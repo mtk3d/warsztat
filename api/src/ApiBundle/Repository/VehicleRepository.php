@@ -20,8 +20,12 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
                 d.model,
                 d.mark,
                 d.engine,
-                d.notes
+                d.notes,
+                c.id as consumerId,
+                c.name as consumer
             FROM ApiBundle:Vehicle d
+            LEFT JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
             WHERE d.id = :id
             AND d.userId = :userId
             "
@@ -60,8 +64,12 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
                 d.model,
                 d.mark,
                 d.engine,
-                d.notes
+                d.notes,
+                c.id as consumerId,
+                c.name as consumer
             FROM ApiBundle:Vehicle d
+            LEFT JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
             WHERE d.consumerId = :consumerId
             AND d.userId = :userId
             "
@@ -83,6 +91,8 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
                 $orderBy == 'engine')
             {
                 $orderBy = 'ORDER BY d.'.$orderBy;
+            }else if($orderBy == 'consumer'){
+                $orderBy = 'ORDER BY c.name';
             }else{
                 $orderBy = '';
             }
@@ -107,8 +117,12 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
                 d.model,
                 d.mark,
                 d.engine,
-                d.notes
+                d.notes,
+                c.id as consumerId,
+                c.name as consumer
             FROM ApiBundle:Vehicle d
+            LEFT JOIN ApiBundle\Entity\Consumer c
+            WITH d.consumerId = c.id
             WHERE d.userId = :userId
             AND (d.registrationNumber LIKE :searchStr
             OR d.model LIKE :searchStr

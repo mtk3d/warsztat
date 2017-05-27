@@ -29,6 +29,9 @@
             <th (click)="sortingBy('engine')">Silnik
                 <i class="sort icon" [ngClass]="{'descending': (order('engine')=='DESC'), 'ascending': (order('engine')=='ASC')}"></i>
             </th>
+            <th (click)="sortingBy('consumer')">Klient
+                <i class="sort icon" [ngClass]="{'descending': (order('consumer')=='DESC'), 'ascending': (order('consumer')=='ASC')}"></i>
+            </th>
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
@@ -43,6 +46,7 @@
             <td>{{ vehicle?.mark }}</td>
             <td>{{ vehicle?.model }}</td>
             <td>{{ vehicle?.engine }}</td>
+            <td><a [routerLink]="['/consumers', vehicle.consumerId]">{{ vehicle?.consumer }}</a></td>
         </tr>
     </tbody>
     <tbody *ngIf="!isReturn()">
