@@ -50,13 +50,11 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges {
                 });
         });
 
-        this.sub = this.route.params.subscribe(params => {
-            this.userDataService.get()
-                .subscribe(userData => {
-                    this.userData = userData;
-                    this.userDataLoading = false;
-                });
-        });
+        this.sub = this.userDataService.get()
+            .subscribe(userData => {
+                this.userData = userData;
+                this.userDataLoading = false;
+            });
     }
 
     ngOnChanges() {

@@ -61,7 +61,9 @@
                 <ul>
                     <li *ngFor="let item of day.items" class="day-item">
                         <a [routerLink]="['/orders', item.id]" [ngClass]="{'completed-item': item.completed}">
-                            <i *ngIf="item.completed" class="check circle icon"></i>{{ item.name }}
+                            <i *ngIf="item.completed" class="checkmark box icon"></i>
+                            <i *ngIf="!item.completed" class="square outline icon"></i>
+                            {{ item.name }}
                         </a>
                     </li>
                 </ul>

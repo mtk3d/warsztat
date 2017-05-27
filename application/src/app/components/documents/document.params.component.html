@@ -16,6 +16,7 @@
 </ng-container>
 <ng-container *ngIf="edit">
     <form class="ui form">
+        <b style="font-size:1.07142857rem;">Edycja</b>
         <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div>
         <div class="field">
             <label>Data wystawienia</label>
@@ -48,9 +49,10 @@
             </div>
         </div>
         <div class="field">
+            <label>Zapłacono</label>
             <div class="ui toggle checkbox">
                 <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="documentEdit.paid">
-                <label>Zapłacono</label>
+                <label>{{documentEdit.paid ? "Tak" : "Nie"}}</label>
             </div>
         </div>
         <div class="field">

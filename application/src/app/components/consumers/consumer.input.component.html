@@ -19,9 +19,8 @@
 </div>
 <div *ngIf="search">
     <div class="ui right floated icon button mini" (click)="cancel()" *ngIf="isSetConsumer()"><i class="remove icon"></i></div>
-    <div class="ui small icon input loading">
+    <div class="ui small fluid input">
         <input type="text" [(ngModel)]="searchStr" (keyup)="searchConsumer()" placeholder="Search...">
-        <!-- <i class="search icon"></i> -->
     </div>
     <div class="ui divider"></div>
     <div class="consumers-list" *ngIf="consumersReturn">

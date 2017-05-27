@@ -1,0 +1,42 @@
+<div class="ui active inverted dimmer" *ngIf="loading">
+    <div class="ui loader"></div>
+</div>
+<h3 class="ui horizontal divider header">Zlecenie {{ order.id }} - {{ order.mark }} {{ order.model }}</h3>
+<ng-container *ngIf="!edit">
+    <div class="ui right floated icon button mini" (click)="editMode(true)"><i class="write icon"></i></div>
+    <b>Data:</b> {{ order.date | date: 'dd/MM/yyyy' }}
+    <br>
+    <b>Termin:</b> {{ order.term | date: 'dd/MM/yyyy' }}
+    <br>
+    <b>Zakończono:</b> {{ order.completed ? "Tak" : "Nie" }}
+    <br>
+    <b>Notatki:</b> {{ order.notes }}
+</ng-container>
+<ng-container *ngIf="edit">
+    <form class="ui form">
+        <b style="font-size:1.07142857rem;">Edycja</b>
+        <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div>
+        <div class="field">
+            <label>Data</label>
+            <input type="date" name="date" [(ngModel)]="orderEdit.date" (ngModelChange)="orderEdit.date  = $event">
+        </div>
+        <div class="field">
+            <label>Termin</label>
+            <input type="date" name="term" [(ngModel)]="orderEdit.term" (ngModelChange)="orderEdit.term  = $event">
+        </div>
+        <div class="field">
+            <label>Zakończono</label>
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="orderEdit.completed">
+                <label>{{orderEdit.completed ? "Tak" : "Nie"}}</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>Notatki</label>
+            <input type="text" name="notes" placeholder="Notatki" [(ngModel)]="orderEdit.notes">
+        </div>
+        <div class="ui  green labeled icon button" (click)="save()">
+            <i class="save icon"></i> Zapisz
+        </div>
+    </form>
+</ng-container>

@@ -1,0 +1,19 @@
+<div class="ui grid" style="min-height: calc(100vh - 80px);">
+    <div class="four wide column">
+        <div class="ui segment">
+            <order-params [id]=id></order-params>
+        </div>
+        <div class="ui segment">
+            <h3 class="ui horizontal divider header">Klient</h3>
+            <consumer-input [consumerId]=consumerId (consumerOutput)="setConsumerId($event)"></consumer-input>
+        </div>
+        <div class="document-buttons">
+            <div class="ui blue labeled icon button tiny" (click)="true">
+                <i class="file outline icon"></i> Utwórz dokument
+            </div>
+        </div>
+    </div>
+    <div class="twelve wide column">
+        <order-positions [id]=id></order-positions>
+    </div>
+</div>

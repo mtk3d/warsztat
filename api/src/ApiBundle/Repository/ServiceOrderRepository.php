@@ -82,7 +82,7 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
                 v.registrationNumber,
                 c.id as consumerId
             FROM ApiBundle:ServiceOrder d
-            JOIN ApiBundle\Entity\Consumer c
+            LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             LEFT JOIN ApiBundle\Entity\Vehicle v
             WITH d.vehicleId = v.id
@@ -132,7 +132,7 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
                 c.id as consumerId, 
                 c.name as consumerName
             FROM ApiBundle:ServiceOrder d
-            JOIN ApiBundle\Entity\Consumer c
+            LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             LEFT JOIN ApiBundle\Entity\Vehicle v
             WITH d.vehicleId = v.id
@@ -165,7 +165,7 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
                 c.id as consumerId, 
                 c.name as consumerName
             FROM ApiBundle:ServiceOrder d
-            JOIN ApiBundle\Entity\Consumer c
+            LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             LEFT JOIN ApiBundle\Entity\Vehicle v
             WITH d.vehicleId = v.id

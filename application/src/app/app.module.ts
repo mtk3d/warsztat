@@ -10,6 +10,7 @@ import { AuthenticationService } from './_services/authentication.service';
 import { DocumentService } from './_services/document.service';
 import { DocumentPositionService } from './_services/documentPosition.service';
 import { OrderService } from './_services/order.service';
+import { OrderPositionService } from './_services/orderPosition.service';
 import { ConsumerService } from './_services/consumer.service';
 import { ServiceService } from './_services/service.service';
 import { StoreService } from './_services/store.service';
@@ -45,8 +46,11 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
 import { StoresComponent } from './components/stores/stores.component';
 import { TiresComponent } from './components/tires/tires.component';
+import { OrderComponent } from './components/orders/order.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrdersAddComponent } from './components/orders/orders.add.component';
+import { OrderParamsComponent } from './components/orders/order.params.component';
+import { OrderPositionsComponent } from './components/orders/order.positions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 
 
@@ -77,8 +81,11 @@ import { RegistrationComponent } from './components/registration/registration.co
         ServicesComponent,
         StoresComponent,
         TiresComponent,
+        OrderComponent,
         OrdersComponent,
         OrdersAddComponent,
+        OrderParamsComponent,
+        OrderPositionsComponent,
         RegistrationComponent
     ],
     imports: [
@@ -97,6 +104,7 @@ import { RegistrationComponent } from './components/registration/registration.co
             { path: 'newdocument', component: DocumentsComponent, canActivate: [AuthGuard] },
             { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
             { path: 'orders/add', component: OrdersAddComponent, canActivate: [AuthGuard] },
+            { path: 'orders/:id', component: OrderComponent, canActivate: [AuthGuard] },
             { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
             { path: 'timetable', component: TimetableComponent, canActivate: [AuthGuard] },
             { path: 'vehicles', component: VehiclesComponent, canActivate: [AuthGuard] },
@@ -118,6 +126,7 @@ import { RegistrationComponent } from './components/registration/registration.co
         DocumentService,
         DocumentPositionService,
         OrderService,
+        OrderPositionService,
         ConsumerService,
         ServiceService,
         StoreService,

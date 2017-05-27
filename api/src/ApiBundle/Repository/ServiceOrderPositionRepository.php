@@ -16,6 +16,7 @@ class ServiceOrderPositionRepository extends \Doctrine\ORM\EntityRepository
             "
             SELECT d.id,
                 d.serviceId,
+                d.employeeId,
                 d.name,
                 d.netto,
                 d.brutto,
@@ -45,6 +46,7 @@ class ServiceOrderPositionRepository extends \Doctrine\ORM\EntityRepository
             "
             SELECT d.id,
                 d.serviceId,
+                d.employeeId,
                 d.name,
                 d.netto,
                 d.brutto,

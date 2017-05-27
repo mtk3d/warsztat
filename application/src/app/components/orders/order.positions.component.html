@@ -1,0 +1,194 @@
+<table class="ui celled table selectable">
+    <thead>
+        <tr>
+            <th class="collapsing">
+                <div class="ui fitted checkbox">
+                    <input type="checkbox" (change)="allDelete()" [checked]="isAllChecked()">
+                    <label></label>
+                </div>
+            </th>
+            <th class="collapsing">L.p.</th>
+            <th>Nazwa</th>
+            <th>Pracownik</th>
+            <th class="collapsing">Ilość</th>
+            <th>Netto</th>
+            <th>VAT</th>
+            <th>Kwota VAT</th>
+            <th>Brutto</th>
+            <th class="collapsing"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let orderPosition of orderPositions;  let i = index">
+            <ng-container *ngIf="!isEditing(orderPosition.id)">
+                <td class="collapsing">
+                    <div class="ui fitted checkbox">
+                        <input type="checkbox" (change)="addDelete(orderPosition.id)" [checked]="isCheck(orderPosition.id)">
+                        <label></label>
+                    </div>
+                </td>
+                <td class="collapsing" style="text-align: center;">{{ i + 1 }}</td>
+                <td>{{ orderPosition?.name }} <i *ngIf="orderPosition?.completed" class="checkmark box icon"></i><i *ngIf="!orderPosition?.completed" class="square outline icon"></i></td>
+                <td>{{ orderPosition?.firstName }} {{ orderPosition?.lastName }}</td>
+                <td>{{ orderPosition?.quantity }}</td>
+                <td>{{ orderPosition?.netto | number : '1.2-2'}}</td>
+                <td>{{ orderPosition?.vat }}%</td>
+                <td>{{ orderPosition?.vatSum | number : '1.2-2'}}</td>
+                <td>{{ orderPosition?.brutto | number : '1.2-2'}}</td>
+                <td class="collapsing" style="text-align: center;">
+                    <div class="ui  blue icon button mini" (click)="editPosition(orderPosition.id, i)"><i class="edit icon"></i></div>
+                    <div class="ui  red icon button mini" (click)="deleteById(orderPosition.id)"><i class="trash icon"></i></div>
+                </td>
+            </ng-container>
+            <ng-container *ngIf="isEditing(orderPosition.id)">
+                <td colspan="2" style="text-align: center;">
+                    <span>{{ inputPosition.completed ? "Zakończone" : "W trakcie" }}</span>
+                    <div class="ui toggle fitted checkbox">
+                        <input type="checkbox" [(ngModel)]="inputPosition.completed">
+                        <label></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui form">
+                        <div class="field edit-position-dropdown">
+                            <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
+                                <option value="">{{ inputPosition.name }}</option>
+                                <option *ngFor="let item of selectItems;" value="{{ item.id }}">{{ item.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui form">
+                        <div class="field edit-position-dropdown">
+                            <select class="ui search dropdown" (change)="employeeSelect($event.target.value)">
+                                <option value="">{{ inputPosition.firstName }} {{ inputPosition.lastName }}</option>
+                                <option *ngFor="let item of employees;" value="{{ item.id }}">{{ item.firstName }} {{ item.lastName }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui input smaller-value">
+                        <input type="text" name="quantity" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui input small-value">
+                        <input type="text" name="netto" [(ngModel)]="inputPosition.netto" (blur)="nettoBlur()">
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui right labeled input small-value">
+                        <input type="text" name="vat" style="width: 50px;" [(ngModel)]="inputPosition.vat" (blur)="vatBlur()">
+                        <div class="ui basic label">
+                            %
+                        </div>
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui input small-value">
+                        <input type="text" name="vatSum" [(ngModel)]="inputPosition.vatSum" (blur)="vatSumBlur()">
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui input small-value">
+                        <input type="text" name="brutto" [(ngModel)]="inputPosition.brutto" (blur)="bruttoBlur()">
+                    </div>
+                </td>
+                <td class="collapsing">
+                    <div class="ui  green icon button mini" (click)="updatePosition()"><i class="checkmark icon"></i></div>
+                    <div class="ui  red icon button mini" (click)="closeChange()"><i class="remove icon"></i></div>
+                </td>
+            </ng-container>
+        </tr>
+        <tr *ngIf="showAdd">
+            <td colspan="2" style="text-align: center;">
+                <span>{{ inputPosition.completed ? "Zakończone" : "W trakcie" }}</span>
+                <div class="ui toggle fitted checkbox">
+                    <input type="checkbox" [(ngModel)]="inputPosition.completed">
+                    <label></label>
+                </div>
+            </td>
+            <td>
+                <div class="ui form">
+                    <div class="field">
+                        <select class="ui search dropdown" (change)="nameSelect($event.target.value)">
+                            <option value="">Wybierz</option>
+                            <option *ngFor="let item of selectItems;" value="{{ item.id }}">{{ item.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="ui form">
+                    <div class="field">
+                        <select class="ui search dropdown" (change)="employeeSelect($event.target.value)">
+                            <option value="">Wybierz</option>
+                            <option *ngFor="let item of employees;" value="{{ item.id }}">{{ item.firstName }} {{ item.lastName }}</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input smaller-value">
+                    <input type="text" name="quantity" [(ngModel)]="inputPosition.quantity" (blur)="quantityBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="netto" [(ngModel)]="inputPosition.netto" (blur)="nettoBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui right labeled input small-value">
+                    <input type="text" name="vat" style="width: 50px;" [(ngModel)]="inputPosition.vat" (blur)="vatBlur()">
+                    <div class="ui basic label">
+                        %
+                    </div>
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="vatSum" [(ngModel)]="inputPosition.vatSum" (blur)="vatSumBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui input small-value">
+                    <input type="text" name="brutto" [(ngModel)]="inputPosition.brutto" (blur)="bruttoBlur()">
+                </div>
+            </td>
+            <td class="collapsing">
+                <div class="ui  green icon button mini" (click)="addNewPosition()"><i class="checkmark icon"></i></div>
+                <div class="ui  red icon button mini" (click)="closeAdd()"><i class="remove icon"></i></div>
+            </td>
+        </tr>
+        <tr *ngIf="positionsReturned">
+            <td colspan="5">Razem:</td>
+            <td>{{ orderSum?.netto | number : '1.2-2'}}</td>
+            <td></td>
+            <td>{{ orderSum?.vatSum | number : '1.2-2'}}</td>
+            <td>{{ orderSum?.brutto | number : '1.2-2'}}</td>
+            <td class="collapsing"></td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="notFound">
+        <tr>
+            <td colspan="10" class="ui center aligned" style="font-size: 20px; color: #ccc;">
+                Brak pozycji
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="10">
+                <button class="ui  red labeled icon button" [disabled]="isDelete() || deleteLoading" [ngClass]="{'loading': deleteLoading}" (click)="deleteChecked()">
+                    <i class="trash icon"></i> Usuń
+                </button>
+                <div class="ui  green right floated labeled icon button" (click)="addView()">
+                    <i class="plus icon"></i> Dodaj
+                </div>
+            </th>
+        </tr>
+    </tfoot>
+</table>
