@@ -45,7 +45,6 @@ import { VehicleAddComponent } from './components/vehicles/vehicle.add.component
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ServicesComponent } from './components/services/services.component';
 import { StoresComponent } from './components/stores/stores.component';
-import { TiresComponent } from './components/tires/tires.component';
 import { OrderComponent } from './components/orders/order.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrdersAddComponent } from './components/orders/orders.add.component';
@@ -81,7 +80,6 @@ import { RegistrationComponent } from './components/registration/registration.co
         EmployeesComponent,
         ServicesComponent,
         StoresComponent,
-        TiresComponent,
         OrderComponent,
         OrdersComponent,
         OrdersAddComponent,

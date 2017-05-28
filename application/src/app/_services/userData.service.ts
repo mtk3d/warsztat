@@ -36,6 +36,12 @@ export class UserDataService {
             .map((response: Response) => response.json());
     }
 
+    availableEmail(email: string) {
+        let data = {"email": email};
+        return this.http.post('http://localhost:8000/email_check', data)
+            .map((response: Response) => response.json());
+    }
+
     update(user: UserData) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });

@@ -29,6 +29,7 @@ export class OrdersComponent implements OnInit, OnDestroy, AfterViewInit {
     actualPage: number = 1;
     pagesButtons: Array < number > = [];
     singlePageOrders: Order[] = [];
+    deleteLoading: boolean = false;
     sub: any;
 
     constructor(
@@ -203,9 +204,10 @@ export class OrdersComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     deleteChecked() {
+        this.deleteLoading = true;
         for (let id in this.delete) {
             this.sub = this.orderService.delete(this.delete[id])
-                .subscribe((ok) => { this.searchOrders(); });
+                .subscribe((ok) => { this.searchOrders(); this.deleteLoading = false; });
         }
     }
 

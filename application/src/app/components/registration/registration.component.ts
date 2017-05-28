@@ -17,7 +17,9 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
 
     user: any = {};
     available: boolean = true;
+    availableEmail: boolean = true;
     availableLoading: boolean = false;
+    availableEmailLoading: boolean = false;
     match: boolean = true;
     private sub: any;
 
@@ -56,6 +58,15 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(resp => {
                 this.available = resp['available'];
                 this.availableLoading = false;
+            });
+    }
+
+    checkEmail() {
+        this.availableEmailLoading = true;
+        this.sub = this.userService.availableEmail(this.user['email'])
+            .subscribe(resp => {
+                this.availableEmail = resp['available'];
+                this.availableEmailLoading = false;
             });
     }
 

@@ -12,6 +12,11 @@ api_username_check:
     methods: [POST]
     defaults: { _controller: ApiBundle:User:postCheckUsername }
 
+api_email_check:
+    path: /email_check
+    methods: [POST]
+    defaults: { _controller: ApiBundle:User:postCheckEmail }
+
 api:
     type: rest
     prefix: /

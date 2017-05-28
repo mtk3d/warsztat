@@ -70,5 +70,21 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $query;
     }
+
+    public function createFindByEmailQuery(string $email)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT
+                u
+            FROM ApiBundle:User u
+            WHERE u.email = :email
+            "
+        );
+
+        $query->setParameter('email', $email);
+
+        return $query;
+    }
     
 }

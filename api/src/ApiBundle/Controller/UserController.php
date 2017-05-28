@@ -64,6 +64,23 @@ class UserController extends FOSRestController implements ClassResourceInterface
         return $available;
     }
 
+    public function postCheckEmailAction(Request $request)
+    {
+        $username = $request->request->get('email', '');
+
+        $user = $this->getUserRepository()
+            ->createFindByEmailQuery($username)
+            ->getResult();
+
+        $available = ['available' => false];
+
+        if($user == null) {
+            $available = ['available' => true];
+        }
+
+        return $available;
+    }
+
     public function postAction(Request $request)
     {
         $dateTime = new \DateTime('now');

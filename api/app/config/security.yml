@@ -56,6 +56,11 @@ security:
             stateless: true
             anonymous: true
 
+        email:
+            pattern:  ^/email_check
+            stateless: true
+            anonymous: true
+
         api:
             pattern:   ^/
             stateless: true
@@ -72,5 +77,6 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/username_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/email_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(_wdt|_profiler), roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

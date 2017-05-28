@@ -14,7 +14,7 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Hasło *</label>
-                            <input type="password" name="_password" placeholder="Hasło"  (keyup)="matchPassword()" [(ngModel)]="user._password">
+                            <input type="password" name="_password" placeholder="Hasło" (keyup)="matchPassword()" [(ngModel)]="user._password">
                         </div>
                         <div class="field" [ngClass]="{'error': !match}">
                             <label>Powtórz hasło *</label>
@@ -25,9 +25,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="field">
+                <div class="field" [ngClass]="{'error': !availableEmail}">
                     <label>Email *</label>
-                    <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="user.email">
+                    <div class="ui icon input" [ngClass]="{'loading': availableEmailLoading}">
+                        <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (keyup)="checkEmail()" [(ngModel)]="user.email">
+                        <i class="circle icon" [ngClass]="{'check': availableEmail, 'remove': !availableEmail}"></i>
+                    </div>
+                    <small [hidden]="availableEmail">Użytkownik o tym emailu już istnieje</small>
                 </div>
                 <div class="field">
                     <label>Firma *</label>
