@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { ApiSettings } from '../_settings/api.settings';
 import 'rxjs/add/operator/map'
 
 import { AuthenticationService } from '../_services/authentication.service';
@@ -19,7 +20,7 @@ export class ServiceService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/services?search=' + searchStr + '&orderby=' + orderBy + '&sort=' + sort, options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'services?search=' + searchStr + '&orderby=' + orderBy + '&sort=' + sort, options)
             .map((response: Response) => response.json());
     }
 
@@ -29,7 +30,7 @@ export class ServiceService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/services/' + id, options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'services/' + id, options)
             .map((response: Response) => response.json());
     }
 
@@ -37,20 +38,20 @@ export class ServiceService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/services', service, options);
+        return this.http.post(ApiSettings.API_ENDPOINT + 'services', service, options);
     }
 
     update(id: number, service: Service) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put('http://localhost:8000/services/' + id, service, options);
+        return this.http.put(ApiSettings.API_ENDPOINT + 'services/' + id, service, options);
     }
 
     delete(id: number) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/services/' + id, options);
+        return this.http.delete(ApiSettings.API_ENDPOINT + 'services/' + id, options);
     }
 }

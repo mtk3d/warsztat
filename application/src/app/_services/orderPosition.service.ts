@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { ApiSettings } from '../_settings/api.settings';
 import 'rxjs/add/operator/map'
 
 import { AuthenticationService } from '../_services/authentication.service';
@@ -18,7 +19,7 @@ export class OrderPositionService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/serviceorderpositions/' + id + '/order', options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'serviceorderpositions/' + id + '/order', options)
             .map((response: Response) => response.json());
     }
 
@@ -26,21 +27,21 @@ export class OrderPositionService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/serviceorderpositions', orderPosition, options);
+        return this.http.post(ApiSettings.API_ENDPOINT + 'serviceorderpositions', orderPosition, options);
     }
 
     update(orderPosition: OrderPosition, id) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put('http://localhost:8000/serviceorderpositions/' + id, orderPosition, options);
+        return this.http.put(ApiSettings.API_ENDPOINT + 'serviceorderpositions/' + id, orderPosition, options);
     }
 
     delete(id: number) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/serviceorderpositions/' + id, options);
+        return this.http.delete(ApiSettings.API_ENDPOINT + 'serviceorderpositions/' + id, options);
     }
 
 }

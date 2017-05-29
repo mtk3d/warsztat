@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
+import { ApiSettings } from '../_settings/api.settings';
 import 'rxjs/add/operator/map'
 
 @Injectable()
@@ -16,7 +17,7 @@ export class AuthenticationService {
     login(username: string, password: string): Observable < boolean > {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post('http://localhost:8000/login_check', JSON.stringify({ _username: username, _password: password }), options)
+        return this.http.post(ApiSettings.API_ENDPOINT + 'login_check', JSON.stringify({ _username: username, _password: password }), options)
             .map(response => {
                 if (response.status < 200 || response.status >= 300) {
                     return false;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { ApiSettings } from '../_settings/api.settings';
 import 'rxjs/add/operator/map'
 
 import { AuthenticationService } from '../_services/authentication.service';
@@ -18,7 +19,7 @@ export class OrderService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/serviceorders?from=' + from + '&to=' + to + '&search=' + search + '&order_by=' + orderBy + '&sorting=' + sorting, options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'serviceorders?from=' + from + '&to=' + to + '&search=' + search + '&order_by=' + orderBy + '&sorting=' + sorting, options)
             .map((response: Response) => response.json());
     }
 
@@ -28,7 +29,7 @@ export class OrderService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/serviceorders/' + id, options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'serviceorders/' + id, options)
             .map((response: Response) => response.json());
     }
 
@@ -38,7 +39,7 @@ export class OrderService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/serviceorders/' + id + '/consumer', options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'serviceorders/' + id + '/consumer', options)
             .map((response: Response) => response.json());
     }
 
@@ -46,21 +47,21 @@ export class OrderService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put('http://localhost:8000/serviceorders/' + id, document, options);
+        return this.http.put(ApiSettings.API_ENDPOINT + 'serviceorders/' + id, document, options);
     }
 
     patch(document, id) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.patch('http://localhost:8000/serviceorders/' + id, document, options);
+        return this.http.patch(ApiSettings.API_ENDPOINT + 'serviceorders/' + id, document, options);
     }
 
     create(document: Document) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/serviceorders', document, options)
+        return this.http.post(ApiSettings.API_ENDPOINT + 'serviceorders', document, options)
             .map((response: Response) => response.json());
     }
 
@@ -68,6 +69,6 @@ export class OrderService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/serviceorders/' + id, options);
+        return this.http.delete(ApiSettings.API_ENDPOINT + 'serviceorders/' + id, options);
     }
 }

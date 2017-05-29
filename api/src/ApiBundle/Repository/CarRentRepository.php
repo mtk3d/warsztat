@@ -10,15 +10,8 @@ namespace ApiBundle\Repository;
  */
 class CarRentRepository extends \Doctrine\ORM\EntityRepository
 {
-    private function filters(string $search, string $orderBy, string $sort)
+    private function filters(string $orderBy, string $sort)
     {
-        if($search!='')
-        {
-            $searchStr = '%'.$search.'%';
-            $search = "AND (d.number LIKE '".$searchStr
-            ."' OR d.name LIKE '".$searchStr
-            ."' OR c.registrationNumber LIKE '".$searchStr."')";
-        }
         if($orderBy!='')
         {
             if($orderBy == 'name' || 
@@ -40,7 +33,7 @@ class CarRentRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
-        $filter = $search.$orderBy.' '.$sort;
+        $filter = $orderBy.' '.$sort;
         return $filter;
     }
 
@@ -80,10 +73,14 @@ class CarRentRepository extends \Doctrine\ORM\EntityRepository
                 d.loan
             FROM ApiBundle:CarRent d
             WHERE d.userId = :userId
+            AND (d.number LIKE :search
+            OR d.name LIKE :search
+            OR c.registrationNumber LIKE :search)
             ".$filters
         );
 
         $query->setParameter('userId', $userId);
+        $query->setParameter('search', '%'.$search.'%');
 
         return $query;
     }

@@ -10,7 +10,7 @@ namespace ApiBundle\Repository;
  */
 class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
 {
-    private function filters(string $from, string $to, string $search, string $orderBy, string $sort)
+    private function filters(string $from, string $to, string $orderBy, string $sort)
     {
         if($from!='')
         {
@@ -19,18 +19,6 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
         if($to!='')
         {
             $to = "AND d.date <= '".$to."'";
-        }
-        if($search!='')
-        {
-            $searchStr = '%'.$search.'%';
-            $search = "AND (d.id LIKE '".$searchStr
-            ."' OR d.date LIKE '".$searchStr
-            ."' OR d.term LIKE '".$searchStr
-            ."' OR d.notes LIKE '".$searchStr
-            ."' OR v.model LIKE '".$searchStr
-            ."' OR v.mark LIKE '".$searchStr
-            ."' OR v.registrationNumber LIKE '".$searchStr
-            ."' OR c.name LIKE '".$searchStr."')";
         }
         if($orderBy!='')
         {
@@ -63,7 +51,7 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
-        $filter = $from.$to.$search.$orderBy.' '.$sort;
+        $filter = $from.' '.$to.' '.$orderBy.' '.$sort;
         return $filter;
     }
 
@@ -114,9 +102,9 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function createFindByConsumerIdQuery(int $consumerId, int $userId, string $from, string $to, string $search, string $orderBy, string $sort)
+    public function createFindByConsumerIdQuery(int $consumerId, int $userId, string $from, string $to, $search, string $orderBy, string $sort)
     {
-        $filters = $this->filters($from, $to, $search, $orderBy, $sort);
+        $filters = $this->filters($from, $to, $orderBy, $sort);
 
         $query = $this->_em->createQuery(
             "
@@ -138,18 +126,27 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
             WITH d.vehicleId = v.id
             WHERE d.userId = :userId
             AND c.id = :consumerId
+            AND (d.id LIKE :search
+            OR d.date LIKE :search
+            OR d.term LIKE :search
+            OR d.notes LIKE :search
+            OR v.model LIKE :search
+            OR v.mark LIKE :search
+            OR v.registrationNumber LIKE :search
+            OR c.name LIKE :search)
             ".$filters
         );
 
         $query->setParameter('consumerId', $consumerId);
         $query->setParameter('userId', $userId);
+        $query->setParameter('search', '%'.$search.'%');
 
         return $query;
     }
 
     public function createFindAllQuery(int $userId, string $from, string $to, string $search, string $orderBy, string $sort)
     {
-        $filters = $this->filters( $from, $to, $search, $orderBy, $sort);
+        $filters = $this->filters( $from, $to, $orderBy, $sort);
 
         $query = $this->_em->createQuery(
             "
@@ -170,10 +167,19 @@ class ServiceOrderRepository extends \Doctrine\ORM\EntityRepository
             LEFT JOIN ApiBundle\Entity\Vehicle v
             WITH d.vehicleId = v.id
             WHERE d.userId = :userId
+            AND (d.id LIKE :search
+            OR d.date LIKE :search
+            OR d.term LIKE :search
+            OR d.notes LIKE :search
+            OR v.model LIKE :search
+            OR v.mark LIKE :search
+            OR v.registrationNumber LIKE :search
+            OR c.name LIKE :search)
             ".$filters
         );
 
         $query->setParameter('userId', $userId);
+        $query->setParameter('search', '%'.$search.'%');
 
         return $query;
     }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { ApiSettings } from '../_settings/api.settings';
 import 'rxjs/add/operator/map'
 
 import { AuthenticationService } from '../_services/authentication.service';
@@ -19,7 +20,7 @@ export class VehicleService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/vehicles?search=' + searchStr + '&orderby=' + orderBy + '&sort=' + sort, options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'vehicles?search=' + searchStr + '&orderby=' + orderBy + '&sort=' + sort, options)
             .map((response: Response) => response.json());
     }
 
@@ -29,7 +30,7 @@ export class VehicleService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/vehicles/' + id, options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'vehicles/' + id, options)
             .map((response: Response) => response.json());
     }
 
@@ -39,7 +40,7 @@ export class VehicleService {
         let options = new RequestOptions({ headers: headers });
 
         // get users from api
-        return this.http.get('http://localhost:8000/vehicles/' + id + '/consumer', options)
+        return this.http.get(ApiSettings.API_ENDPOINT + 'vehicles/' + id + '/consumer', options)
             .map((response: Response) => response.json());
     }
 
@@ -47,7 +48,7 @@ export class VehicleService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('http://localhost:8000/vehicles', vehicle, options)
+        return this.http.post(ApiSettings.API_ENDPOINT + 'vehicles', vehicle, options)
             .map((response: Response) => response.json());
     }
 
@@ -55,20 +56,20 @@ export class VehicleService {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put('http://localhost:8000/vehicles/'+id, vehicle, options);
+        return this.http.put(ApiSettings.API_ENDPOINT + 'vehicles/'+id, vehicle, options);
     }
 
     patch(id: number, vehicle) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.patch('http://localhost:8000/vehicles/'+id, vehicle, options);
+        return this.http.patch(ApiSettings.API_ENDPOINT + 'vehicles/'+id, vehicle, options);
     }
 
     delete(id: number) {
         let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete('http://localhost:8000/vehicles/' + id, options);
+        return this.http.delete(ApiSettings.API_ENDPOINT + 'vehicles/' + id, options);
     }
 }

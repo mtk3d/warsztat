@@ -10,7 +10,7 @@ namespace ApiBundle\Repository;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
-    private function filters(string $type, string $from, string $to, string $search, string $orderBy, string $sort)
+    private function filters(string $type, string $from, string $to, string $orderBy, string $sort)
     {
         if($type!='')
         {
@@ -23,16 +23,6 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         if($to!='')
         {
             $to = "AND d.date <= '".$to."'";
-        }
-        if($search!='')
-        {
-            $searchStr = '%'.$search.'%';
-            $search = "AND (d.number LIKE '".$searchStr
-            ."' OR d.date LIKE '".$searchStr
-            ."' OR d.dateOfPayment LIKE '".$searchStr
-            ."' OR d.paymentMethod LIKE '".$searchStr
-            ."' OR d.notes LIKE '".$searchStr
-            ."' OR c.name LIKE '".$searchStr."')";
         }
         if($orderBy!='')
         {
@@ -60,7 +50,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
-        $filter = $type.$from.$to.$search.$orderBy.' '.$sort;
+        $filter = $type.$from.$to.$orderBy.' '.$sort;
         return $filter;
     }
 
@@ -77,6 +67,8 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 d.paid,
                 d.vat,
                 d.place,
+                d.bank,
+                d.bankAccount,
                 c.id as consumerId
             FROM ApiBundle:Document d
             LEFT JOIN ApiBundle\Entity\Consumer c
@@ -111,7 +103,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
 
     public function createFindByConsumerIdQuery(int $consumerId, int $userId, string $type, string $from, string $to, string $search, string $orderBy, string $sort)
     {
-        $filters = $this->filters($type, $from, $to, $search, $orderBy, $sort);
+        $filters = $this->filters($type, $from, $to, $orderBy, $sort);
 
         $query = $this->_em->createQuery(
             "
@@ -129,18 +121,25 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             WITH d.consumerId = c.id
             WHERE d.consumerId = :consumerId
             AND d.userId = :userId
+            AND (d.number LIKE :search
+             OR d.date LIKE :search
+             OR d.dateOfPayment LIKE :search
+             OR d.paymentMethod LIKE :search
+             OR d.notes LIKE :search
+             OR c.name LIKE :search)
             ".$filters
         );
 
         $query->setParameter('consumerId', $consumerId);
         $query->setParameter('userId', $userId);
+        $query->setParameter('search', '%'.$search.'%');
 
         return $query;
     }
 
     public function createFindAllQuery(int $userId, string $type, string $from, string $to, string $search, string $orderBy, string $sort)
     {
-        $filters = $this->filters($type, $from, $to, $search, $orderBy, $sort);
+        $filters = $this->filters($type, $from, $to, $orderBy, $sort);
 
         $query = $this->_em->createQuery(
             "
@@ -157,10 +156,17 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             LEFT JOIN ApiBundle\Entity\Consumer c
             WITH d.consumerId = c.id
             WHERE d.userId = :userId
+            AND (d.number LIKE :search
+             OR d.date LIKE :search
+             OR d.dateOfPayment LIKE :search
+             OR d.paymentMethod LIKE :search
+             OR d.notes LIKE :search
+             OR c.name LIKE :search)
             ".$filters
         );
 
         $query->setParameter('userId', $userId);
+        $query->setParameter('search', '%'.$search.'%');
 
         return $query;
     }

@@ -229,24 +229,58 @@ export class pdfGeneratorService {
             bruttoSum = bruttoSum + this.documentPositions[i - 1]['brutto'];
         }
 
+        nettoSum = this.doublePrecision(nettoSum);
+        vatSumSum = this.doublePrecision(vatSumSum);
+        bruttoSum = this.doublePrecision(bruttoSum);
+
         this.docDef['content'][2]['table']['body'].push([{ colSpan: 3, text: 'Razem', alignment: 'right', border: [0, 0, 0, 0] }, '', '', { text: this.amount(nettoSum), bold: true }, '', { text: this.amount(vatSumSum), bold: true }, { text: this.amount(bruttoSum), bold: true }]);
 
-        let fraction = parseInt(((bruttoSum%1)*100).toString())
+        let fraction = parseInt(((bruttoSum % 1) * 100).toString())
 
-        this.docDef['content'][3]['stack'][0]['text'][1]['text'] = bruttoSum+' PLN';
-        this.docDef['content'][3]['stack'][1]['text'][1]['text'] = this.slowa(bruttoSum)+' PLN '+fraction+'/100';
+        if(fraction<10)
+            fraction = fraction+1;
+
+        this.docDef['content'][3]['stack'][0]['text'][1]['text'] = bruttoSum + ' PLN';
+        this.docDef['content'][3]['stack'][1]['text'][1]['text'] = this.slowa(bruttoSum) + ' PLN ' + fraction + '/100';
+
+        if (typeof this.document['bank'] != 'undefined' || typeof this.document['bankAccount'] != 'undefined') {
+            let bank = this.isset(this.document['bank']);
+            let bankAccount = this.isset(this.document['bankAccount']);
+
+            if(bankAccount != "")
+            {
+                bankAccount = 'PL '+bankAccount;
+            }
+
+            let bankData = {
+                stack: [{
+                    text: [
+                        { text: 'Bank: ' },
+                        { text: bank, bold: true },
+                    ]
+                }, {
+                    text: [
+                        { text: 'Numer konta: ' },
+                        { text: bankAccount, bold: true },
+                    ]
+                }],
+                margin: [0, 30, 0, 0]
+            };
+            this.docDef['content'].push(bankData);
+            console.log('bank');
+        }
 
         let pdf = pdfMake.createPdf(this.docDef);
-        switch(method) {
+        switch (method) {
             case 'print':
                 pdf.print();
-            break;
+                break;
             case 'download':
-                pdf.download(this.document['number']+'.pdf');
-            break;
+                pdf.download(this.document['number'] + '.pdf');
+                break;
             case 'preview':
                 pdf.open();
-            break;
+                break;
         }
     }
 
@@ -267,6 +301,10 @@ export class pdfGeneratorService {
             }
         }
         return number;
+    }
+
+    doublePrecision(num) {
+        return Math.round(num * 100) / 100;
     }
 
     amount(price) {
