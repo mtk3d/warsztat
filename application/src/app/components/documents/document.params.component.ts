@@ -76,6 +76,7 @@ export class DocumentParamsComponent implements OnInit, OnDestroy, OnChanges, Af
             .subscribe((ok) => {
                 this.sub.unsubscribe();
                 this.loading = false;
+                this.edit = false;
             });
     }
 

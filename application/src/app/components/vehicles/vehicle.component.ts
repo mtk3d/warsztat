@@ -14,7 +14,7 @@ import { BreadcrumbsService } from '../../_services/breadcrumbs.service';
 export class VehicleComponent implements OnInit, OnDestroy {
     id: number;
     vehicle: Vehicle[] = [];
-    vehicleInput: any = [];
+    vehicleInput: any = {};
     consumerId: number;
     editMode: boolean = false;
     private sub: any;
@@ -52,7 +52,6 @@ export class VehicleComponent implements OnInit, OnDestroy {
         this.vehicleInput['consumerId'] = id;
         this.sub = this.vehicleService.patch(this.id, this.vehicleInput)
             .subscribe((ok) => {
-                    this.sub.unsubscribe();
                     this.getVehicle();
                 });
     }

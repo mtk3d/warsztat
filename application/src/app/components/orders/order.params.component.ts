@@ -34,6 +34,7 @@ export class OrderParamsComponent implements OnInit, OnDestroy, OnChanges, After
             .subscribe(order => {
                 this.order = order;
                 this.order = order;
+                this.orderEdit = order;
                 this.orderEdit['date'] = this.dateStringToString(this.order['date']);
                 this.orderEdit['term'] = this.dateStringToString(this.order['term']);
                 this.loading = false;
@@ -70,6 +71,7 @@ export class OrderParamsComponent implements OnInit, OnDestroy, OnChanges, After
             .subscribe((ok) => {
                 this.sub.unsubscribe();
                 this.loading = false;
+                this.edit = false;
             });
     }
 

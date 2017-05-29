@@ -17,7 +17,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     id: number;
     consumerId: number;
-    consumerPatch: any;
+    consumerPatch: any = {};
     order: Order[] = [];
     sub: any;
 

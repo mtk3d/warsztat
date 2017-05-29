@@ -18,7 +18,7 @@ export class DocumentComponent implements OnInit, OnDestroy, OnChanges {
 
     id: number;
     document: Document[] = [];
-    documentPatch: any = [];
+    documentPatch: any = {};
     userData: UserData[] = [];
     consumerId: number;
     userDataLoading: boolean = true;
