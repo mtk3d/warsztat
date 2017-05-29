@@ -15,6 +15,7 @@ export class VehicleComponent implements OnInit, OnDestroy {
     id: number;
     vehicle: Vehicle[] = [];
     vehicleInput: any = {};
+    vehiclePatch: any = {};
     consumerId: number;
     editMode: boolean = false;
     private sub: any;
@@ -48,10 +49,10 @@ export class VehicleComponent implements OnInit, OnDestroy {
     }
 
     setConsumerId(id) {
-        this.vehicleInput = [];
-        this.vehicleInput['consumerId'] = id;
-        this.sub = this.vehicleService.patch(this.id, this.vehicleInput)
+        this.vehiclePatch['consumerId'] = id;
+        this.sub = this.vehicleService.patch(this.id, this.vehiclePatch)
             .subscribe((ok) => {
+                    this.sub.unsubscribe();
                     this.getVehicle();
                 });
     }
