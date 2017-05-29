@@ -5,7 +5,7 @@
 /tmp
 
 # settings for server
-/srv/app/_settings/api.settings.ts
+/src/app/_settings/api.settings.ts
 
 # dependencies
 /node_modules
