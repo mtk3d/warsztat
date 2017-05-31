@@ -39,32 +39,12 @@ export class ConsumerAddComponent implements OnInit, OnDestroy, OnChanges {
 
     add() {
         this.addLoading = true;
-        let company = '';
-        let consumerName = '';
-        if (typeof this.consumer['company'] !== 'undefined') {
-            company = this.consumer['company'] + ' ';
-        }
 
-        if (typeof this.consumer['firstName'] !== 'undefined' &&
-            typeof this.consumer['lastName'] !== 'undefined') {
-            consumerName = this.consumer['firstName'] + ' ' + this.consumer['lastName'];
-        }
-
-        this.consumer['name'] = company + consumerName;
-
-        if (typeof this.consumer['company'] !== 'undefined' ||
-            (typeof this.consumer['firstName'] !== 'undefined' &&
-                typeof this.consumer['lastName'] !== 'undefined')
-        ) {
-            this.sub = this.consumerService.create(this.consumer)
-                .subscribe(resp => {
-                    this.router.navigate(['/consumers/'+resp['id']]);
-                    this.sub.unsubscribe();
-                });
-        } else {
-            this.dataAlert = true;
-            this.addLoading = false;
-        }
+        this.sub = this.consumerService.create(this.consumer)
+            .subscribe(resp => {
+                this.router.navigate(['/consumers/' + resp['id']]);
+                this.sub.unsubscribe();
+            });
     }
 
     showDataAlert() {

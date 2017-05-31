@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import {Router, NavigationEnd} from '@angular/router';
 
 
 @Component({
@@ -9,7 +10,5 @@ import { HttpModule } from '@angular/http';
     providers: [HttpModule]
 })
 export class AppComponent {
-    constructor() {
-
-    }
+    constructor() {}
 }

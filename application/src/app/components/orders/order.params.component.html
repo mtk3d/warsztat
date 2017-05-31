@@ -13,19 +13,25 @@
     <b>Notatki:</b> {{ order.notes }}
 </ng-container>
 <ng-container *ngIf="edit">
-    <form class="ui form">
+    <form class="ui form" #orderParamsForm="ngForm">
         <b style="font-size:1.07142857rem;">Edycja</b>
-        <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div>
-        <div class="field">
-            <label>Data</label>
-            <input type="date" name="date" [(ngModel)]="orderEdit.date" (ngModelChange)="orderEdit.date  = $event">
+        <!-- <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div> -->
+        <div class="field" [ngClass]="{'error': (!date.valid && (date.dirty || date.touched))}">
+            <label>Data *</label>
+            <input type="date" name="date" [(ngModel)]="orderEdit.date" (ngModelChange)="orderEdit.date  = $event" required #date="ngModel">
+            <div *ngIf="date.errors && (date.dirty || date.touched)">
+                <small [hidden]="!date.errors.required">Data jest wymagana</small>
+            </div>
+        </div>
+        <div class="field" [ngClass]="{'error': (!term.valid && (term.dirty || term.touched))}">
+            <label>Termin *</label>
+            <input type="date" name="term" [(ngModel)]="orderEdit.term" (ngModelChange)="orderEdit.term  = $event" required #term="ngModel">
+            <div *ngIf="term.errors && (term.dirty || term.touched)">
+                <small [hidden]="!term.errors.required">Termin jest wymagany</small>
+            </div>
         </div>
         <div class="field">
-            <label>Termin</label>
-            <input type="date" name="term" [(ngModel)]="orderEdit.term" (ngModelChange)="orderEdit.term  = $event">
-        </div>
-        <div class="field">
-            <label>Zakończono</label>
+            <label>Zakończono *</label>
             <div class="ui toggle checkbox">
                 <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="orderEdit.completed">
                 <label>{{orderEdit.completed ? "Tak" : "Nie"}}</label>
@@ -35,8 +41,11 @@
             <label>Notatki</label>
             <input type="text" name="notes" placeholder="Notatki" [(ngModel)]="orderEdit.notes">
         </div>
-        <div class="ui  green labeled icon button" (click)="save()">
+        <button class="ui  green labeled icon button" (click)="save()" [disabled]="!orderParamsForm.form.valid">
             <i class="save icon"></i> Zapisz
-        </div>
+        </button>
+        <br>
+        <br>
+        <small>* Pola oznaczone gwiazdką, są wymagane</small>
     </form>
 </ng-container>

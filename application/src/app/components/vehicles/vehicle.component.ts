@@ -37,7 +37,7 @@ export class VehicleComponent implements OnInit, OnDestroy {
             this.vehicleService.get(this.id)
                 .subscribe(vehicle => {
                     this.vehicle = vehicle;
-                    this.vehicleInput = vehicle;
+                    this.vehicleInput = this.vehicle;
                     this.breadcrumbsService.sendBreadcrumbs([
                         { 'path': '/', 'text': 'Warsztat', 'active': true },
                         { 'path': '/vehicles', 'text': 'Pojazdy', 'active': true },

@@ -23,25 +23,28 @@
                     <div class="field" [ngClass]="{'error': date.errors && (date.dirty || date.touched)}">
                         <label>Data wystawienia *</label>
                         <input type="date" name="date" [ngModel]="document.date | date:'y-MM-dd'" (ngModelChange)="document.date = $event" required #date="ngModel">
-                        <div *ngIf="date.errors && (date.dirty || date.touched)" class="alert alert-danger">
+                        <div *ngIf="date.errors && (date.dirty || date.touched)">
                             <small [hidden]="!date.errors.required">Data jest wymagana</small>
                         </div>
                     </div>
                     <div class="field">
-                        <label>Domyślna stawka VAT</label>
+                        <label>Domyślna stawka VAT *</label>
                         <div class="field" [ngClass]="{'error': vat.errors && (vat.dirty || vat.touched)}">
                             <div class="ui right labeled input">
-                                <input type="number" name="vat" placeholder="VAT" [(ngModel)]="document.vat" min="0" max="100" #vat="ngModel">
+                                <input type="number" name="vat" placeholder="VAT" [(ngModel)]="document.vat" min="0" max="100" #vat="ngModel" required #vat="ngModel">
                                 <div class="ui basic label">
                                     %
                                 </div>
                             </div>
+                            <div *ngIf="vat.errors && (vat.dirty || vat.touched)">
+                            <small [hidden]="!vat.errors.required">Stawka VAT jest wymagana</small>
+                        </div>
                         </div>
                     </div>
                     <div class="field" [ngClass]="{'error': place.errors && (place.dirty || place.touched)}">
                         <label>Miejsce *</label>
                         <input type="text" name="place" placeholder="Miejsce" [(ngModel)]="document.place" required #place="ngModel">
-                        <div *ngIf="place.errors && (place.dirty || place.touched)" class="alert alert-danger">
+                        <div *ngIf="place.errors && (place.dirty || place.touched)">
                             <small [hidden]="!place.errors.required">Miejsce jest wymagane</small>
                         </div>
                     </div>
@@ -55,7 +58,7 @@
                     <div class="field" [ngClass]="{'error': dateOfPayment.errors && (dateOfPayment.dirty || dateOfPayment.touched)}">
                         <label>Data płatności *</label>
                         <input type="date" name="dateOfPayment" [ngModel]="document.dateOfPayment  | date:'y-MM-dd'" (ngModelChange)="document.dateOfPayment  = $event" required #dateOfPayment="ngModel">
-                        <div *ngIf="dateOfPayment.errors && (dateOfPayment.dirty || dateOfPayment.touched)" class="alert alert-danger">
+                        <div *ngIf="dateOfPayment.errors && (dateOfPayment.dirty || dateOfPayment.touched)">
                             <small [hidden]="!dateOfPayment.errors.required">Data płatności jest wymagana</small>
                         </div>
                     </div>
@@ -93,7 +96,7 @@
                                 </div>
                                 <input type="text" name="bankAccount" pattern="^\d{26}" placeholder="Numer konta" [(ngModel)]="document.bankAccount" #bankAccount="ngModel">
                             </div>
-                            <div *ngIf="bankAccount.errors && (bankAccount.dirty || bankAccount.touched)" class="alert alert-danger">
+                            <div *ngIf="bankAccount.errors && (bankAccount.dirty || bankAccount.touched)">
                                 <small [hidden]="!bankAccount.errors.pattern">Podaj poprawny numer konta (26 cyfr)</small>
                             </div>
                         </div>
@@ -119,4 +122,7 @@
     <button class="ui  green labeled icon button" (click)="add()" [disabled]="!documentAddForm.form.valid || !document.type || !document.paymentMethod || !document.consumerId">
         <i class="plus icon"></i> Dodaj
     </button>
+    <br>
+    <br>
+    <small>* Pola oznaczone gwiazdką, są wymagane</small>
 </div>

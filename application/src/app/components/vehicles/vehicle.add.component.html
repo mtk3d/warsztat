@@ -1,38 +1,37 @@
 <div class="ui segment" style="max-height: 100%;">
-    <form class="ui form">
+    <form class="ui form" #vehicleAddForm="ngForm">
         <div class="ui relaxed grid">
             <div class="two column row">
                 <div class="column">
                     <h4 class="ui dividing header">Podstawowe dane</h4>
-                    <div class="field">
-                        <label>Marka</label>
-                        <div class="field">
-                            <input type="text" name="mark" placeholder="Marka" [(ngModel)]="vehicle.mark">
-                        </div>
+                    <div class="field" [ngClass]="{'error': (!mark.valid && (mark.dirty || mark.touched))}">
+                        <label>Marka *</label>
+                            <input type="text" name="mark" placeholder="Marka" [(ngModel)]="vehicle.mark" required #mark="ngModel">
+                            <div *ngIf="mark.errors && (mark.dirty || mark.touched)">
+                                <small [hidden]="!mark.errors.required">Marka jest wymagana</small>
+                            </div>
                     </div>
-                    <div class="field">
-                        <label>Model</label>
-                        <div class="field">
-                            <input type="text" name="model" placeholder="Model" [(ngModel)]="vehicle.model">
-                        </div>
+                    <div class="field" [ngClass]="{'error': (!model.valid && (model.dirty || model.touched))}">
+                        <label>Model *</label>
+                            <input type="text" name="model" placeholder="Model" [(ngModel)]="vehicle.model" required #model="ngModel">
+                            <div *ngIf="model.errors && (model.dirty || model.touched)">
+                                <small [hidden]="!model.errors.required">Model jest wymagany</small>
+                            </div>
                     </div>
                     <div class="field">
                         <label>Silnik</label>
-                        <div class="field">
                             <input type="text" name="engine" placeholder="Typ, pojemność" [(ngModel)]="vehicle.engine">
-                        </div>
                     </div>
-                    <div class="field">
-                        <label>Numer rejestracyjny</label>
-                        <div class="field">
-                            <input type="text" name="registrationNumber" placeholder="Numer rejestracyjny" [(ngModel)]="vehicle.registrationNumber">
-                        </div>
+                    <div class="field" [ngClass]="{'error': (!registrationNumber.valid && (registrationNumber.dirty || registrationNumber.touched))}">
+                        <label>Numer rejestracyjny *</label>
+                            <input type="text" name="registrationNumber" placeholder="Numer rejestracyjny" [(ngModel)]="vehicle.registrationNumber" required #registrationNumber="ngModel">
+                            <div *ngIf="registrationNumber.errors && (registrationNumber.dirty || registrationNumber.touched)">
+                                <small [hidden]="!registrationNumber.errors.required">Numer rejestracyjny jest wymagany</small>
+                            </div>
                     </div>
                     <div class="field">
                         <label>Notatki</label>
-                        <div class="field">
                             <textarea type="text" name="notes" placeholder="Notatki" [(ngModel)]="vehicle.notes" rows="2"></textarea>
-                        </div>
                     </div>
                 </div>
                 <div class="column">
@@ -45,7 +44,10 @@
         </div>
     </form>
     <br>
-    <div class="ui  green labeled icon button" (click)="add()">
+    <button class="ui  green labeled icon button" (click)="add()" [disabled]="!vehicleAddForm.form.valid || !vehicle.consumerId">
         <i class="plus icon"></i> Dodaj
-    </div>
+    </button>
+    <br>
+    <br>
+    <small>* Pola oznaczone gwiazdką, są wymagane</small>
 </div>

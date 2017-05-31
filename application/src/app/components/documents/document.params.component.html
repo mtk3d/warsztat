@@ -23,19 +23,25 @@
     </ng-container>
 </ng-container>
 <ng-container *ngIf="edit">
-    <form class="ui form">
+    <form class="ui form" #documentParamsForm="ngForm">
         <b style="font-size:1.07142857rem;">Edycja</b>
-        <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div>
-        <div class="field">
-            <label>Data wystawienia</label>
-            <input type="date" name="date" [(ngModel)]="documentEdit.date" (ngModelChange)="documentEdit.date  = $event">
+        <!-- <div class="ui right floated icon button mini" (click)="editMode(false)"><i class="close icon"></i></div> -->
+        <div class="field" [ngClass]="{'error': (!date.valid && (date.dirty || date.touched))}">
+            <label>Data wystawienia *</label>
+            <input type="date" name="date" [(ngModel)]="documentEdit.date" (ngModelChange)="documentEdit.date  = $event" required #date="ngModel">
+            <div *ngIf="date.errors && (date.dirty || date.touched)">
+                <small [hidden]="!date.errors.required">Data jest wymagana</small>
+            </div>
         </div>
-        <div class="field">
-            <label>Data płatności</label>
-            <input type="date" name="dateOfPayment" [(ngModel)]="documentEdit.dateOfPayment" (ngModelChange)="documentEdit.dateOfPayment  = $event">
+        <div class="field" [ngClass]="{'error': (!dateOfPayment.valid && (dateOfPayment.dirty || dateOfPayment.touched))}">
+            <label>Data płatności *</label>
+            <input type="date" name="dateOfPayment" [(ngModel)]="documentEdit.dateOfPayment" (ngModelChange)="documentEdit.dateOfPayment  = $event" required #dateOfPayment="ngModel">
+            <div *ngIf="dateOfPayment.errors && (dateOfPayment.dirty || dateOfPayment.touched)">
+                <small [hidden]="!dateOfPayment.errors.required">Data płatności jest wymagana</small>
+            </div>
         </div>
         <div class="field edit-position-dropdown">
-            <label>Metoda płatności</label>
+            <label>Metoda płatności *</label>
             <div class="ui selection dropdown">
                 <input type="hidden" name="card[type]">
                 <div class="default text">
@@ -57,31 +63,40 @@
             </div>
         </div>
         <div class="field">
-            <label>Zapłacono</label>
+            <label>Zapłacono *</label>
             <div class="ui toggle checkbox">
                 <input type="checkbox" name="gift" tabindex="0" class="hidden" [(ngModel)]="documentEdit.paid">
                 <label>{{documentEdit.paid ? "Tak" : "Nie"}}</label>
             </div>
         </div>
-        <div class="field">
-            <label>Miejsce</label>
-            <input type="text" name="place" placeholder="Miejsce" [(ngModel)]="documentEdit.place">
+        <div class="field" [ngClass]="{'error': (!place.valid && (place.dirty || place.touched))}">
+            <label>Miejsce *</label>
+            <input type="text" name="place" placeholder="Miejsce" [(ngModel)]="documentEdit.place" required #place="ngModel">
+            <div *ngIf="place.errors && (place.dirty || place.touched)">
+                <small [hidden]="!place.errors.required">Miejsce jest wymagane</small>
+            </div>
         </div>
         <div class="field">
             <label>Bank</label>
             <input type="text" name="bank" placeholder="Bank" [(ngModel)]="documentEdit.bank">
         </div>
-        <div class="field">
+        <div class="field" [ngClass]="{'error': bankAccount.errors && (bankAccount.dirty || bankAccount.touched)}">
             <label>Numer konta</label>
             <div class="ui labeled input">
                 <div class="ui label">
                     PL
                 </div>
-                <input type="text" name="bankAccount" placeholder="Numer konta" [(ngModel)]="documentEdit.bankAccount">
+                <input type="text" name="bankAccount" pattern="^\d{26}" placeholder="Numer konta" [(ngModel)]="documentEdit.bankAccount" #bankAccount="ngModel">
+            </div>
+            <div *ngIf="bankAccount.errors && (bankAccount.dirty || bankAccount.touched)">
+                <small [hidden]="!bankAccount.errors.pattern">Podaj poprawny numer konta (26 cyfr)</small>
             </div>
         </div>
-        <div class="ui  green labeled icon button" (click)="save()">
+        <button class="ui  green labeled icon button" (click)="save()" [disabled]="!documentParamsForm.form.valid">
             <i class="save icon"></i> Zapisz
-        </div>
+        </button>
+        <br>
+        <br>
+        <small>* Pola oznaczone gwiazdką, są wymagane</small>
     </form>
 </ng-container>

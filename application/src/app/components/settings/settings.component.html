@@ -1,33 +1,50 @@
-<form class="ui form" #consumerForm="ngForm">
+<form class="ui form" #settingsForm="ngForm">
     <div class="ui two column centered grid">
         <div class="column">
             <div class="ui segment">
                 <h4 class="ui dividing header">Dane użytkownika</h4>
-                <div class="field">
+                <div class="field" [ngClass]="{'error': email.errors && (email.dirty || email.touched)}">
                     <label>Email *</label>
-                    <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="user.email">
+                    <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="user.email" required #email="ngModel">
+                    <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                        <small [hidden]="!email.errors.required">Email jest wymagany</small>
+                        <small [hidden]="!email.errors.pattern">Podaj email w poprawnym formacie</small>
+                    </div>
                 </div>
-                <div class="field">
+                <div class="field" [ngClass]="{'error': company.errors && (company.dirty || company.touched)}">
                     <label>Firma *</label>
-                    <input type="text" name="company" id="company" placeholder="Firma" [(ngModel)]="user.company">
+                    <input type="text" name="company" id="company" placeholder="Firma" [(ngModel)]="user.company" required #company="ngModel">
+                    <div *ngIf="company.errors && (company.dirty || company.touched)" class="alert alert-danger">
+                        <small [hidden]="!company.errors.required">Nazwa firmy jest wymagana</small>
+                    </div>
                 </div>
                 <div class="field">
                     <div class="two fields">
-                        <div class="field">
+                        <div class="field" [ngClass]="{'error': firstName.errors && (firstName.dirty || firstName.touched)}">
                             <label>Imie *</label>
-                            <input type="text" name="firstName" placeholder="Imie" [(ngModel)]="user.firstName">
+                            <input type="text" name="firstName" placeholder="Imie" [(ngModel)]="user.firstName" required #firstName="ngModel">
+                            <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+                                <small [hidden]="!firstName.errors.required">Imię jest wymagane</small>
+                            </div>
                         </div>
-                        <div class="field">
+                        <div class="field" [ngClass]="{'error': lastName.errors && (lastName.dirty || lastName.touched)}">
                             <label>Nazwisko *</label>
-                            <input type="text" name="lastName" placeholder="Nazwisko" [(ngModel)]="user.lastName">
+                            <input type="text" name="lastName" placeholder="Nazwisko" [(ngModel)]="user.lastName" required #lastName="ngModel">
+                            <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                                <small [hidden]="!lastName.errors.required">Nazwisko jest wymagane</small>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="field">
                     <div class="two fields">
-                        <div class="field">
+                        <div class="field" [ngClass]="{'error': nip.errors && (nip.dirty || nip.touched)}">
                             <label>NIP *</label>
-                            <input type="text" name="nip" placeholder="NIP" [(ngModel)]="user.nip">
+                            <input type="text" name="nip" pattern="^\d{3}-\d{3}-\d{2}-\d{2}|\d{3}-\d{2}-\d{2}-\d{3}$" placeholder="NIP" [(ngModel)]="user.nip" required #nip="ngModel">
+                            <div *ngIf="nip.errors && (nip.dirty || nip.touched)" class="alert alert-danger">
+                                <small [hidden]="!nip.errors.required">NIP jest wymagany</small>
+                                <small [hidden]="!nip.errors.pattern">Podaj poprawny format NIP</small>
+                            </div>
                         </div>
                         <div class="field">
                             <label>REGON</label>
@@ -36,9 +53,12 @@
                     </div>
                 </div>
                 <div class="fields">
-                    <div class="ten wide field">
+                    <div class="ten wide field" [ngClass]="{'error': street.errors && (street.dirty || street.touched)}">
                         <label>Ulica *</label>
-                        <input type="text" name="street" required id="street" placeholder="Ulica" [(ngModel)]="user.street">
+                        <input type="text" name="street" required id="street" placeholder="Ulica" [(ngModel)]="user.street" required #street="ngModel">
+                        <div *ngIf="street.errors && (street.dirty || street.touched)" class="alert alert-danger">
+                            <small [hidden]="!street.errors.required">NIP jest wymagany</small>
+                        </div>
                     </div>
                     <div class="three wide field">
                         <label>Budynek</label>
@@ -50,16 +70,23 @@
                     </div>
                 </div>
                 <div class="fields">
-                    <div class="five wide field">
+                    <div class="five wide field" [ngClass]="{'error': postalCode.errors && (postalCode.dirty || postalCode.touched)}">
                         <label>Kod pocztowy *</label>
-                        <input type="text" name="postalCode" required placeholder="Kod pocztowy" [(ngModel)]="user.postalCode">
+                        <input type="text" name="postalCode" required pattern="[0-9]{2}\-[0-9]{3}" placeholder="Kod pocztowy" [(ngModel)]="user.postalCode" #postalCode="ngModel">
+                        <div *ngIf="postalCode.errors && (postalCode.dirty || postalCode.touched)" class="alert alert-danger">
+                            <small [hidden]="!postalCode.errors.required">NIP jest wymagany</small>
+                            <small [hidden]="!postalCode.errors.pattern">Podaj poprawny format kodu</small>
+                        </div>
                     </div>
-                    <div class="eleven wide field">
+                    <div class="eleven wide field" [ngClass]="{'error': place.errors && (place.dirty || place.touched)}">
                         <label>Miejscowość *</label>
-                        <input type="text" name="place" placeholder="Miejscowość" required [(ngModel)]="user.place">
+                        <input type="text" name="place" placeholder="Miejscowość" required [(ngModel)]="user.place" required #place="ngModel">
+                        <div *ngIf="place.errors && (place.dirty || place.touched)" class="alert alert-danger">
+                            <small [hidden]="!place.errors.required">Miejscowość jest wymagana</small>
+                        </div>
                     </div>
                 </div>
-                <button class="ui button" [ngClass]="{'loading': loading}" (click)="save()">
+                <button class="ui button" [ngClass]="{'loading': loading}" (click)="save()" [disabled]="!settingsForm.form.valid">
                     Zapisz
                 </button>
                 <div class="ui positive message" *ngIf="message=='ok'">
