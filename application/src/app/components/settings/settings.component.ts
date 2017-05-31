@@ -17,6 +17,9 @@ export class SettingsComponent implements OnInit {
     loading: boolean = false;
     message: string;
     private sub: any;
+    availableEmail: boolean = true;
+    availableEmailLoading: boolean = false;
+    oldEmail: any;
 
     constructor(
         private router: Router,
@@ -37,6 +40,7 @@ export class SettingsComponent implements OnInit {
             this.userService.get()
                 .subscribe(user => {
                     this.user = user;
+                    this.oldEmail = user['email'];
                 });
         });
     }
@@ -49,11 +53,25 @@ export class SettingsComponent implements OnInit {
                 this.sub.unsubscribe();
                 this.loading = false;
                 this.message = 'ok';
+                this.oldEmail = this.user['email'];
             },
             (err)=>{
                 this.sub.unsubscribe();
                 this.loading = false;
                 this.message = 'err';
+            });
+    }
+
+    checkEmail() {
+        this.availableEmailLoading = true;
+        this.sub = this.userService.availableEmail(this.user['email'])
+            .subscribe(resp => {
+                this.availableEmail = resp['available'];
+                if(this.user['email'] == this.oldEmail)
+                {
+                    this.availableEmail = true;
+                }
+                this.availableEmailLoading = false;
             });
     }
 

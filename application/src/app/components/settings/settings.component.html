@@ -3,13 +3,17 @@
         <div class="column">
             <div class="ui segment">
                 <h4 class="ui dividing header">Dane użytkownika</h4>
-                <div class="field" [ngClass]="{'error': email.errors && (email.dirty || email.touched)}">
+                <div class="field" [ngClass]="{'error': (!availableEmail || email.errors) && (email.dirty || email.touched)}">
                     <label>Email *</label>
-                    <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="user.email" required #email="ngModel">
+                    <div class="ui icon input" [ngClass]="{'loading': availableEmailLoading}">
+                        <input type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (keyup)="checkEmail()" [(ngModel)]="user.email" required #email="ngModel">
+                        <i class="circle icon" *ngIf="email.dirty || email.touched" [ngClass]="{'check': availableEmail && !email.errors, 'remove': !availableEmail || email.errors}"></i>
+                    </div>
                     <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
                         <small [hidden]="!email.errors.required">Email jest wymagany</small>
                         <small [hidden]="!email.errors.pattern">Podaj email w poprawnym formacie</small>
                     </div>
+                    <small [hidden]="availableEmail">Użytkownik o tym emailu już istnieje</small>
                 </div>
                 <div class="field" [ngClass]="{'error': company.errors && (company.dirty || company.touched)}">
                     <label>Firma *</label>

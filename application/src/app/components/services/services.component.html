@@ -36,7 +36,7 @@
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
-        <tr *ngFor="let service of services; let key = index">
+        <tr *ngFor="let service of singlePageServices; let key = index">
             <ng-container *ngIf="!isEdited(service.id)">
                 <td class="collapsing">
                     <div class="ui fitted checkbox">
@@ -66,7 +66,7 @@
                 </td>
                 <td class="collapsing">
                     <div class="ui input">
-                        <input type="text" name="netto" [(ngModel)]="inputService.netto" (blur)="nettoBlur()">
+                        <input type="text" name="netto" class="price-input" [(ngModel)]="inputService.netto" (blur)="nettoBlur()">
                     </div>
                 </td>
                 <td class="collapsing">
@@ -79,16 +79,16 @@
                 </td>
                 <td class="collapsing">
                     <div class="ui input">
-                        <input type="text" name="vatSum" [(ngModel)]="inputService.vatSum" (blur)="vatSumBlur()">
+                        <input type="text" name="vatSum" class="price-input" [(ngModel)]="inputService.vatSum" (blur)="vatSumBlur()">
                     </div>
                 </td>
                 <td class="collapsing">
                     <div class="ui input">
-                        <input type="text" name="brutto" [(ngModel)]="inputService.brutto" (blur)="bruttoBlur()">
+                        <input type="text" name="brutto" class="price-input" [(ngModel)]="inputService.brutto" (blur)="bruttoBlur()">
                     </div>
                 </td>
                 <td class="collapsing">
-                    <div class="ui  green icon button mini" (click)="update(service.id)"><i class="checkmark icon"></i></div>
+                    <button class="ui  green icon button mini" (click)="update(service.id)" [disabled]="!inputService.name"><i class="checkmark icon"></i></button>
                     <div class="ui  red icon button mini" (click)="hideEdit()"><i class="remove icon"></i></div>
                 </td>
             </ng-container>
@@ -114,7 +114,7 @@
             </td>
             <td class="collapsing">
                 <div class="ui input">
-                    <input type="text" name="netto" [(ngModel)]="inputService.netto" (blur)="nettoBlur()">
+                    <input type="text" name="netto" class="price-input" [(ngModel)]="inputService.netto" (blur)="nettoBlur()">
                 </div>
             </td>
             <td class="collapsing">
@@ -127,16 +127,16 @@
             </td>
             <td class="collapsing">
                 <div class="ui input">
-                    <input type="text" name="vatSum" [(ngModel)]="inputService.vatSum" (blur)="vatSumBlur()">
+                    <input type="text" name="vatSum" class="price-input" [(ngModel)]="inputService.vatSum" (blur)="vatSumBlur()">
                 </div>
             </td>
             <td class="collapsing">
                 <div class="ui input">
-                    <input type="text" name="brutto" [(ngModel)]="inputService.brutto" (blur)="bruttoBlur()">
+                    <input type="text" name="brutto" class="price-input" [(ngModel)]="inputService.brutto" (blur)="bruttoBlur()">
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui  green icon button mini" (click)="addNewService()"><i class="checkmark icon"></i></div>
+                <button class="ui  green icon button mini" (click)="addNewService()"  [disabled]="!inputService.name"><i class="checkmark icon"></i></button>
                 <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
             </td>
         </tr>
@@ -171,3 +171,6 @@
 <div class="ui green labeled icon button" (click)="add()">
     <i class="configure icon"></i> Nowa usługa
 </div>
+<br>
+<br>
+<small>* Wszystkie pola są wymagane</small>

@@ -30,7 +30,7 @@
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
-        <tr *ngFor="let employee of employees; let key = index">
+        <tr *ngFor="let employee of singlePageEmployees; let key = index">
             <ng-container *ngIf="!isEdited(employee.id)">
                 <td class="collapsing">
                     <div class="ui fitted checkbox">
@@ -71,7 +71,7 @@
                     </div>
                 </td>
                 <td class="collapsing">
-                    <div class="ui  green icon button mini" (click)="update(employee.id)"><i class="checkmark icon"></i></div>
+                    <button class="ui  green icon button mini" (click)="update(employee.id)" [disabled]="!inputEmployee.firstName || !inputEmployee.lastName || !inputEmployee.position"><i class="checkmark icon"></i></button>
                     <div class="ui  red icon button mini" (click)="hideEdit()"><i class="remove icon"></i></div>
                 </td>
             </ng-container>
@@ -110,7 +110,7 @@
                 </div>
             </td>
             <td class="collapsing">
-                <div class="ui  green icon button mini" (click)="addNewStore()"><i class="checkmark icon"></i></div>
+                <button class="ui  green icon button mini" (click)="addNewStore()" [disabled]="!inputEmployee.firstName || !inputEmployee.lastName || !inputEmployee.position"><i class="checkmark icon"></i></button>
                 <div class="ui  red icon button mini" (click)="showAdd = false"><i class="remove icon"></i></div>
             </td>
         </tr>
@@ -145,3 +145,6 @@
 <div class="ui green labeled icon button" (click)="add()">
     <i class="add icon"></i> Nowa pozycja
 </div>
+<br>
+<br>
+<small>* Wszystkie pola są wymagane</small>

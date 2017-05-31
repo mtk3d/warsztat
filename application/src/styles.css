@@ -114,6 +114,10 @@
     margin-bottom: 5px;
 }
 
+.price-input {
+    width: 90px;
+} 
+
 ::-webkit-scrollbar {
     width: 4px;
     height: 4px;

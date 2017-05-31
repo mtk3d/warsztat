@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody *ngIf="isReturn()">
-        <tr *ngFor="let consumer of consumers">
+        <tr *ngFor="let consumer of singlePageConsumers">
             <td class="collapsing">
                 <div class="ui fitted checkbox">
                     <input type="checkbox" (change)="addDelete(consumer.id)" [checked]="isCheck(consumer.id)">
