@@ -7,6 +7,7 @@ Projekt realizowany w ramach konkursu [DajSięPoznać2017][2].
 Więcej informacji na temat projektu, można znaleźć na blogu: [Blog.WebMTK.pl][1], oraz w [profilu na stronie konkursu][3].
 
 Aplikacja dostępna pod adresem: [warsztat.webmtk.pl][3]
+
 Użytkownik z przykładowymi danymi:
 nazwa użytkownika: user, hasło: password
 
