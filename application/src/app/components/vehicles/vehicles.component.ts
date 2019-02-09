@@ -51,8 +51,8 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     }
 
     sortingBy(by) {
-        if (this.orderBy == by) {
-            if (this.sorting == 'DESC') {
+        if (this.orderBy === by) {
+            if (this.sorting === 'DESC') {
                 this.sorting = 'ASC';
             } else {
                 this.sorting = 'DESC';
@@ -66,7 +66,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
 
     order(item) {
         let ret = '';
-        if (this.orderBy == item) {
+        if (this.orderBy === item) {
             ret = this.sorting;
         }
         return ret;
@@ -84,7 +84,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
             this.actualPage = pageNumber;
             let startItem = (this.actualPage - 1) * this.itemsPerPage;
             let last = this.itemsPerPage;
-            if (this.actualPage == this.pages) {
+            if (this.actualPage === this.pages) {
                 last = this.vehicles.length - ((this.pages - 1) * this.itemsPerPage);
             }
             for (let i = 0; i < last; i++) {
@@ -123,7 +123,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     }
 
     isSearch() {
-        if (this.search == '') {
+        if (this.search === '') {
             return false;
         } else {
             return true;
@@ -138,7 +138,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     }
 
     addDelete(id) {
-        if (this.delete.indexOf(id) == -1) {
+        if (this.delete.indexOf(id) === -1) {
             this.delete.push(id);
         } else {
             this.delete.splice(this.delete.indexOf(id), 1);
@@ -150,7 +150,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
             this.allDeleteChecked = true;
             for (let item in this.vehicles) {
                 let id = this.vehicles[item].id;
-                if (this.delete.indexOf(id) == -1) {
+                if (this.delete.indexOf(id) === -1) {
                     this.delete.push(id);
                 }
             }
@@ -164,7 +164,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
         let is = true;
         for (let item in this.vehicles) {
             let id = this.vehicles[item].id;
-            if (this.delete.indexOf(id) == -1) {
+            if (this.delete.indexOf(id) === -1) {
                 is = false;
                 this.allDeleteChecked = false;
             }
@@ -179,7 +179,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     }
 
     isCheck(id) {
-        if (this.delete.indexOf(id) == -1) {
+        if (this.delete.indexOf(id) === -1) {
             return false;
         } else {
             return true;
