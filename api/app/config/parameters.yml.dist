@@ -8,7 +8,7 @@ parameters:
     database_user:     root
     database_password: ~
     # You should uncomment this if you want use pdo_sqlite
-    database_path: "%kernel.root_dir%/data.db3"
+    database_path: "%kernel.root_dir%/../var/data/data.sqlite"
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -18,13 +18,13 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem'
-    jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'
-    jwt_key_pass_phrase:  'warsztat' # hasło wpisane podczas tworzenia kluczy
+    jwt_private_key_path: '%kernel.root_dir%/../config/jwt/private.pem'
+    jwt_public_key_path:  '%kernel.root_dir%/../config/jwt/public.pem'
+    jwt_key_pass_phrase:  '' # hasło wpisane podczas tworzenia kluczy
     jwt_token_ttl:  3600
 
     # nelmio cors
-    cors_allow_origin: 'http://localhost'
+    cors_allow_origin: '*'
 
     # nelmio api docs
     api_name: 'Your API name'
